@@ -1,0 +1,111 @@
+@import 'sass/utils/_variables';
+
+.deals-table {
+  .deal__field {
+    min-width: 80px;
+    width: 11%;
+    justify-content: flex-end;
+    text-align: right;
+  }
+  .deal__field-avatar {
+    width: 36px;
+    min-width: auto;
+    margin-right: 5px;
+  }
+  .deal__field-name {
+    justify-content: start;
+  }
+  .deal__field-status {
+    justify-content: start;
+    width: 9%;
+    min-width: 9%;
+    &__icon {
+      margin-left: -10px;
+    }
+    &--live {
+      svg {
+        g {
+          fill: $color-green;
+        }
+      }
+    }
+    &--cancelled {
+      svg {
+        g {
+          fill: $color-red;
+        }
+      }
+    }
+    &--paused {
+      svg {
+        g {
+          fill: $color-yellow;
+        }
+      }
+    }
+    &--closed {
+      svg {
+        g {
+          fill: $color-orange;
+        }
+      }
+    }
+  }
+  .deal__field-raised-amount {
+    margin-left: 20px;
+  }
+  .deal__field-contribution {
+    margin-left: 20px;
+  }
+  .deal__field-action {
+    padding-left: 37px;
+    justify-content: start;
+    min-width: auto;
+    width: 137px;
+  }
+
+  // header
+  &-header {
+    padding-left: 20px !important;
+    padding-right: 30px !important;
+    margin-bottom: 11px;
+    .deal__field {
+      font-family: Barlow;
+      font-size: 12px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.33;
+      letter-spacing: normal;
+      color: $color-gray-30;
+    }
+  }
+
+  // content
+  &-content {
+    &__row {
+      background: transparent !important;
+      // max-width: 875px;
+      overflow-x: auto;
+      > div {
+        height: 100px;
+        width: 100%;
+        min-width: max-content;
+        padding-left: 20px !important;
+        padding-right: 30px !important;
+        border-radius: 5px;
+        background-color: rgba($color-gray-10, 0.5);
+        border: dashed 1px rgba($color-gray-30, 0.5);
+
+        font-family: Barlow;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.29;
+        letter-spacing: normal;
+        color: $color-gray-60;
+      }
+    }
+  }
+}

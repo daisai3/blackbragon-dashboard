@@ -1,0 +1,26 @@
+// color palette
+$color-black: #020202;
+$color-white: #ffffff;
+
+$color-red: #e9504f;
+$color-green: #029e80;
+$color-yellow: #f8c12e;
+$color-orange: #ff8547;
+
+$color-red-hover: #b43938;
+$color-green-hover: #007760;
+$color-button: #3fa2f7;
+
+$color-gray: #1b1b1b;
+$color-gray-10: #0f0f0f;
+$color-gray-20: #323232;
+$color-gray-30: #676767;
+$color-gray-40: #4b4b4b;
+$color-gray-50: #bebebe;
+$color-gray-60: #cdcdcd;
+$color-gray-70: #f2f2f2;
+
+:root {
+  --green: #{$color-green};
+  --main-border-color: #{rgba($color-gray-50, 0.2)};
+}

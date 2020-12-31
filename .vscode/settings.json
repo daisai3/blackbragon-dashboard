@@ -1,0 +1,17 @@
+{
+    "files.autoSave": "onFocusChange",
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "prettier.singleQuote": true,
+    "cSpell.ignoreWords": [
+        "persistor",
+        "arrowdown",
+        "prorata",
+        "labelledby",
+        "walletconnect",
+        "haspopup",
+        "blackdragon"
+    ],
+    "cSpell.words": [
+    ],
+}

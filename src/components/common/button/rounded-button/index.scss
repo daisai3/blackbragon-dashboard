@@ -1,0 +1,38 @@
+@import 'sass/utils/_variables';
+
+.rounded-btn {
+  padding: 8px 13px;
+  border-radius: 4px;
+  font-family: Barlow;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: $color-white;
+  cursor: pointer;
+  &--disabled {
+    background: $color-gray !important;
+    color: $color-gray-30 !important;
+  }
+  &--primary {
+    background: $color-red;
+    &:hover {
+      background: $color-red-hover !important;
+    }
+  }
+  &--secondary {
+    background: $color-green;
+    &:hover {
+      background: $color-green-hover !important;
+    }
+  }
+  &--default {
+    background: $color-gray-20;
+    &:hover {
+      background: $color-gray !important;
+    }
+  }
+}

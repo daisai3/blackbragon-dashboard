@@ -1,0 +1,148 @@
+@import 'sass/utils/_variables';
+
+.sidebar {
+  position: relative;
+  width: 260px;
+  height: 100%;
+  padding: 0px 20px;
+}
+
+// top
+.sidebar__top {
+  height: 80px;
+  .chart-btn-container {
+    width: fit-content;
+    margin-left: 16px;
+  }
+}
+
+// content
+.sidebar__content {
+  max-height: calc(100% - 510px);
+  overflow-y: auto;
+  padding-bottom: 10px;
+
+  // sidebar menu
+  .sidebar-menu {
+    width: 100%;
+    &__item {
+      width: 100%;
+      height: 48px;
+      padding-left: 16px;
+      color: $color-gray-60;
+      border-radius: 5px;
+
+      &-name {
+        margin-left: 8px;
+      }
+      svg {
+        path {
+          fill: $color-gray-60;
+        }
+      }
+      &--active {
+        color: $color-green;
+        background: $color-gray;
+        .sidebar-menu__item-icon {
+          svg {
+            path {
+              fill: $color-green;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// footer
+.sidebar__footer {
+  position: absolute;
+  bottom: 0px;
+  width: calc(100% - 40px);
+  color: $color-gray-40;
+
+  // account info
+  .account-info {
+    padding: 30px 16px;
+    border-top: 1px solid var(--main-border-color);
+    border-bottom: 1px solid var(--main-border-color);
+    &__field {
+      margin-bottom: 20px;
+      &:last-child {
+        margin-bottom: 0px;
+      }
+      &-name {
+        color: rgba(190, 190, 190, 0.7);
+        margin-bottom: 5px;
+        font-family: Barlow;
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.13;
+        letter-spacing: normal;
+      }
+      &-value {
+        font-family: Barlow;
+        font-size: 20px;
+        font-weight: bold;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        color: $color-green;
+      }
+    }
+  }
+
+  // meta info
+  .meta-info {
+    padding: 30px 0px;
+    .social-links {
+      display: flex;
+      justify-content: center;
+      a {
+        margin: 0px 8px;
+        color: $color-gray-40;
+      }
+    }
+
+    .terms-and-policy {
+      display: flex;
+      justify-content: center;
+      font-family: Barlow;
+      font-size: 11px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.45;
+      letter-spacing: normal;
+      margin: 10px 0px;
+      a {
+        color: $color-gray-40;
+      }
+      .policy {
+        position: relative;
+        &::after {
+          content: '•';
+          position: absolute;
+          right: -12px;
+        }
+      }
+      .terms {
+        margin-left: 20px;
+      }
+    }
+    .company-info {
+      font-family: Barlow;
+      font-size: 11px;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.45;
+      letter-spacing: normal;
+      text-align: center;
+    }
+  }
+}

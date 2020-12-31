@@ -1,0 +1,120 @@
+@import './utils/_variables';
+@import './utils/_texts';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Barlow;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+textarea {
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+label {
+  margin: 0px;
+}
+
+// layout
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+.horizontal-center {
+  display: flex;
+  justify-content: center;
+}
+.full-height {
+  height: 100%;
+}
+.full-width {
+  width: 100%;
+}
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+// button
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  background: transparent;
+  &:hover,
+  &:focus {
+    outline: none !important;
+    border: none !important;
+  }
+}
+
+// div
+div {
+  &:focus {
+    outline: none;
+  }
+}
+
+// image
+img {
+  box-sizing: border-box;
+}
+
+// input, textarea
+textarea,
+input {
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  border: none;
+  width: 100%;
+  &:hover,
+  &:focus {
+    outline: none !important;
+  }
+}
+
+// dropdown
+.dropdown {
+  position: initial;
+}
+
+// custom scrollbar
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  // background-color: var(--scrollbar-bg-color);
+  background-color: var(--theme-color-primary);
+  scrollbar-width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  width: 10px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover-color);
+}

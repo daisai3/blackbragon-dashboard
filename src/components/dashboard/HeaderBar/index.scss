@@ -1,0 +1,23 @@
+@import 'sass/utils/_variables';
+
+.header-bar {
+  height: 80px;
+  background: $color-gray-10;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  &__left {
+    height: 100%;
+    image {
+      height: 48px;
+    }
+  }
+  &__right {
+    .notification-container {
+      margin-right: 16px;
+      svg {
+        width: 24px;
+      }
+    }
+  }
+}
