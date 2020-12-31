@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import NotificationSelect from 'components/common/select/notification-select';
+import { updateGlobal } from 'store/actions';
 import Logo from 'assets/logo.svg';
 import './index.scss';
 
@@ -15,6 +16,19 @@ const notifications = [
 ];
 
 function HeaderBar() {
+  const dispatch = useDispatch();
+  const globalReducer = useSelector((state) => state.global);
+  const { notificationDropdownOpened } = globalReducer;
+
+  const onToggleNotification = () => {
+    dispatch(updateGlobal({ notificationDropdownOpened: !notificationDropdownOpened }));
+  };
+
+  const onCloseNotification = () => {
+    if (!notificationDropdownOpened) return;
+    dispatch(updateGlobal({ notificationDropdownOpened: false }));
+  };
+
   return (
     <div className="header-bar">
       <div className="header-bar__left vertical-center">
@@ -22,7 +36,12 @@ function HeaderBar() {
       </div>
       <div className="header-bar__right vertical-center">
         <div className="notification-container">
-          <NotificationSelect notifications={notifications} />
+          <NotificationSelect
+            opened={notificationDropdownOpened}
+            notifications={notifications}
+            onToggle={onToggleNotification}
+            onClose={onCloseNotification}
+          />
         </div>
         <div className="account-avatar-container vertical-center">
           <RoundedAvatar />
@@ -32,8 +51,8 @@ function HeaderBar() {
   );
 }
 
-HeaderBar.propTypes = { history: PropTypes.shape() };
+HeaderBar.propTypes = {};
 
-HeaderBar.defaultProps = { history: {} };
+HeaderBar.defaultProps = {};
 
-export default withRouter(HeaderBar);
+export default HeaderBar;

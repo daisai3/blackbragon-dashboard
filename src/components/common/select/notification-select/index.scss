@@ -1,7 +1,8 @@
 @import 'sass/utils/_variables';
 
 .notification-dropdown {
-  .dropdown-toggle {
+  position: relative !important;
+  &-toggle {
     cursor: pointer;
     svg {
       width: 24px !important;
@@ -10,8 +11,9 @@
       display: none !important;
     }
   }
-  .dropdown-menu {
-    left: 51px !important;
+  &-menu {
+    position: absolute;
+    right: -51px;
     width: 329px;
     border-radius: 8px;
     background: $color-gray-10;
@@ -20,7 +22,6 @@
     border-radius: 5px;
     box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.5);
     &::before {
-      z-index: -1;
       position: absolute;
       top: -16px;
       margin-left: 253px;
