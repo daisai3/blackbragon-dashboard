@@ -4,10 +4,10 @@
   position: fixed;
   left: 260px;
   width: calc(100% - 260px);
+  z-index: 1;
 }
 
 .dashboard-content {
-  // margin-top: 80px;
 }
 
 .dashboard-content__left {
@@ -19,7 +19,6 @@
 }
 
 .dashboard-content__right {
-  z-index: -1;
   position: relative;
   width: calc(100% - 260px);
   min-height: calc(100vh - 80px);
