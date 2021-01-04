@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from 'containers/app';
 import { store, persistor } from 'store';
 import 'typeface-barlow';
+import 'react-sweet-progress/lib/style.css';
 import 'sass/global.scss';
 
 const Root = () => (

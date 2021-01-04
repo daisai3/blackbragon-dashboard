@@ -1,0 +1,17 @@
+@import 'sass/utils/_variables';
+
+.custom-progress-bar {
+  > div:last-child {
+    display: none;
+  }
+  > div:first-child {
+    height: 4px;
+    > div {
+      min-height: 4px;
+      background-color: $color-green !important;
+      &::before {
+        display: none;
+      }
+    }
+  }
+}

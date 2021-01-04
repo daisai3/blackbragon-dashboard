@@ -8,7 +8,7 @@ import './index.scss';
 
 function Dashboard({ onConnect }) {
   const globalReducer = useSelector((state) => state.global);
-  const { notificationDropdownOpened } = globalReducer;
+  const { notificationDropdownOpened, activeDeal } = globalReducer;
 
   useEffect(() => {
     onConnect();
@@ -27,7 +27,9 @@ function Dashboard({ onConnect }) {
           <LeftSideBar />
         </div>
         <div className="dashboard-content__right">
-          {notificationDropdownOpened && <div className="overlay-background-container" />}
+          {(notificationDropdownOpened || activeDeal) && (
+            <div className="overlay-background-container" />
+          )}
           {userType === 'user' && <UserDealsContent />}
         </div>
       </div>

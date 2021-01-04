@@ -1,0 +1,22 @@
+@import 'sass/utils/_variables';
+
+.custom-input {
+  height: 36px;
+  background-color: $color-gray;
+  border-radius: 5px;
+  border: solid 1px transparent;
+  padding-left: 8px;
+  padding: 8px 7px;
+  font-family: Barlow;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $color-gray-60;
+  &:hover,
+  &:active {
+    border-color: $color-gray-30;
+  }
+}

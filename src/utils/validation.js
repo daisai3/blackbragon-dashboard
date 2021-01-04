@@ -24,3 +24,7 @@ export const validatePassword = (password, confirmPassword) => {
   if (password.length > 0 && password === confirmPassword) errors.matched = false;
   return errors;
 };
+
+export const isNumeric = (str) => {
+  return /^\d+$/.test(str);
+};

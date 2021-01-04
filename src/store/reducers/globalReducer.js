@@ -3,6 +3,7 @@ import * as actionTypes from '../constants';
 const initialState = {
   loading: false,
   notificationDropdownOpened: false,
+  activeDeal: false,
 };
 
 function globalReducer(state = initialState, action) {

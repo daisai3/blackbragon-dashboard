@@ -15,7 +15,7 @@ const menuItems = [
 
 function LeftSideBar() {
   const [currentTab, setCurrentTab] = useState(menuItems[0]);
-  const [accountInfo, setAccountInfo] = useState({
+  const [accountInfo] = useState({
     level: 0,
     prorata: 1,
     bdtBalance: 100,
