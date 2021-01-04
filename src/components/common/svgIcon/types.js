@@ -14,6 +14,11 @@ import IconStatusClosed from 'assets/icons/icon-status-closed.svg';
 import IconStatusCancelled from 'assets/icons/icon-status-cancelled.svg';
 import IconPlus from 'assets/icons/icon-plus.svg';
 
+import IconFacebook from 'assets/icons/icon-facebook.svg';
+import IconGooglePlus from 'assets/icons/icon-google-plus.svg';
+import IconTwitter from 'assets/icons/icon-twitter.svg';
+import IconInstagram from 'assets/icons/icon-instagram.svg';
+
 const Icons = {
   chart: IconChart,
   search: IconSearch,
@@ -29,6 +34,11 @@ const Icons = {
   statusClosed: IconStatusClosed,
   statusCancelled: IconStatusCancelled,
   plus: IconPlus,
+
+  facebook: IconFacebook,
+  googlePlus: IconGooglePlus,
+  twitter: IconTwitter,
+  instagram: IconInstagram,
 };
 
 export default Icons;
