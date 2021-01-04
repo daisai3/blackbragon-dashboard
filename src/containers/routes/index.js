@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import CustomLoading from 'components/common/loading/custom-loading';
 import { initLoading, updateAuth } from 'store/actions';
 import { getUserModel } from 'contracts/index';
-
+import { ADMIN_ADDRESS } from 'constants/index';
 import Dashboard from '../dashboard';
 import Login from '../login';
 
@@ -43,7 +43,14 @@ function Routes() {
     const accounts = await web3Object.eth.getAccounts();
     if (accounts.length > 0) {
       const accountInfo = await getAccountInfo(accounts[0]);
-      dispatch(updateAuth({ walletAddress: accounts[0], accountInfo }));
+
+      dispatch(
+        updateAuth({
+          walletAddress: accounts[0],
+          accountInfo,
+          isAdmin: accounts[0] === ADMIN_ADDRESS,
+        })
+      );
     }
   };
 

@@ -3,6 +3,7 @@ import * as actionTypes from '../constants';
 const initialState = {
   accountInfo: {},
   walletAddress: null,
+  isAdmin: false,
 };
 
 function authReducer(state = initialState, action) {

@@ -6,14 +6,31 @@ import FilterSelect from 'components/common/select/filter-select';
 import RoundedButton from 'components/common/button/rounded-button';
 import UserDealsTable from 'components/dashboard/DealsTable/UserDealsTable';
 import AdminDealsTable from 'components/dashboard/DealsTable/AdminDealsTable';
+import { getDealModels } from 'contracts/index';
 import './index.scss';
 
 function UserDealsContent() {
   const [searchValue, setSearchValue] = useState('');
-  const globalReducer = useSelector((state) => state.global);
+  const [userDeals, setUserDeals] = useState([]);
   const authReducer = useSelector((state) => state.auth);
-  const { isAdmin } = globalReducer;
-  const { walletAddress } = authReducer;
+  const { accountInfo, isAdmin } = authReducer;
+
+  const fetchUserDeals = async () => {
+    const { userAccessLevel } = accountInfo;
+    // const deals = await getDealModels(1);
+    const deals = await getDealModels(userAccessLevel);
+    const _deals = deals.map((deal, index) => {
+      return {
+        id: index.toString(),
+        ...deal,
+      };
+    });
+    setUserDeals(_deals);
+  };
+
+  useEffect(() => {
+    fetchUserDeals();
+  }, []);
 
   const onChangeSearch = (e) => {
     const { value } = e.target;
@@ -65,7 +82,11 @@ function UserDealsContent() {
           </div>
         </div>
         <div className="deals-table-container">
-          {isAdmin ? <AdminDealsTable /> : <UserDealsTable />}
+          {isAdmin ? (
+            <AdminDealsTable userDeals={userDeals} />
+          ) : (
+            <UserDealsTable userDeals={userDeals} />
+          )}
         </div>
       </div>
     </div>

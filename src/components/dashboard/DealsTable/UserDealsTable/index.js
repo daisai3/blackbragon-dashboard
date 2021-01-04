@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -9,15 +9,8 @@ import CustomProgressBar from 'components/common/progress-bar/custom-progress-ba
 import CustomInput from 'components/common/input/custom-input';
 import { updateGlobal } from 'store/actions';
 import { isNumeric } from 'utils/index';
-import tempDeals from './constants';
+import { approveDeal } from 'contracts/index';
 import './index.scss';
-
-const DEAL_STATUS = {
-  live: 'Live',
-  cancelled: 'Canceled',
-  paused: 'Paused',
-  closed: 'Closed',
-};
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -43,12 +36,18 @@ const getListStyle = (isDraggingOver) => ({
   padding: 0,
 });
 
-function DealsTable() {
+function DealsTable({ userDeals }) {
   const dispatch = useDispatch();
-  const [deals, setDeals] = useState(tempDeals);
+  const [deals, setDeals] = useState([]);
   const [activeDealContributionValue, setActiveDealContributionValue] = useState('');
   const globalReducer = useSelector((state) => state.global);
+  const authReducer = useSelector((state) => state.auth);
   const { activeDeal } = globalReducer;
+  const { accountInfo, walletAddress } = authReducer;
+
+  useEffect(() => {
+    setDeals(userDeals);
+  }, [userDeals]);
 
   const onDragEnd = (result) => {
     // dropped outside the list
@@ -61,7 +60,7 @@ function DealsTable() {
   };
 
   const onContribute = (deal) => {
-    setActiveDealContributionValue(deal.contribution);
+    setActiveDealContributionValue(deal.contributedAmount);
     dispatch(updateGlobal({ activeDeal: deal }));
   };
 
@@ -76,11 +75,10 @@ function DealsTable() {
     setActiveDealContributionValue(value);
   };
 
-  const onApprove = (deal) => {
-    // TODO: should call smart contract function
-    dispatch(updateGlobal({ dealApprovedStatus: 'approved' }));
-    // dispatch(updateGlobal({ dealApprovedStatus: 'failed' }));
+  const onApprove = async () => {
     onCloseDealModal();
+    const result = await approveDeal(walletAddress, activeDealContributionValue);
+    dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'failed' }));
   };
 
   return (
@@ -140,7 +138,11 @@ function DealsTable() {
                             <div className="deal__field deal__field-name vertical-center">
                               <div>
                                 <div>{deal.name}</div>
-                                <CustomProgressBar percent={65} />
+                                <CustomProgressBar
+                                  percent={
+                                    (Number(deal.raisedAmount) * 100) / Number(deal.dealSize)
+                                  }
+                                />
                               </div>
                             </div>
                             <div
@@ -149,10 +151,12 @@ function DealsTable() {
                               <span className="deal__field-status__icon">
                                 <SvgIcon name="dot" />
                               </span>
-                              <span>{DEAL_STATUS[deal.status]}</span>
+                              <span>{deal.status}</span>
                             </div>
                             <div className="deal__field deal__field-modal-bar vertical-center">
-                              <CustomProgressBar percent={65} />
+                              <CustomProgressBar
+                                percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)}
+                              />
                             </div>
                             <div className="deal__field deal__field-modal-contribution vertical-center">
                               <span>
@@ -166,7 +170,7 @@ function DealsTable() {
                             </div>
                             <div className="deal__field deal__field-modal-action vertical-center">
                               <RoundedButton onClick={onCloseDealModal}>Cancel</RoundedButton>
-                              <RoundedButton type="primary" onClick={() => onApprove(deal)}>
+                              <RoundedButton type="primary" onClick={onApprove}>
                                 Approve
                               </RoundedButton>
                             </div>
@@ -180,7 +184,11 @@ function DealsTable() {
                             <div className="deal__field deal__field-name vertical-center">
                               <div>
                                 <div>{deal.name}</div>
-                                <CustomProgressBar percent={65} />
+                                <CustomProgressBar
+                                  percent={
+                                    (Number(deal.raisedAmount) * 100) / Number(deal.dealSize)
+                                  }
+                                />
                               </div>
                             </div>
                             <div
@@ -189,23 +197,32 @@ function DealsTable() {
                               <span className="deal__field-status__icon">
                                 <SvgIcon name="dot" />
                               </span>
-                              <span>{DEAL_STATUS[deal.status]}</span>
+                              <span>{deal.status}</span>
                             </div>
-                            <div className="deal__field deal__field-size vertical-center">{`$${deal.size}`}</div>
+                            <div className="deal__field deal__field-size vertical-center">{`$${deal.dealSize}`}</div>
                             <div className="deal__field deal__field-raised-amount vertical-center">
                               {`$${deal.raisedAmount}`}
                             </div>
                             <div className="deal__field deal__field-model vertical-center">
-                              {deal.model}
+                              {deal.allocationModel}
                             </div>
-                            <div className="deal__field deal__field-minimum vertical-center">{`$${deal.minimum}`}</div>
-                            <div className="deal__field deal__field-maximum  vertical-center">{`$${deal.maximum}`}</div>
+                            <div className="deal__field deal__field-minimum vertical-center">{`$${deal.minContribution}`}</div>
+                            <div className="deal__field deal__field-maximum  vertical-center">
+                              {`$${deal.personalCap || 0.0}`}
+                            </div>
                             <div className="deal__field deal__field-contribution vertical-center">
-                              <span>{`$${deal.contribution}`}</span>
+                              <span>{`$${deal.contributedAmount}`}</span>
                             </div>
                             <div className="deal__field deal__field-action vertical-center">
-                              {DEAL_STATUS[deal.status] === 'Live' ? (
-                                <RoundedButton type="primary" onClick={() => onContribute(deal)}>
+                              {deal.status === 'Opened' ? (
+                                <RoundedButton
+                                  type="primary"
+                                  disabled={
+                                    Number(accountInfo.bdtBalance) <
+                                    Number(deal.minContributorBDTBalance)
+                                  }
+                                  onClick={() => onContribute(deal)}
+                                >
                                   Contribute
                                 </RoundedButton>
                               ) : (
@@ -228,8 +245,12 @@ function DealsTable() {
   );
 }
 
-DealsTable.propTypes = {};
+DealsTable.propTypes = {
+  userDeals: PropTypes.arrayOf(PropTypes.shape()),
+};
 
-DealsTable.defaultProps = {};
+DealsTable.defaultProps = {
+  userDeals: [],
+};
 
 export default DealsTable;

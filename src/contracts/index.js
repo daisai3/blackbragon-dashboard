@@ -18,10 +18,16 @@ const dealFactoryInterface = new ethers.utils.Interface(DealFactoryArtifact.abi)
 // USDT contract 0x4EB8924c3eaD317C01E7dF3Ef6684A21eE053c20
 // DEAL FACTORY BLOCK NUMBER 7633506 address 0x54242Ca3E5904557CA6e6aa4E8C26536760ceAb5
 
-const bdtAddress = '0x7767B7b6afFd55e231fDAB42B1E9863cc64066C2';
-const usdtAddress = '0x4EB8924c3eaD317C01E7dF3Ef6684A21eE053c20';
-const factoryContractAddress = '0x54242Ca3E5904557CA6e6aa4E8C26536760ceAb5';
-const factoryCreationBlockNumber = 7633506;
+// const bdtAddress = '0x7767B7b6afFd55e231fDAB42B1E9863cc64066C2';
+// const usdtAddress = '0x4EB8924c3eaD317C01E7dF3Ef6684A21eE053c20';
+// const factoryContractAddress = '0x54242Ca3E5904557CA6e6aa4E8C26536760ceAb5';
+// const factoryCreationBlockNumber = 7633506;
+
+// Daiki's test infos
+const bdtAddress = '0x3f97Ba16d12a16BD5935ad26c1644D1740DA24dd';
+const usdtAddress = '0x81fA8cc9d5e645787334e488E287FBC5511f2d08';
+const factoryContractAddress = '0x013Ff3e91C6E6ad7D485635062f1e0f93E089d04';
+const factoryCreationBlockNumber = 7836627;
 
 const bdtCirculatingSupply = 1000000;
 
@@ -120,7 +126,7 @@ export async function contribute(address, amount) {
   return result;
 }
 
-export async function approve(address, amount) {
+export async function approveDeal(address, amount) {
   let result = false;
   try {
     const weiAmount = ethers.utils.parseUnits(amount, 'mwei');
@@ -325,15 +331,6 @@ export async function claim(dealAddress, tokenAddress) {
   }
 
   return result;
-}
-
-export function getAccounts() {
-  const accounts = window.ethereum.request({ method: 'eth_accounts' });
-  return accounts;
-}
-
-export function openMetamaskWindowToConnect() {
-  return window.ethereum.request({ method: 'eth_requestAccounts' });
 }
 
 export async function createDeal(deal) {
