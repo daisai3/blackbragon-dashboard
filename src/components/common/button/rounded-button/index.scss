@@ -13,10 +13,6 @@
   text-align: center;
   color: $color-white;
   cursor: pointer;
-  &--disabled {
-    background: $color-gray !important;
-    color: $color-gray-30 !important;
-  }
   &--primary {
     background: $color-red;
     &:hover {
@@ -33,6 +29,14 @@
     background: $color-gray-20;
     &:hover {
       background: $color-gray !important;
+    }
+  }
+  &--disabled {
+    background: $color-gray !important;
+    color: $color-gray-30 !important;
+    &:hover {
+      background: $color-gray !important;
+      color: $color-gray-30 !important;
     }
   }
 }
