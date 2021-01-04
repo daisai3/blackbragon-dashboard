@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import NotificationSelect from 'components/common/select/notification-select';
+import DealApproveNotification from 'components/dashboard/Notification';
 import { updateGlobal } from 'store/actions';
 import Logo from 'assets/logo.svg';
 import './index.scss';
@@ -35,6 +36,7 @@ function HeaderBar() {
         <img src={Logo} alt="logo" />
       </div>
       <div className="header-bar__right vertical-center">
+        <DealApproveNotification />
         <div className="notification-container">
           <NotificationSelect
             opened={notificationDropdownOpened}

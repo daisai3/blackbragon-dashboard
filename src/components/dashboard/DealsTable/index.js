@@ -66,8 +66,6 @@ function DealsTable() {
     dispatch(updateGlobal({ activeDeal: deal }));
   };
 
-  const onApprove = (deal) => {};
-
   const onCloseDealModal = () => {
     dispatch(updateGlobal({ activeDeal: null }));
     setActiveDealContributionValue('');
@@ -77,6 +75,13 @@ function DealsTable() {
     const { value } = e.target;
     if (!isNumeric(value)) return;
     setActiveDealContributionValue(value);
+  };
+
+  const onApprove = (deal) => {
+    // TODO: should call smart contract function
+    dispatch(updateGlobal({ dealApprovedStatus: 'approved' }));
+    // dispatch(updateGlobal({ dealApprovedStatus: 'failed' }));
+    onCloseDealModal();
   };
 
   return (
