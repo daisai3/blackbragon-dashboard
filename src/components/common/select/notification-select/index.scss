@@ -38,7 +38,6 @@
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       &__title {
-        font-family: Barlow;
         font-size: 16px;
         font-weight: normal;
         font-stretch: normal;
@@ -48,7 +47,6 @@
         color: $color-gray-60;
       }
       &__description {
-        font-family: Barlow;
         font-size: 11px;
         font-weight: 500;
         font-stretch: normal;
@@ -79,7 +77,6 @@
         max-width: 208px;
         overflow: hidden;
         &__text {
-          font-family: Barlow;
           font-size: 14px;
           font-weight: normal;
           font-stretch: normal;
@@ -90,7 +87,7 @@
         }
         &__time {
           margin-top: 3px;
-          font-family: Barlow;
+
           font-size: 11px;
           font-weight: 500;
           font-stretch: normal;

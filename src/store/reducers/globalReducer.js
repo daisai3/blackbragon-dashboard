@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   notificationDropdownOpened: false,
   activeDeal: false,
+  dealApprovedStatus: 'default',
 };
 
 function globalReducer(state = initialState, action) {
