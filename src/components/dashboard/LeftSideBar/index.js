@@ -5,20 +5,12 @@ import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
 import './index.scss';
 
-const menuItems = [
-  { id: 0, name: 'Deals', value: 'deal1', icon: 'chart' },
-  { id: 1, name: 'Deals', value: 'deal2', icon: 'chart' },
-  { id: 2, name: 'Deals', value: 'deal3', icon: 'chart' },
-  { id: 3, name: 'Deals', value: 'deal4', icon: 'chart' },
-  { id: 4, name: 'Deals', value: 'deal5', icon: 'chart' },
-];
+const menuItems = [{ id: 0, name: 'Deals', value: 'deal1', icon: 'chart' }];
 
 function LeftSideBar() {
   const [currentTab, setCurrentTab] = useState(menuItems[0]);
-  const globalReducer = useSelector((state) => state.global);
   const authReducer = useSelector((state) => state.auth);
-  const { isAdmin } = globalReducer;
-  const { accountInfo } = authReducer;
+  const { accountInfo, isAdmin } = authReducer;
 
   const onSelectMenu = (item) => {
     setCurrentTab(item);
@@ -77,10 +69,18 @@ function LeftSideBar() {
         )}
         <div className="meta-info">
           <div className="social-links">
-            <a href="#" className="fa fa-google-plus" />
-            <a href="#" className="fa fa-facebook" />
-            <a href="#" className="fa fa-twitter" />
-            <a href="#" className="fa fa-instagram" />
+            <a href="/">
+              <SvgIcon name="facebook" width={16} />
+            </a>
+            <a href="/">
+              <SvgIcon name="googlePlus" width={16} />
+            </a>
+            <a href="/">
+              <SvgIcon name="twitter" width={16} />
+            </a>
+            <a href="/">
+              <SvgIcon name="instagram" width={16} />
+            </a>
           </div>
           <div className="terms-and-policy">
             <div className="policy">
