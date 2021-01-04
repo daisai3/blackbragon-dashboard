@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import SearchInput from 'components/common/input/search-input';
 import FilterSelect from 'components/common/select/filter-select';
 import RoundedButton from 'components/common/button/rounded-button';
-import DealsTable from 'components/dashboard/DealsTable';
+import UserDealsTable from 'components/dashboard/DealsTable/UserDealsTable';
+import AdminDealsTable from 'components/dashboard/DealsTable/AdminDealsTable';
 import './index.scss';
 
 function UserDealsContent() {
   const [searchValue, setSearchValue] = useState('');
+  const globalReducer = useSelector((state) => state.global);
+  const { isAdmin } = globalReducer;
 
   const onChangeSearch = (e) => {
     const { value } = e.target;
@@ -60,7 +63,7 @@ function UserDealsContent() {
           </div>
         </div>
         <div className="deals-table-container">
-          <DealsTable />
+          {isAdmin ? <AdminDealsTable /> : <UserDealsTable />}
         </div>
       </div>
     </div>
@@ -71,4 +74,4 @@ UserDealsContent.propTypes = {};
 
 UserDealsContent.defaultProps = {};
 
-export default withRouter(UserDealsContent);
+export default UserDealsContent;

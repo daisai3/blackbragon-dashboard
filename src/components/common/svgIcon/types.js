@@ -8,6 +8,12 @@ import IconArrowDown from 'assets/icons/icon-arrowDown.svg';
 import IconArrowLeft from 'assets/icons/icon-arrowLeft.svg';
 import IconArrowRight from 'assets/icons/icon-arrowRight.svg';
 
+import IconStatusLive from 'assets/icons/icon-status-live.svg';
+import IconStatusPaused from 'assets/icons/icon-status-paused.svg';
+import IconStatusClosed from 'assets/icons/icon-status-closed.svg';
+import IconStatusCancelled from 'assets/icons/icon-status-cancelled.svg';
+import IconPlus from 'assets/icons/icon-plus.svg';
+
 const Icons = {
   chart: IconChart,
   search: IconSearch,
@@ -18,6 +24,11 @@ const Icons = {
   arrowDown: IconArrowDown,
   arrowLeft: IconArrowLeft,
   arrowRight: IconArrowRight,
+  statusLive: IconStatusLive,
+  statusPaused: IconStatusPaused,
+  statusClosed: IconStatusClosed,
+  statusCancelled: IconStatusCancelled,
+  plus: IconPlus,
 };
 
 export default Icons;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
 import './index.scss';
@@ -21,6 +21,8 @@ function LeftSideBar() {
     bdtBalance: 100,
     usdtBalance: 100,
   });
+  const globalReducer = useSelector((state) => state.global);
+  const { isAdmin } = globalReducer;
 
   const onSelectMenu = (item) => {
     setCurrentTab(item);
@@ -57,24 +59,26 @@ function LeftSideBar() {
         </div>
       </div>
       <div className="sidebar__footer">
-        <div className="account-info">
-          <div className="account-info__field">
-            <h5 className="account-info__field-name body-1">Access Level</h5>
-            <div className="account-info__field-value">{`Level ${accountInfo.level}`}</div>
+        {!isAdmin && (
+          <div className="account-info">
+            <div className="account-info__field">
+              <h5 className="account-info__field-name body-1">Access Level</h5>
+              <div className="account-info__field-value">{`Level ${accountInfo.level}`}</div>
+            </div>
+            <div className="account-info__field">
+              <h5 className="account-info__field-name body-1">ProRata Share</h5>
+              <div className="account-info__field-value">{`${accountInfo.prorata} %`}</div>
+            </div>
+            <div className="account-info__field">
+              <h5 className="account-info__field-name body-1">BDT Tokens Held</h5>
+              <div className="account-info__field-value">{`${accountInfo.bdtBalance} BDT`}</div>
+            </div>
+            <div className="account-info__field">
+              <h5 className="account-info__field-name body-1">USDT Tokens Held</h5>
+              <div className="account-info__field-value">{`${accountInfo.usdtBalance} USDT`}</div>
+            </div>
           </div>
-          <div className="account-info__field">
-            <h5 className="account-info__field-name body-1">ProRata Share</h5>
-            <div className="account-info__field-value">{`${accountInfo.prorata} %`}</div>
-          </div>
-          <div className="account-info__field">
-            <h5 className="account-info__field-name body-1">BDT Tokens Held</h5>
-            <div className="account-info__field-value">{`${accountInfo.bdtBalance} BDT`}</div>
-          </div>
-          <div className="account-info__field">
-            <h5 className="account-info__field-name body-1">USDT Tokens Held</h5>
-            <div className="account-info__field-value">{`${accountInfo.usdtBalance} USDT`}</div>
-          </div>
-        </div>
+        )}
         <div className="meta-info">
           <div className="social-links">
             <a href="#" className="fa fa-google-plus" />
@@ -102,4 +106,4 @@ LeftSideBar.propTypes = {};
 
 LeftSideBar.defaultProps = {};
 
-export default withRouter(LeftSideBar);
+export default LeftSideBar;

@@ -1,0 +1,93 @@
+@import 'sass/utils/_variables';
+
+// admin deals table
+.admin-deals-table {
+  .deal__field-status-stepper {
+    width: 25%;
+    .deal__field-status-step {
+      padding: 0px 5px;
+      &--live--active {
+        svg {
+          path {
+            fill: $color-green;
+          }
+        }
+      }
+      &--paused--active {
+        svg {
+          path {
+            fill: $color-yellow;
+          }
+        }
+      }
+      &--closed--active {
+        svg {
+          path {
+            fill: $color-orange;
+          }
+        }
+      }
+      &--cancelled--active {
+        svg {
+          path {
+            fill: $color-red;
+          }
+        }
+      }
+    }
+  }
+  .deal__field-action {
+    padding-left: 10px;
+    justify-content: start;
+    min-width: 130px;
+    width: 15%;
+    justify-content: flex-end;
+  }
+}
+
+.deals-table {
+  &-footer {
+    position: fixed;
+    bottom: 50px;
+    right: 43px;
+    button {
+      padding: 24px;
+      border-radius: 50%;
+      background: $color-red;
+    }
+  }
+}
+
+// deal-edit-modal
+.deal-edit-modal {
+  z-index: 1000;
+  position: absolute;
+  width: 100%;
+  border-radius: 5px;
+  background-color: $color-gray-10;
+  padding: 18px 20px 30px;
+  // modal header
+  &__header {
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba($color-gray-50, 0.2);
+    justify-content: space-between;
+    &-left {
+      .deal-size {
+        margin-left: 10px;
+      }
+      .deal-name {
+        margin-left: 23px;
+      }
+    }
+    &-right {
+      button {
+        margin-left: 30px;
+      }
+    }
+  }
+
+  // modal content
+  &__content {
+    padding-top: 30px;
+  }
+}

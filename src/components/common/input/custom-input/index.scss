@@ -1,22 +1,39 @@
 @import 'sass/utils/_variables';
 
 .custom-input {
-  height: 36px;
-  background-color: $color-gray;
-  border-radius: 5px;
-  border: solid 1px transparent;
-  padding-left: 8px;
-  padding: 8px 7px;
+  label {
+    font-size: 11px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: $color-gray-30;
+    margin-bottom: 5px;
+  }
+  input {
+    height: 36px;
+    background-color: $color-gray;
+    border-radius: 5px;
+    border: solid 1px transparent;
+    padding: 11px 16px;
 
-  font-size: 16px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: normal;
-  color: $color-gray-60;
-  &:hover,
-  &:active {
-    border-color: $color-gray-30;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $color-gray-60;
+    &:hover,
+    &:active,
+    &:focus {
+      border-color: $color-gray-30;
+    }
+    &[disabled] {
+      border: solid 1px transparent;
+      background: transparent;
+      padding-left: 0px;
+    }
   }
 }

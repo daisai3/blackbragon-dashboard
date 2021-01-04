@@ -4,7 +4,7 @@
   position: fixed;
   left: 260px;
   width: calc(100% - 260px);
-  z-index: 1;
+  z-index: 1002;
 }
 
 .dashboard-content {
@@ -28,6 +28,7 @@
   padding: 0px 20px;
   background-color: $color-black;
   .overlay-background-container {
+    z-index: 999;
     position: absolute;
     top: 0px;
     bottom: 0px;

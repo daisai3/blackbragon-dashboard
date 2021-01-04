@@ -5,6 +5,7 @@ const initialState = {
   notificationDropdownOpened: false,
   activeDeal: false,
   dealApprovedStatus: 'default',
+  isAdmin: false,
 };
 
 function globalReducer(state = initialState, action) {

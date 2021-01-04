@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import Logo from 'assets/logo.svg';
 import { DashboardPreview } from 'constants/index';
 import RoundedButton from 'components/common/button/rounded-button';
@@ -42,4 +41,4 @@ Login.propTypes = {};
 
 Login.defaultProps = {};
 
-export default withRouter(Login);
+export default Login;
