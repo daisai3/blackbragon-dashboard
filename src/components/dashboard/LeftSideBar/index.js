@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
 import './index.scss';
@@ -15,14 +15,10 @@ const menuItems = [
 
 function LeftSideBar() {
   const [currentTab, setCurrentTab] = useState(menuItems[0]);
-  const [accountInfo] = useState({
-    level: 0,
-    prorata: 1,
-    bdtBalance: 100,
-    usdtBalance: 100,
-  });
   const globalReducer = useSelector((state) => state.global);
+  const authReducer = useSelector((state) => state.auth);
   const { isAdmin } = globalReducer;
+  const { accountInfo } = authReducer;
 
   const onSelectMenu = (item) => {
     setCurrentTab(item);
@@ -63,11 +59,11 @@ function LeftSideBar() {
           <div className="account-info">
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">Access Level</h5>
-              <div className="account-info__field-value">{`Level ${accountInfo.level}`}</div>
+              <div className="account-info__field-value">{`Level ${accountInfo.userAccessLevel}`}</div>
             </div>
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">ProRata Share</h5>
-              <div className="account-info__field-value">{`${accountInfo.prorata} %`}</div>
+              <div className="account-info__field-value">{`${accountInfo.proRataShare} %`}</div>
             </div>
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">BDT Tokens Held</h5>

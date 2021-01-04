@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants';
 
 const initialState = {
-  authUser: {},
+  accountInfo: {},
   walletAddress: null,
 };
 

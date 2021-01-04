@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import SearchInput from 'components/common/input/search-input';
@@ -11,7 +11,9 @@ import './index.scss';
 function UserDealsContent() {
   const [searchValue, setSearchValue] = useState('');
   const globalReducer = useSelector((state) => state.global);
+  const authReducer = useSelector((state) => state.auth);
   const { isAdmin } = globalReducer;
+  const { walletAddress } = authReducer;
 
   const onChangeSearch = (e) => {
     const { value } = e.target;

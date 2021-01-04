@@ -7,9 +7,7 @@ import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
 import RoundedButton from 'components/common/button/rounded-button';
 import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
-import CustomInput from 'components/common/input/custom-input';
 import { updateGlobal } from 'store/actions';
-import { isNumeric } from 'utils/index';
 import DealEditModal from './DealEditModal';
 import tempDeals from './constants';
 import './index.scss';
@@ -48,7 +46,6 @@ const getListStyle = (isDraggingOver) => ({
 function AdminDealsTable() {
   const dispatch = useDispatch();
   const [deals, setDeals] = useState(tempDeals);
-  const [activeDealContributionValue, setActiveDealContributionValue] = useState('');
   const globalReducer = useSelector((state) => state.global);
   const { activeDeal } = globalReducer;
 
@@ -67,22 +64,12 @@ function AdminDealsTable() {
     dispatch(updateGlobal({ activeDeal: deal }));
   };
 
+  const onClickAddDeal = () => {
+    dispatch(updateGlobal({ activeDeal: {} }));
+  };
+
   const onCloseDealModal = () => {
     dispatch(updateGlobal({ activeDeal: null }));
-    setActiveDealContributionValue('');
-  };
-
-  const onChangeContributionValue = (e) => {
-    const { value } = e.target;
-    if (!isNumeric(value)) return;
-    setActiveDealContributionValue(value);
-  };
-
-  const onApprove = (deal) => {
-    // TODO: should call smart contract function
-    dispatch(updateGlobal({ dealApprovedStatus: 'approved' }));
-    // dispatch(updateGlobal({ dealApprovedStatus: 'failed' }));
-    onCloseDealModal();
   };
 
   return (
@@ -211,7 +198,7 @@ function AdminDealsTable() {
         </DragDropContext>
       </div>
       <div className="deals-table-footer">
-        <IconButton icon="plus" />
+        <IconButton icon="plus" onClick={onClickAddDeal} />
       </div>
     </div>
   );

@@ -1,29 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
-import SvgIcon from 'components/common/svgIcon';
-import IconButton from 'components/common/button/icon-button';
 import RoundedButton from 'components/common/button/rounded-button';
-import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
 import CustomInput from 'components/common/input/custom-input';
-import { updateGlobal } from 'store/actions';
 import { isNumeric } from 'utils/index';
-import tempDeals from './constants';
 import './index.scss';
 
-const DEAL_STATUS = {
-  live: 'Live',
-  cancelled: 'Canceled',
-  paused: 'Paused',
-  closed: 'Closed',
-};
-
 function DealEditModal({ data, onClose, onCreate }) {
-  const dispatch = useDispatch();
   const [deal, setDeal] = useState(data);
-  const globalReducer = useSelector((state) => state.global);
 
   const onChangeInput = (e) => {
     const { value, name } = e.target;
