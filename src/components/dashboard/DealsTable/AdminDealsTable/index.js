@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -8,16 +8,16 @@ import IconButton from 'components/common/button/icon-button';
 import RoundedButton from 'components/common/button/rounded-button';
 import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
 import { updateGlobal } from 'store/actions';
+import {
+  createDeal,
+  updateDeal,
+  cancelDeal,
+  closeDeal,
+  pauseDeal,
+  unpauseDeal,
+} from 'contracts/index';
 import DealEditModal from './DealEditModal';
-import tempDeals from './constants';
 import './index.scss';
-
-const DEAL_STATUS = {
-  live: 'Live',
-  cancelled: 'Canceled',
-  paused: 'Paused',
-  closed: 'Closed',
-};
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -43,11 +43,15 @@ const getListStyle = (isDraggingOver) => ({
   padding: 0,
 });
 
-function AdminDealsTable() {
+function AdminDealsTable({ userDeals, onFetchDeals }) {
   const dispatch = useDispatch();
-  const [deals, setDeals] = useState(tempDeals);
+  const [deals, setDeals] = useState([]);
   const globalReducer = useSelector((state) => state.global);
   const { activeDeal } = globalReducer;
+
+  useEffect(() => {
+    setDeals(userDeals);
+  }, [userDeals]);
 
   const onDragEnd = (result) => {
     // dropped outside the list
@@ -65,11 +69,60 @@ function AdminDealsTable() {
   };
 
   const onClickAddDeal = () => {
-    dispatch(updateGlobal({ activeDeal: {} }));
+    dispatch(
+      updateGlobal({
+        activeDeal: {
+          name: '',
+          dealSize: '100000.0',
+          minContribution: '250.0',
+          allocationModel: 'ProRata',
+          minViewLevel: 0,
+          userCap: '0.0',
+          minAccessLevel: 0,
+          imageUrl: '',
+          unlimitedTimestamp: 0,
+        },
+      })
+    );
   };
 
   const onCloseDealModal = () => {
     dispatch(updateGlobal({ activeDeal: null }));
+  };
+
+  const onCreateDeal = async (deal) => {
+    const result = await createDeal(deal);
+    onCloseDealModal();
+    if (result) onFetchDeals();
+  };
+
+  const onUpdateDeal = async (deal) => {
+    const result = await updateDeal(deal);
+    onCloseDealModal();
+    if (result) onFetchDeals();
+  };
+
+  const onUnpauseDeal = async (deal) => {
+    if (deal.status === 'Live') return;
+    const result = await unpauseDeal(deal.address);
+    if (result) onFetchDeals();
+  };
+
+  const onPauseDeal = async (deal) => {
+    if (deal.status === 'Paused') return;
+    const result = await pauseDeal(deal.address);
+    if (result) onFetchDeals();
+  };
+
+  const onCloseDeal = async (deal) => {
+    if (deal.status === 'Closed') return;
+    // const result = await closeDeal(deal.dealAddress);
+  };
+
+  const onCancelDeal = async (deal) => {
+    if (deal.status === 'Canceled') return;
+    const result = await cancelDeal(deal.address);
+    if (result) onFetchDeals();
   };
 
   return (
@@ -102,7 +155,12 @@ function AdminDealsTable() {
               >
                 {activeDeal && (
                   <div className="deal-edit-modal-wrapper">
-                    <DealEditModal data={activeDeal} onClose={onCloseDealModal} />
+                    <DealEditModal
+                      data={activeDeal}
+                      onClose={onCloseDealModal}
+                      onCreate={onCreateDeal}
+                      onUpdate={onUpdateDeal}
+                    />
                   </div>
                 )}
                 {deals.map((deal, index) => (
@@ -124,7 +182,9 @@ function AdminDealsTable() {
                           <div className="deal__field deal__field-name vertical-center">
                             <div>
                               <div>{deal.name}</div>
-                              <CustomProgressBar percent={65} />
+                              <CustomProgressBar
+                                percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)}
+                              />
                             </div>
                           </div>
                           <div
@@ -133,52 +193,55 @@ function AdminDealsTable() {
                             <span className="deal__field-status__icon">
                               <SvgIcon name="dot" />
                             </span>
-                            <span>{DEAL_STATUS[deal.status]}</span>
+                            <span>{deal.status}</span>
                           </div>
-                          <div className="deal__field deal__field-size vertical-center">{`$${deal.size}`}</div>
+                          <div className="deal__field deal__field-size vertical-center">{`$${deal.dealSize}`}</div>
                           <div className="deal__field deal__field-raised-amount vertical-center">
                             {`$${deal.raisedAmount}`}
                           </div>
                           <div className="deal__field deal__field-model vertical-center">
-                            {deal.model}
+                            {deal.allocationModel}
                           </div>
-                          <div className="deal__field deal__field-minimum vertical-center">{`$${deal.minimum}`}</div>
+                          <div className="deal__field deal__field-minimum vertical-center">{`$${deal.minContribution}`}</div>
                           <div className="deal__field deal__field-status-stepper vertical-center">
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'live'
+                                deal.status === 'Live'
                                   ? 'deal__field-status-step--live--active'
                                   : ''
                               }`}
                             >
-                              <SvgIcon name="statusLive" />
+                              <IconButton icon="statusLive" onClick={() => onUnpauseDeal(deal)} />
                             </span>
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'paused'
+                                deal.status === 'Paused'
                                   ? 'deal__field-status-step--paused--active'
                                   : ''
                               }`}
                             >
-                              <SvgIcon name="statusPaused" />
+                              <IconButton icon="statusPaused" onClick={() => onPauseDeal(deal)} />
                             </span>
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'closed'
+                                deal.status === 'Closed'
                                   ? 'deal__field-status-step--closed--active'
                                   : ''
                               }`}
                             >
-                              <SvgIcon name="statusClosed" />
+                              <IconButton icon="statusClosed" onClick={() => onCloseDeal(deal)} />
                             </span>
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'cancelled'
-                                  ? 'deal__field-status-step--cancelled--active'
+                                deal.status === 'Canceled'
+                                  ? 'deal__field-status-step--canceled--active'
                                   : ''
                               }`}
                             >
-                              <SvgIcon name="statusCancelled" />
+                              <IconButton
+                                icon="statusCanceled"
+                                onClick={() => onCancelDeal(deal)}
+                              />
                             </span>
                           </div>
                           <div className="deal__field deal__field-action vertical-center">
@@ -204,8 +267,14 @@ function AdminDealsTable() {
   );
 }
 
-AdminDealsTable.propTypes = {};
+AdminDealsTable.propTypes = {
+  userDeals: PropTypes.arrayOf(PropTypes.shape()),
+  onFetchDeals: PropTypes.func,
+};
 
-AdminDealsTable.defaultProps = {};
+AdminDealsTable.defaultProps = {
+  userDeals: [],
+  onFetchDeals: () => {},
+};
 
 export default AdminDealsTable;
