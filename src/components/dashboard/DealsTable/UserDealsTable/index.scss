@@ -32,6 +32,9 @@
     &__icon {
       margin-left: -10px;
     }
+    &__name:first-letter {
+      text-transform: capitalize;
+    }
     &--opened {
       svg {
         g {
@@ -39,7 +42,7 @@
         }
       }
     }
-    &--cancelled {
+    &--canceled {
       svg {
         g {
           fill: $color-red;

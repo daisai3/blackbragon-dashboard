@@ -151,7 +151,7 @@ function UserDealsTable({ userDeals }) {
                               <span className="deal__field-status__icon">
                                 <SvgIcon name="dot" />
                               </span>
-                              <span>{deal.status}</span>
+                              <span className="deal__field-status__name">{deal.status}</span>
                             </div>
                             <div className="deal__field deal__field-modal-bar vertical-center">
                               <CustomProgressBar
@@ -197,7 +197,7 @@ function UserDealsTable({ userDeals }) {
                               <span className="deal__field-status__icon">
                                 <SvgIcon name="dot" />
                               </span>
-                              <span>{deal.status}</span>
+                              <span className="deal__field-status__name">{deal.status}</span>
                             </div>
                             <div className="deal__field deal__field-size vertical-center">{`$${deal.dealSize}`}</div>
                             <div className="deal__field deal__field-raised-amount vertical-center">
@@ -214,7 +214,7 @@ function UserDealsTable({ userDeals }) {
                               <span>{`$${deal.contributedAmount}`}</span>
                             </div>
                             <div className="deal__field deal__field-action vertical-center">
-                              {deal.status === 'Live' ? (
+                              {deal.status === 'opened' ? (
                                 <RoundedButton
                                   type="primary"
                                   disabled={

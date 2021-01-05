@@ -8,7 +8,7 @@ import IconArrowDown from 'assets/icons/icon-arrowDown.svg';
 import IconArrowLeft from 'assets/icons/icon-arrowLeft.svg';
 import IconArrowRight from 'assets/icons/icon-arrowRight.svg';
 
-import IconStatusLive from 'assets/icons/icon-status-live.svg';
+import IconStatusOpened from 'assets/icons/icon-status-opened.svg';
 import IconStatusPaused from 'assets/icons/icon-status-paused.svg';
 import IconStatusClosed from 'assets/icons/icon-status-closed.svg';
 import IconStatusCanceled from 'assets/icons/icon-status-canceled.svg';
@@ -29,7 +29,7 @@ const Icons = {
   arrowDown: IconArrowDown,
   arrowLeft: IconArrowLeft,
   arrowRight: IconArrowRight,
-  statusLive: IconStatusLive,
+  statusOpened: IconStatusOpened,
   statusPaused: IconStatusPaused,
   statusClosed: IconStatusClosed,
   statusCanceled: IconStatusCanceled,

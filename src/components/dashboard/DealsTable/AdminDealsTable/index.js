@@ -103,25 +103,25 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
   };
 
   const onUnpauseDeal = async (deal) => {
-    if (deal.status === 'Live') return;
+    if (deal.status === 'opened') return;
     const result = await unpauseDeal(deal.address);
     if (result) onFetchDeals();
   };
 
   const onPauseDeal = async (deal) => {
-    if (deal.status === 'Paused') return;
+    if (deal.status === 'paused') return;
     const result = await pauseDeal(deal.address);
     if (result) onFetchDeals();
   };
 
   const onCloseDeal = async (deal) => {
-    if (deal.status === 'Closed') return;
+    if (deal.status === 'closed') return;
     const result = await closeDeal(deal.dealAddress);
     if (result) onFetchDeals();
   };
 
   const onCancelDeal = async (deal) => {
-    if (deal.status === 'Canceled') return;
+    if (deal.status === 'canceled') return;
     const result = await cancelDeal(deal.address);
     if (result) onFetchDeals();
   };
@@ -207,16 +207,16 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                           <div className="deal__field deal__field-status-stepper vertical-center">
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'Live'
-                                  ? 'deal__field-status-step--live--active'
+                                deal.status === 'opened'
+                                  ? 'deal__field-status-step--opened--active'
                                   : ''
                               }`}
                             >
-                              <IconButton icon="statusLive" onClick={() => onUnpauseDeal(deal)} />
+                              <IconButton icon="statusOpened" onClick={() => onUnpauseDeal(deal)} />
                             </span>
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'Paused'
+                                deal.status === 'paused'
                                   ? 'deal__field-status-step--paused--active'
                                   : ''
                               }`}
@@ -225,7 +225,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                             </span>
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'Closed'
+                                deal.status === 'closed'
                                   ? 'deal__field-status-step--closed--active'
                                   : ''
                               }`}
@@ -234,7 +234,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                             </span>
                             <span
                               className={`deal__field-status-step ${
-                                deal.status === 'Canceled'
+                                deal.status === 'canceled'
                                   ? 'deal__field-status-step--canceled--active'
                                   : ''
                               }`}

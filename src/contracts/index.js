@@ -34,13 +34,13 @@ const bdtCirculatingSupply = 1000000;
 const getStatus = (statusBN) => {
   switch (statusBN.toString()) {
     case '1':
-      return 'Live';
+      return 'opened';
     case '2':
-      return 'Paused';
+      return 'paused';
     case '3':
-      return 'Closed';
+      return 'closed';
     case '4':
-      return 'Canceled';
+      return 'canceled';
     default:
       throw new Error(`Invalid status ${statusBN.toString()}`);
   }
@@ -244,12 +244,12 @@ const getDealMetadata = async (log, userAccessLevel) => {
 
   deal.contributedAmount = await getMyContributionAmount(dealAddress);
 
-  if (['Opened', 'Paused'].includes(deal.status)) {
+  if (['opened', 'paused'].includes(deal.status)) {
     const personalCap = await getMyContributionAmountLeft(dealAddress);
     deal.personalCap = personalCap;
   }
 
-  if (['Closed', 'Canceled'].includes(deal.status)) {
+  if (['closed', 'canceled'].includes(deal.status)) {
     const claimAmounts = await getClaimAmounts(dealAddress, blockNumber);
     const availableClaimAmounts = claimAmounts.filter(
       (ca) => Object.getOwnPropertyNames(ca).length > 0 && parseFloat(ca.claimAmount) > 0

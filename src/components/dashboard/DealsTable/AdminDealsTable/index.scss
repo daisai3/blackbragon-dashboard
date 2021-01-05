@@ -6,7 +6,7 @@
     width: 25%;
     .deal__field-status-step {
       padding: 0px 5px;
-      &--live--active {
+      &--opened--active {
         svg {
           path {
             fill: $color-green;
