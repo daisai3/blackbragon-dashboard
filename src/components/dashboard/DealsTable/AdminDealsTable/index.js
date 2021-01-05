@@ -232,7 +232,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                       >
                         <div className="d-flex full-width">
                           <div className="deal__field deal__field-avatar vertical-center">
-                            <RoundedAvatar />
+                            <RoundedAvatar src={deal.imageUrl} />
                           </div>
                           <div className="deal__field deal__field-name vertical-center">
                             <div>

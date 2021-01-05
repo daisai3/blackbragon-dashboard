@@ -88,8 +88,10 @@ function UserDealsTable({ userDeals }) {
   };
 
   const getFilteredDeals = () => {
-    if (filterOption === 'all deals') return deals.sort((a) => (a.status === 'opened' ? -1 : 1));
-    return deals.sort((a) => (a.status === 'opened' ? -1 : 1));
+    if (filterOption === 'all deals') {
+      return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
+    }
+    return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
   };
 
   const filteredDeals = getFilteredDeals();
@@ -163,7 +165,7 @@ function UserDealsTable({ userDeals }) {
                           // edit modal
                           <div className="d-flex full-width">
                             <div className="deal__field deal__field-avatar vertical-center">
-                              <RoundedAvatar />
+                              <RoundedAvatar src={deal.imageUrl} />
                             </div>
                             <div className="deal__field deal__field-name vertical-center">
                               <div>
@@ -209,7 +211,7 @@ function UserDealsTable({ userDeals }) {
                           // only view
                           <div className="d-flex full-width">
                             <div className="deal__field deal__field-avatar vertical-center">
-                              <RoundedAvatar />
+                              <RoundedAvatar src={deal.imageUrl} />
                             </div>
                             <div className="deal__field deal__field-name vertical-center">
                               <div>
