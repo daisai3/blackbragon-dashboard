@@ -116,7 +116,8 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
 
   const onCloseDeal = async (deal) => {
     if (deal.status === 'Closed') return;
-    // const result = await closeDeal(deal.dealAddress);
+    const result = await closeDeal(deal.dealAddress);
+    if (result) onFetchDeals();
   };
 
   const onCancelDeal = async (deal) => {

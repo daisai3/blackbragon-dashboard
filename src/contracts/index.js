@@ -287,8 +287,6 @@ export async function getDealModels(userAccessLevel) {
 
   const deals = await Promise.all(promises);
 
-  console.log(deals);
-
   return deals.filter((d) => !!d);
 }
 

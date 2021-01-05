@@ -37,8 +37,12 @@ function Login({ onConnect }) {
   );
 }
 
-Login.propTypes = {};
+Login.propTypes = {
+  onConnect: PropTypes.func,
+};
 
-Login.defaultProps = {};
+Login.defaultProps = {
+  onConnect: () => {},
+};
 
 export default Login;

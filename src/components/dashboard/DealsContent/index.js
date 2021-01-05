@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import SearchInput from 'components/common/input/search-input';
 import FilterSelect from 'components/common/select/filter-select';
@@ -9,7 +8,7 @@ import AdminDealsTable from 'components/dashboard/DealsTable/AdminDealsTable';
 import { getDealModels } from 'contracts/index';
 import './index.scss';
 
-function UserDealsContent() {
+function DealsContent() {
   const [searchValue, setSearchValue] = useState('');
   const [userDeals, setUserDeals] = useState([]);
   const authReducer = useSelector((state) => state.auth);
@@ -92,8 +91,8 @@ function UserDealsContent() {
   );
 }
 
-UserDealsContent.propTypes = {};
+DealsContent.propTypes = {};
 
-UserDealsContent.defaultProps = {};
+DealsContent.defaultProps = {};
 
-export default UserDealsContent;
+export default DealsContent;

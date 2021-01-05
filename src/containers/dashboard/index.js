@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import HeaderBar from 'components/dashboard/HeaderBar';
 import LeftSideBar from 'components/dashboard/LeftSideBar';
-import UserDealsContent from 'components/dashboard/UserDealsContent';
+import DealsContent from 'components/dashboard/DealsContent';
 import './index.scss';
 
 function Dashboard({ onConnect }) {
@@ -14,8 +13,6 @@ function Dashboard({ onConnect }) {
     onConnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const userType = 'user';
 
   return (
     <div className="dashboard-container">
@@ -30,7 +27,7 @@ function Dashboard({ onConnect }) {
           {(notificationDropdownOpened || activeDeal) && (
             <div className="overlay-background-container" />
           )}
-          {userType === 'user' && <UserDealsContent />}
+          <DealsContent />
         </div>
       </div>
     </div>

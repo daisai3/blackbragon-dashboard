@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import NotificationSelect from 'components/common/select/notification-select';

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
