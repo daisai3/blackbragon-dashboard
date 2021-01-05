@@ -34,7 +34,7 @@ const bdtCirculatingSupply = 1000000;
 const getStatus = (statusBN) => {
   switch (statusBN.toString()) {
     case '1':
-      return 'Opened';
+      return 'Live';
     case '2':
       return 'Paused';
     case '3':
@@ -206,7 +206,7 @@ const parseDealInfo = (dealInfo, dealAddress) => {
   const status = getStatus(dealInfo['6']);
   const allocationModel = getAllocationModel(dealInfo['7']);
   const userCap = ethers.utils.formatUnits(dealInfo['8'], 'mwei');
-  const image = dealInfo['9'];
+  const imageUrl = dealInfo['9'];
   const unlimitedTimestamp = dealInfo['10'].toNumber();
   const minViewLevel = dealInfo['11'];
 
@@ -222,7 +222,7 @@ const parseDealInfo = (dealInfo, dealAddress) => {
     raisedAmount,
     status,
     allocationModel,
-    image,
+    imageUrl,
     userCap,
     unlimitedTimestamp,
     minViewLevel,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import SearchInput from 'components/common/input/search-input';
 import FilterSelect from 'components/common/select/filter-select';
@@ -30,6 +30,7 @@ function UserDealsContent() {
 
   useEffect(() => {
     fetchUserDeals();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onChangeSearch = (e) => {
@@ -39,15 +40,13 @@ function UserDealsContent() {
 
   const onSelectFilter = () => {};
 
-  const dealsCnt = 10;
-
   return (
     <div className="deals-container">
       <div className="deals-header">
         <div className="deals-header-left d-flex">
           <div className="deals-header__title vertical-center">Deals</div>
           <div className="deals-header__deals-cnt vertical-center">
-            <span>{`${dealsCnt} Total`}</span>
+            <span>{`${userDeals.length} Total`}</span>
           </div>
         </div>
         <div className="deals-header-right d-flex">
@@ -83,7 +82,7 @@ function UserDealsContent() {
         </div>
         <div className="deals-table-container">
           {isAdmin ? (
-            <AdminDealsTable userDeals={userDeals} />
+            <AdminDealsTable userDeals={userDeals} onFetchDeals={fetchUserDeals} />
           ) : (
             <UserDealsTable userDeals={userDeals} />
           )}

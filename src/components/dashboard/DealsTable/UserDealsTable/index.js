@@ -36,7 +36,7 @@ const getListStyle = (isDraggingOver) => ({
   padding: 0,
 });
 
-function DealsTable({ userDeals }) {
+function UserDealsTable({ userDeals }) {
   const dispatch = useDispatch();
   const [deals, setDeals] = useState([]);
   const [activeDealContributionValue, setActiveDealContributionValue] = useState('');
@@ -214,7 +214,7 @@ function DealsTable({ userDeals }) {
                               <span>{`$${deal.contributedAmount}`}</span>
                             </div>
                             <div className="deal__field deal__field-action vertical-center">
-                              {deal.status === 'Opened' ? (
+                              {deal.status === 'Live' ? (
                                 <RoundedButton
                                   type="primary"
                                   disabled={
@@ -245,12 +245,12 @@ function DealsTable({ userDeals }) {
   );
 }
 
-DealsTable.propTypes = {
+UserDealsTable.propTypes = {
   userDeals: PropTypes.arrayOf(PropTypes.shape()),
 };
 
-DealsTable.defaultProps = {
+UserDealsTable.defaultProps = {
   userDeals: [],
 };
 
-export default DealsTable;
+export default UserDealsTable;

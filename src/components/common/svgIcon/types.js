@@ -11,7 +11,7 @@ import IconArrowRight from 'assets/icons/icon-arrowRight.svg';
 import IconStatusLive from 'assets/icons/icon-status-live.svg';
 import IconStatusPaused from 'assets/icons/icon-status-paused.svg';
 import IconStatusClosed from 'assets/icons/icon-status-closed.svg';
-import IconStatusCancelled from 'assets/icons/icon-status-cancelled.svg';
+import IconStatusCanceled from 'assets/icons/icon-status-canceled.svg';
 import IconPlus from 'assets/icons/icon-plus.svg';
 
 import IconFacebook from 'assets/icons/icon-facebook.svg';
@@ -32,7 +32,7 @@ const Icons = {
   statusLive: IconStatusLive,
   statusPaused: IconStatusPaused,
   statusClosed: IconStatusClosed,
-  statusCancelled: IconStatusCancelled,
+  statusCanceled: IconStatusCanceled,
   plus: IconPlus,
 
   facebook: IconFacebook,
