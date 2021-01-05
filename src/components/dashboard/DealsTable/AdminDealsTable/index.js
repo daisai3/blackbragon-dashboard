@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import NumberFormat from 'react-number-format';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
@@ -46,6 +47,7 @@ const getListStyle = (isDraggingOver) => ({
 function AdminDealsTable({ userDeals, onFetchDeals }) {
   const dispatch = useDispatch();
   const [deals, setDeals] = useState([]);
+  const [filterOption, setFilterOption] = useState('active');
   const globalReducer = useSelector((state) => state.global);
   const { activeDeal } = globalReducer;
 
@@ -126,8 +128,61 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
     if (result) onFetchDeals();
   };
 
+  const onSelectFilter = (val) => {
+    if (val !== filterOption) setFilterOption(val);
+  };
+
+  const getFilteredDeals = () => {
+    if (filterOption === 'active') {
+      return deals.filter((deal) => deal.status === 'opened' || deal.status === 'paused');
+    }
+    if (filterOption === 'closed') {
+      return deals.filter((deal) => deal.status === 'closed');
+    }
+    if (filterOption === 'canceled') {
+      return deals.filter((deal) => deal.status === 'canceled');
+    }
+    return deals;
+  };
+
+  const filteredDeals = getFilteredDeals();
+
   return (
     <div className="deals-table admin-deals-table">
+      <div className="deals-table-options d-flex">
+        <div className="filter-btn-wrapper">
+          <RoundedButton
+            className={`filter-btn ${filterOption === 'active' ? 'filter-btn--active' : ''}`}
+            onClick={() => onSelectFilter('active')}
+          >
+            <span>Active</span>
+          </RoundedButton>
+        </div>
+        <div className="filter-btn-wrapper">
+          <RoundedButton
+            className={`filter-btn ${filterOption === 'closed' ? 'filter-btn--active' : ''}`}
+            onClick={() => onSelectFilter('closed')}
+          >
+            <span>Closed</span>
+          </RoundedButton>
+        </div>
+        <div className="filter-btn-wrapper">
+          <RoundedButton
+            className={`filter-btn ${filterOption === 'canceled' ? 'filter-btn--active' : ''}`}
+            onClick={() => onSelectFilter('canceled')}
+          >
+            <span>Canceled</span>
+          </RoundedButton>
+        </div>
+        <div className="filter-btn-wrapper">
+          <RoundedButton
+            className={`filter-btn ${filterOption === 'distributed' ? 'filter-btn--active' : ''}`}
+            onClick={() => onSelectFilter('distributed')}
+          >
+            <span>Fully Distributed</span>
+          </RoundedButton>
+        </div>
+      </div>
       <div className="deals-table-header d-flex full-width">
         <div className="deal__field deal__field-avatar vertical-center" />
         <div className="deal__field deal__field-name vertical-center">Name</div>
@@ -135,7 +190,6 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
         <div className="deal__field deal__field-size vertical-center">Deal size</div>
         <div className="deal__field deal__field-raised-amount vertical-center">Raised Amount</div>
         <div className="deal__field deal__field-model vertical-center">Deal Model</div>
-        <div className="deal__field deal__field-minimum vertical-center">Minimum</div>
         <div className="deal__field deal__field-status-stepper vertical-center" />
         <div className="deal__field deal__field-action vertical-center">
           Control Instructions...
@@ -164,7 +218,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                     />
                   </div>
                 )}
-                {deals.map((deal, index) => (
+                {filteredDeals.map((deal, index) => (
                   <Draggable key={deal.id} draggableId={deal.id} index={index}>
                     {(provided1, snapshot1) => (
                       <div
@@ -194,16 +248,27 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                             <span className="deal__field-status__icon">
                               <SvgIcon name="dot" />
                             </span>
-                            <span>{deal.status}</span>
+                            <span className="deal__field-status__name">{deal.status}</span>
                           </div>
-                          <div className="deal__field deal__field-size vertical-center">{`$${deal.dealSize}`}</div>
+                          <div className="deal__field deal__field-size vertical-center">
+                            <NumberFormat
+                              value={Number(deal.dealSize)}
+                              thousandSeparator
+                              displayType="text"
+                              prefix="$"
+                            />
+                          </div>
                           <div className="deal__field deal__field-raised-amount vertical-center">
-                            {`$${deal.raisedAmount}`}
+                            <NumberFormat
+                              value={Number(deal.raisedAmount)}
+                              thousandSeparator
+                              displayType="text"
+                              prefix="$"
+                            />
                           </div>
                           <div className="deal__field deal__field-model vertical-center">
                             {deal.allocationModel}
                           </div>
-                          <div className="deal__field deal__field-minimum vertical-center">{`$${deal.minContribution}`}</div>
                           <div className="deal__field deal__field-status-stepper vertical-center">
                             <span
                               className={`deal__field-status-step ${

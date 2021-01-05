@@ -2,6 +2,9 @@
 
 // admin deals table
 .admin-deals-table {
+  .deal__field {
+    width: 15%;
+  }
   .deal__field-status-stepper {
     width: 25%;
     .deal__field-status-step {

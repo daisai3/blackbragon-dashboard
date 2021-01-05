@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import NumberFormat from 'react-number-format';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import SvgIcon from 'components/common/svgIcon';
 import RoundedButton from 'components/common/button/rounded-button';
@@ -39,6 +40,7 @@ const getListStyle = (isDraggingOver) => ({
 function UserDealsTable({ userDeals }) {
   const dispatch = useDispatch();
   const [deals, setDeals] = useState([]);
+  const [filterOption, setFilterOption] = useState('all deals');
   const [activeDealContributionValue, setActiveDealContributionValue] = useState('');
   const globalReducer = useSelector((state) => state.global);
   const authReducer = useSelector((state) => state.auth);
@@ -81,8 +83,37 @@ function UserDealsTable({ userDeals }) {
     dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'failed' }));
   };
 
+  const onSelectFilter = (val) => {
+    if (val !== filterOption) setFilterOption(val);
+  };
+
+  const getFilteredDeals = () => {
+    if (filterOption === 'all deals') return deals.sort((a) => (a.status === 'opened' ? -1 : 1));
+    return deals.sort((a) => (a.status === 'opened' ? -1 : 1));
+  };
+
+  const filteredDeals = getFilteredDeals();
+
   return (
     <div className="deals-table">
+      <div className="deals-table-options d-flex">
+        <div className="filter-btn-wrapper">
+          <RoundedButton
+            className={`filter-btn ${filterOption === 'all deals' ? 'filter-btn--active' : ''}`}
+            onClick={() => onSelectFilter('all deals')}
+          >
+            <span>All Deals</span>
+          </RoundedButton>
+        </div>
+        <div className="filter-btn-wrapper">
+          <RoundedButton
+            className={`filter-btn ${filterOption === 'my deals' ? 'filter-btn--active' : ''}`}
+            onClick={() => onSelectFilter('my deals')}
+          >
+            <span>My Deals</span>
+          </RoundedButton>
+        </div>
+      </div>
       <div className="deals-table-header d-flex full-width">
         <div className="deal__field deal__field-avatar vertical-center" />
         <div className="deal__field deal__field-name vertical-center">Name</div>
@@ -90,7 +121,6 @@ function UserDealsTable({ userDeals }) {
         <div className="deal__field deal__field-size vertical-center">Deal size</div>
         <div className="deal__field deal__field-raised-amount vertical-center">Raised Amount</div>
         <div className="deal__field deal__field-model vertical-center">Deal Model</div>
-        <div className="deal__field deal__field-minimum vertical-center">Minimum</div>
         <div className="deal__field deal__field-maximum  vertical-center">Maximum</div>
         <div className="deal__field deal__field-contribution vertical-center">
           <span>Contribution</span>
@@ -113,7 +143,7 @@ function UserDealsTable({ userDeals }) {
                   overflowX: 'auto',
                 }}
               >
-                {deals.map((deal, index) => (
+                {filteredDeals.map((deal, index) => (
                   <Draggable key={deal.id} draggableId={deal.id} index={index}>
                     {(provided1, snapshot1) => (
                       <div
@@ -199,19 +229,42 @@ function UserDealsTable({ userDeals }) {
                               </span>
                               <span className="deal__field-status__name">{deal.status}</span>
                             </div>
-                            <div className="deal__field deal__field-size vertical-center">{`$${deal.dealSize}`}</div>
+                            <div className="deal__field deal__field-size vertical-center">
+                              <NumberFormat
+                                value={Number(deal.dealSize)}
+                                thousandSeparator
+                                displayType="text"
+                                prefix="$"
+                              />
+                            </div>
                             <div className="deal__field deal__field-raised-amount vertical-center">
-                              {`$${deal.raisedAmount}`}
+                              <NumberFormat
+                                value={Number(deal.raisedAmount)}
+                                thousandSeparator
+                                displayType="text"
+                                prefix="$"
+                              />
                             </div>
                             <div className="deal__field deal__field-model vertical-center">
                               {deal.allocationModel}
                             </div>
-                            <div className="deal__field deal__field-minimum vertical-center">{`$${deal.minContribution}`}</div>
                             <div className="deal__field deal__field-maximum  vertical-center">
-                              {`$${deal.personalCap || 0.0}`}
+                              <NumberFormat
+                                value={Number(deal.personalCap || 0)}
+                                thousandSeparator
+                                displayType="text"
+                                prefix="$"
+                              />
                             </div>
                             <div className="deal__field deal__field-contribution vertical-center">
-                              <span>{`$${deal.contributedAmount}`}</span>
+                              <span>
+                                <NumberFormat
+                                  value={Number(deal.contributedAmount)}
+                                  thousandSeparator
+                                  displayType="text"
+                                  prefix="$"
+                                />
+                              </span>
                             </div>
                             <div className="deal__field deal__field-action vertical-center">
                               {deal.status === 'opened' ? (

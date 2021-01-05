@@ -45,23 +45,4 @@
   position: relative;
   padding: 10px 0px;
   min-width: 905px;
-  .filters-container {
-    .filter-btn-wrapper {
-      margin-right: 10px;
-      button {
-        width: 82px;
-
-        font-size: 14px;
-        font-weight: 500;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.29;
-        letter-spacing: normal;
-        color: $color-gray-60;
-      }
-    }
-  }
-  .deals-table-container {
-    margin-top: 19px;
-  }
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import SearchInput from 'components/common/input/search-input';
 import FilterSelect from 'components/common/select/filter-select';
-import RoundedButton from 'components/common/button/rounded-button';
 import UserDealsTable from 'components/dashboard/DealsTable/UserDealsTable';
 import AdminDealsTable from 'components/dashboard/DealsTable/AdminDealsTable';
 import { getDealModels } from 'contracts/index';
@@ -61,32 +60,15 @@ function DealsContent() {
           </div>
         </div>
       </div>
-      <div className="deals-content">
-        <div className="filters-container d-flex">
-          <div className="filter-btn-wrapper">
-            <RoundedButton>
-              <span>Filter #1</span>
-            </RoundedButton>
-          </div>
-          <div className="filter-btn-wrapper">
-            <RoundedButton>
-              <span>Filter #2</span>
-            </RoundedButton>
-          </div>
-          <div className="filter-btn-wrapper">
-            <RoundedButton>
-              <span>Filter #3</span>
-            </RoundedButton>
-          </div>
-        </div>
-        <div className="deals-table-container">
+      {userDeals.length > 0 && (
+        <div className="deals-content">
           {isAdmin ? (
             <AdminDealsTable userDeals={userDeals} onFetchDeals={fetchUserDeals} />
           ) : (
             <UserDealsTable userDeals={userDeals} />
           )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

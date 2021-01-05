@@ -8,14 +8,14 @@
     text-align: right;
   }
   .deal__field-avatar {
-    width: 36px;
+    width: 36px !important;
     min-width: auto;
     margin-right: 5px;
   }
   .deal__field-name {
     justify-content: start;
     min-width: 85px;
-    margin-right: 20px;
+    margin-right: 10px;
     > div {
       text-align: left;
       width: 100%;
@@ -26,9 +26,9 @@
     }
   }
   .deal__field-status {
-    justify-content: start;
-    width: 7%;
-    min-width: 7%;
+    justify-content: center;
+    width: 15%;
+    min-width: 15%;
     &__icon {
       margin-left: -10px;
     }
@@ -77,6 +77,28 @@
     width: 137px;
   }
 
+  // options
+  &-options {
+    margin-bottom: 19px;
+    .filter-btn-wrapper {
+      margin-right: 10px;
+      .filter-btn {
+        min-width: 82px;
+        font-size: 14px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.29;
+        letter-spacing: normal;
+        color: $color-gray-60;
+        background: $color-gray-10;
+        &--active {
+          background-color: #02110e;
+          color: $color-green;
+        }
+      }
+    }
+  }
   // header
   &-header {
     padding-left: 20px !important;
