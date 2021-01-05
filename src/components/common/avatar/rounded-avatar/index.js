@@ -4,9 +4,20 @@ import { TempAvatar } from 'constants/index';
 import './index.scss';
 
 function RoundedAvatar({ src, width, borderWidth, onClick }) {
+  const onAddDefaultSrc = (ev) => {
+    ev.target.src = TempAvatar;
+  };
+
   return (
     <div className="img-wrapper rounded-img-wrapper" style={{ width, height: width }}>
-      <img src={src} alt="avatar" style={{ borderWidth }} />
+      <img
+        src={src}
+        alt="avatar"
+        style={{ borderWidth }}
+        role="presentation"
+        onError={onAddDefaultSrc}
+        onClick={onClick}
+      />
     </div>
   );
 }
