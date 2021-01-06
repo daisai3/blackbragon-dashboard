@@ -1,0 +1,91 @@
+@import 'sass/utils/_variables';
+
+.custom-select {
+  border: none;
+  padding: 0;
+  height: auto;
+  border-radius: 5px;
+  background: transparent;
+  position: relative;
+  label {
+    font-size: 11px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: $color-gray-30;
+    margin-bottom: 5px;
+  }
+  &__origin {
+    position: relative;
+    .select-icon-wrapper {
+      position: absolute;
+      right: 10px;
+      height: 100%;
+      cursor: pointer;
+      pointer-events: none;
+      transition: transform 300ms ease;
+    }
+    button {
+      width: 100%;
+      text-align: left;
+      background-color: $color-gray;
+      border-radius: 5px;
+      border: solid 1px transparent;
+      padding: 11px 16px;
+      font-size: 15px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: $color-gray-60;
+      &:hover {
+        border: 1px solid $color-gray-40 !important;
+      }
+      &[disabled] {
+        border: solid 1px transparent;
+        background: transparent;
+        padding-left: 0px;
+      }
+    }
+    &--opened {
+      button {
+        border: 1px solid $color-gray-30 !important;
+      }
+      svg {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+  &__expanded {
+    position: absolute;
+    width: 100%;
+    margin-top: 16px;
+    z-index: 1;
+    &-menu {
+      padding: 12px 0px;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.22);
+      background: $color-gray;
+      &__item {
+        width: 100%;
+        text-align: left;
+        padding: 12px 16px;
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: normal;
+        color: $color-gray-30;
+        &:hover,
+        &--active {
+          background: $color-gray-20;
+          color: $color-gray-60;
+        }
+      }
+    }
+  }
+}

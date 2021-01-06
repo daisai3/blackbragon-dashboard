@@ -5,7 +5,20 @@ import moment from 'moment';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import RoundedButton from 'components/common/button/rounded-button';
 import CustomInput from 'components/common/input/custom-input';
+import CustomSelect from 'components/common/select/custom-select';
 import './index.scss';
+
+const allocationModelItems = [
+  { id: 0, name: 'Capped', value: 'Capped' },
+  { id: 1, name: 'Pro Rata', value: 'ProRata' },
+];
+
+const levelItems = [
+  { id: 0, name: 'Level 0', value: '0' },
+  { id: 1, name: 'Level 1', value: '1' },
+  { id: 2, name: 'Level 2', value: '2' },
+  { id: 3, name: 'Level 3', value: '3' },
+];
 
 function DealEditModal({ data, onClose, onCreate, onUpdate }) {
   const [deal, setDeal] = useState(data);
@@ -15,12 +28,16 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
     setDeal({ ...deal, [name]: value });
   };
 
+  const onChangeSelect = (name, value) => {
+    setDeal({ ...deal, [name]: value });
+  };
+
   return (
     <div className="deal-edit-modal">
       <div className="deal-edit-modal__header d-flex">
         <div className="deal-edit-modal__header-left d-flex">
           <div className="vertical-end">
-            <RoundedAvatar />
+            <RoundedAvatar src={deal.imageUrl} />
           </div>
           <div className="deal-image">
             <CustomInput
@@ -34,7 +51,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
             <CustomInput label="Deal Name" name="name" value={deal.name} onChange={onChangeInput} />
           </div>
         </div>
-        <div className="deal-edit-modal__header-right vertical-center">
+        <div className="deal-edit-modal__header-right">
           <div>
             <RoundedButton onClick={onClose}>Cancel</RoundedButton>
             {deal.address ? (
@@ -56,28 +73,30 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
               <CustomInput
                 label="Deal Size"
                 name="dealSize"
-                value={deal.dealSize}
+                value={Number(deal.dealSize).toString()}
                 onChange={onChangeInput}
               />
             </div>
           </Grid>
           <Grid item xs={3}>
             <div className="deal-min-view-level">
-              <CustomInput
+              <CustomSelect
                 label="Min View Level"
                 name="minViewLevel"
                 value={deal.minViewLevel.toString()}
-                onChange={onChangeInput}
+                items={levelItems}
+                onSelect={onChangeSelect}
               />
             </div>
           </Grid>
           <Grid item xs={3}>
             <div className="deal-min-access-level">
-              <CustomInput
+              <CustomSelect
                 label="Min Access Level"
                 name="minAccessLevel"
                 value={deal.minAccessLevel.toString()}
-                onChange={onChangeInput}
+                items={levelItems}
+                onSelect={onChangeSelect}
               />
             </div>
           </Grid>
@@ -103,18 +122,19 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
               <CustomInput
                 label="Min Contribution"
                 name="minContribution"
-                value={deal.minContribution}
+                value={Number(deal.minContribution).toString()}
                 onChange={onChangeInput}
               />
             </div>
           </Grid>
           <Grid item xs={3}>
             <div className="deal-allocation-modal">
-              <CustomInput
+              <CustomSelect
                 label="Allocation Model"
                 name="allocationModel"
                 value={deal.allocationModel}
-                onChange={onChangeInput}
+                items={allocationModelItems}
+                onSelect={onChangeSelect}
               />
             </div>
           </Grid>
@@ -123,7 +143,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
               <CustomInput
                 label="Personal Cap"
                 name="userCap"
-                value={deal.userCap}
+                value={Number(deal.userCap).toString()}
                 onChange={onChangeInput}
               />
             </div>

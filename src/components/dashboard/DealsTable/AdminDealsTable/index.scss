@@ -83,6 +83,8 @@
       }
     }
     &-right {
+      display: flex;
+      align-items: flex-end;
       button {
         margin-left: 30px;
       }

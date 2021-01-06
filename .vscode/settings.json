@@ -10,7 +10,9 @@
         "labelledby",
         "walletconnect",
         "haspopup",
-        "blackdragon"
+        "blackdragon",
+        "noopener",
+        "noreferrer"
     ],
     "cSpell.words": [
     ],
