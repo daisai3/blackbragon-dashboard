@@ -12,7 +12,8 @@
         "haspopup",
         "blackdragon",
         "noopener",
-        "noreferrer"
+        "noreferrer",
+        "PrettoSlider"
     ],
     "cSpell.words": [
     ],

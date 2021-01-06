@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import NumberFormat from 'react-number-format';
-import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import SvgIcon from 'components/common/svgIcon';
 import RoundedButton from 'components/common/button/rounded-button';
-import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
-import CustomSlider from 'components/common/progress-bar/custom-slider';
-import CustomInput from 'components/common/input/custom-input';
-import { updateGlobal } from 'store/actions';
-import { isNumeric } from 'utils/index';
-import { approveDeal } from 'contracts/index';
+import DealEditRow from './DealEditRow';
+import DealRow from './DealRow';
 import './index.scss';
 
 const reorder = (list, startIndex, endIndex) => {
@@ -38,14 +32,10 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function UserDealsTable({ userDeals }) {
-  const dispatch = useDispatch();
   const [deals, setDeals] = useState([]);
   const [filterOption, setFilterOption] = useState('all deals');
-  const [activeDealContributionValue, setActiveDealContributionValue] = useState('');
   const globalReducer = useSelector((state) => state.global);
-  const authReducer = useSelector((state) => state.auth);
   const { activeDeal } = globalReducer;
-  const { accountInfo, walletAddress } = authReducer;
 
   const getFilteredDeals = () => {
     if (filterOption === 'all deals') {
@@ -69,142 +59,9 @@ function UserDealsTable({ userDeals }) {
     setDeals(_deals);
   };
 
-  const onContribute = (deal) => {
-    setActiveDealContributionValue(deal.contributedAmount);
-    dispatch(updateGlobal({ activeDeal: deal }));
-  };
-
-  const onCloseDealModal = () => {
-    dispatch(updateGlobal({ activeDeal: null }));
-    setActiveDealContributionValue('');
-  };
-
-  const onChangeContributionValue = (e) => {
-    const { value } = e.target;
-    if (!isNumeric(value)) return;
-    setActiveDealContributionValue(value);
-  };
-
-  const onApprove = async () => {
-    onCloseDealModal();
-    const result = await approveDeal(walletAddress, activeDealContributionValue);
-    dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'failed' }));
-  };
-
   const onSelectFilter = (val) => {
     if (val !== filterOption) setFilterOption(val);
   };
-
-  const EditRow = ({ deal }) => (
-    <div className="d-flex full-width">
-      <div className="deal__field deal__field-avatar vertical-center">
-        <RoundedAvatar src={deal.imageUrl} />
-      </div>
-      <div className="deal__field deal__field-name vertical-center">
-        <div>
-          <div>{deal.name}</div>
-          <CustomProgressBar percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)} />
-        </div>
-      </div>
-      <div
-        className={`deal__field deal__field-status deal__field-status--${deal.status} vertical-center`}
-      >
-        <span className="deal__field-status__icon">
-          <SvgIcon name="dot" />
-        </span>
-        <span className="deal__field-status__name">{deal.status}</span>
-      </div>
-      <div className="deal__field deal__field-modal-bar vertical-center">
-        <CustomSlider />
-      </div>
-      <div className="deal__field deal__field-modal-contribution vertical-center">
-        <span>
-          <CustomInput
-            placeholder=""
-            value={activeDealContributionValue}
-            onChange={onChangeContributionValue}
-          />
-        </span>
-        <span>USDT</span>
-      </div>
-      <div className="deal__field deal__field-modal-action vertical-center">
-        <RoundedButton onClick={onCloseDealModal}>Cancel</RoundedButton>
-        <RoundedButton type="primary" onClick={onApprove}>
-          Approve
-        </RoundedButton>
-      </div>
-    </div>
-  );
-
-  const ViewRow = ({ deal }) => (
-    <div className="d-flex full-width">
-      <div className="deal__field deal__field-avatar vertical-center">
-        <RoundedAvatar src={deal.imageUrl} />
-      </div>
-      <div className="deal__field deal__field-name vertical-center">
-        <div>
-          <div>{deal.name}</div>
-          <CustomProgressBar percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)} />
-        </div>
-      </div>
-      <div
-        className={`deal__field deal__field-status deal__field-status--${deal.status} vertical-center`}
-      >
-        <span className="deal__field-status__icon">
-          <SvgIcon name="dot" />
-        </span>
-        <span className="deal__field-status__name">{deal.status}</span>
-      </div>
-      <div className="deal__field deal__field-size vertical-center">
-        <NumberFormat
-          value={Number(deal.dealSize)}
-          thousandSeparator
-          displayType="text"
-          prefix="$"
-        />
-      </div>
-      <div className="deal__field deal__field-raised-amount vertical-center">
-        <NumberFormat
-          value={Number(deal.raisedAmount)}
-          thousandSeparator
-          displayType="text"
-          prefix="$"
-        />
-      </div>
-      <div className="deal__field deal__field-model vertical-center">{deal.allocationModel}</div>
-      <div className="deal__field deal__field-maximum  vertical-center">
-        <NumberFormat
-          value={Number(deal.personalCap || 0)}
-          thousandSeparator
-          displayType="text"
-          prefix="$"
-        />
-      </div>
-      <div className="deal__field deal__field-contribution vertical-center">
-        <span>
-          <NumberFormat
-            value={Number(deal.contributedAmount)}
-            thousandSeparator
-            displayType="text"
-            prefix="$"
-          />
-        </span>
-      </div>
-      <div className="deal__field deal__field-action vertical-center">
-        {deal.status === 'opened' ? (
-          <RoundedButton
-            type="primary"
-            disabled={Number(accountInfo.bdtBalance) < Number(deal.minContributorBDTBalance)}
-            onClick={() => onContribute(deal)}
-          >
-            Contribute
-          </RoundedButton>
-        ) : (
-          <RoundedButton disabled>Claim</RoundedButton>
-        )}
-      </div>
-    </div>
-  );
 
   return (
     <div className="deals-table">
@@ -256,7 +113,12 @@ function UserDealsTable({ userDeals }) {
                 }}
               >
                 {deals.map((deal, index) => (
-                  <Draggable key={deal.id} draggableId={deal.id} index={index}>
+                  <Draggable
+                    key={deal.id}
+                    draggableId={deal.id}
+                    index={index}
+                    isDragDisabled={!!activeDeal}
+                  >
                     {(provided1, snapshot1) => (
                       <div
                         ref={provided1.innerRef}
@@ -272,9 +134,9 @@ function UserDealsTable({ userDeals }) {
                         }`}
                       >
                         {activeDeal && activeDeal.id === deal.id ? (
-                          <EditRow deal={deal} />
+                          <DealEditRow deal={deal} />
                         ) : (
-                          <ViewRow deal={deal} />
+                          <DealRow deal={deal} />
                         )}
                       </div>
                     )}
@@ -298,4 +160,4 @@ UserDealsTable.defaultProps = {
   userDeals: [],
 };
 
-export default UserDealsTable;
+export default React.memo(UserDealsTable);

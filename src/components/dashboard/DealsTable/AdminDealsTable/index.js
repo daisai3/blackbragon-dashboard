@@ -241,7 +241,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                           </div>
                           <div className="deal__field deal__field-name vertical-center">
                             <div>
-                              <div>{deal.name}</div>
+                              <span>{deal.name}</span>
                               <CustomProgressBar
                                 percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)}
                               />
