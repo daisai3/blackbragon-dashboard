@@ -23,9 +23,7 @@ import './index.scss';
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
+  return result.splice(endIndex, 0, removed);
 };
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -56,10 +54,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
   }, [userDeals]);
 
   const onDragEnd = (result) => {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
+    if (!result.destination) return;
 
     const _deals = reorder(deals, result.source.index, result.destination.index);
     setDeals(_deals);
@@ -232,7 +227,13 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                       >
                         <div className="d-flex full-width">
                           <div className="deal__field deal__field-avatar vertical-center">
-                            <RoundedAvatar src={deal.imageUrl} />
+                            <a
+                              href={`https://etherscan.io/address/${deal.address}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <RoundedAvatar src={deal.imageUrl} />
+                            </a>
                           </div>
                           <div className="deal__field deal__field-name vertical-center">
                             <div>
