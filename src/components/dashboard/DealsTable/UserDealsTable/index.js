@@ -7,6 +7,7 @@ import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import SvgIcon from 'components/common/svgIcon';
 import RoundedButton from 'components/common/button/rounded-button';
 import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
+import CustomSlider from 'components/common/progress-bar/custom-slider';
 import CustomInput from 'components/common/input/custom-input';
 import { updateGlobal } from 'store/actions';
 import { isNumeric } from 'utils/index';
@@ -16,7 +17,8 @@ import './index.scss';
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
-  return result.splice(endIndex, 0, removed);
+  result.splice(endIndex, 0, removed);
+  return result;
 };
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -45,13 +47,24 @@ function UserDealsTable({ userDeals }) {
   const { activeDeal } = globalReducer;
   const { accountInfo, walletAddress } = authReducer;
 
+  const getFilteredDeals = () => {
+    if (filterOption === 'all deals') {
+      return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
+    }
+    return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
+  };
+
   useEffect(() => {
     setDeals(userDeals);
   }, [userDeals]);
 
+  useEffect(() => {
+    if (deals.length > 0) setDeals(getFilteredDeals());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterOption]);
+
   const onDragEnd = (result) => {
     if (!result.destination) return;
-
     const _deals = reorder(deals, result.source.index, result.destination.index);
     setDeals(_deals);
   };
@@ -82,14 +95,116 @@ function UserDealsTable({ userDeals }) {
     if (val !== filterOption) setFilterOption(val);
   };
 
-  const getFilteredDeals = () => {
-    if (filterOption === 'all deals') {
-      return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
-    }
-    return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
-  };
+  const EditRow = ({ deal }) => (
+    <div className="d-flex full-width">
+      <div className="deal__field deal__field-avatar vertical-center">
+        <RoundedAvatar src={deal.imageUrl} />
+      </div>
+      <div className="deal__field deal__field-name vertical-center">
+        <div>
+          <div>{deal.name}</div>
+          <CustomProgressBar percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)} />
+        </div>
+      </div>
+      <div
+        className={`deal__field deal__field-status deal__field-status--${deal.status} vertical-center`}
+      >
+        <span className="deal__field-status__icon">
+          <SvgIcon name="dot" />
+        </span>
+        <span className="deal__field-status__name">{deal.status}</span>
+      </div>
+      <div className="deal__field deal__field-modal-bar vertical-center">
+        <CustomSlider />
+      </div>
+      <div className="deal__field deal__field-modal-contribution vertical-center">
+        <span>
+          <CustomInput
+            placeholder=""
+            value={activeDealContributionValue}
+            onChange={onChangeContributionValue}
+          />
+        </span>
+        <span>USDT</span>
+      </div>
+      <div className="deal__field deal__field-modal-action vertical-center">
+        <RoundedButton onClick={onCloseDealModal}>Cancel</RoundedButton>
+        <RoundedButton type="primary" onClick={onApprove}>
+          Approve
+        </RoundedButton>
+      </div>
+    </div>
+  );
 
-  const filteredDeals = getFilteredDeals();
+  const ViewRow = ({ deal }) => (
+    <div className="d-flex full-width">
+      <div className="deal__field deal__field-avatar vertical-center">
+        <RoundedAvatar src={deal.imageUrl} />
+      </div>
+      <div className="deal__field deal__field-name vertical-center">
+        <div>
+          <div>{deal.name}</div>
+          <CustomProgressBar percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)} />
+        </div>
+      </div>
+      <div
+        className={`deal__field deal__field-status deal__field-status--${deal.status} vertical-center`}
+      >
+        <span className="deal__field-status__icon">
+          <SvgIcon name="dot" />
+        </span>
+        <span className="deal__field-status__name">{deal.status}</span>
+      </div>
+      <div className="deal__field deal__field-size vertical-center">
+        <NumberFormat
+          value={Number(deal.dealSize)}
+          thousandSeparator
+          displayType="text"
+          prefix="$"
+        />
+      </div>
+      <div className="deal__field deal__field-raised-amount vertical-center">
+        <NumberFormat
+          value={Number(deal.raisedAmount)}
+          thousandSeparator
+          displayType="text"
+          prefix="$"
+        />
+      </div>
+      <div className="deal__field deal__field-model vertical-center">{deal.allocationModel}</div>
+      <div className="deal__field deal__field-maximum  vertical-center">
+        <NumberFormat
+          value={Number(deal.personalCap || 0)}
+          thousandSeparator
+          displayType="text"
+          prefix="$"
+        />
+      </div>
+      <div className="deal__field deal__field-contribution vertical-center">
+        <span>
+          <NumberFormat
+            value={Number(deal.contributedAmount)}
+            thousandSeparator
+            displayType="text"
+            prefix="$"
+          />
+        </span>
+      </div>
+      <div className="deal__field deal__field-action vertical-center">
+        {deal.status === 'opened' ? (
+          <RoundedButton
+            type="primary"
+            disabled={Number(accountInfo.bdtBalance) < Number(deal.minContributorBDTBalance)}
+            onClick={() => onContribute(deal)}
+          >
+            Contribute
+          </RoundedButton>
+        ) : (
+          <RoundedButton disabled>Claim</RoundedButton>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="deals-table">
@@ -140,7 +255,7 @@ function UserDealsTable({ userDeals }) {
                   overflowX: 'auto',
                 }}
               >
-                {filteredDeals.map((deal, index) => (
+                {deals.map((deal, index) => (
                   <Draggable key={deal.id} draggableId={deal.id} index={index}>
                     {(provided1, snapshot1) => (
                       <div
@@ -157,129 +272,9 @@ function UserDealsTable({ userDeals }) {
                         }`}
                       >
                         {activeDeal && activeDeal.id === deal.id ? (
-                          // edit modal
-                          <div className="d-flex full-width">
-                            <div className="deal__field deal__field-avatar vertical-center">
-                              <RoundedAvatar src={deal.imageUrl} />
-                            </div>
-                            <div className="deal__field deal__field-name vertical-center">
-                              <div>
-                                <div>{deal.name}</div>
-                                <CustomProgressBar
-                                  percent={
-                                    (Number(deal.raisedAmount) * 100) / Number(deal.dealSize)
-                                  }
-                                />
-                              </div>
-                            </div>
-                            <div
-                              className={`deal__field deal__field-status deal__field-status--${deal.status} vertical-center`}
-                            >
-                              <span className="deal__field-status__icon">
-                                <SvgIcon name="dot" />
-                              </span>
-                              <span className="deal__field-status__name">{deal.status}</span>
-                            </div>
-                            <div className="deal__field deal__field-modal-bar vertical-center">
-                              <CustomProgressBar
-                                percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)}
-                              />
-                            </div>
-                            <div className="deal__field deal__field-modal-contribution vertical-center">
-                              <span>
-                                <CustomInput
-                                  placeholder=""
-                                  value={activeDealContributionValue}
-                                  onChange={onChangeContributionValue}
-                                />
-                              </span>
-                              <span>USDT</span>
-                            </div>
-                            <div className="deal__field deal__field-modal-action vertical-center">
-                              <RoundedButton onClick={onCloseDealModal}>Cancel</RoundedButton>
-                              <RoundedButton type="primary" onClick={onApprove}>
-                                Approve
-                              </RoundedButton>
-                            </div>
-                          </div>
+                          <EditRow deal={deal} />
                         ) : (
-                          // only view
-                          <div className="d-flex full-width">
-                            <div className="deal__field deal__field-avatar vertical-center">
-                              <RoundedAvatar src={deal.imageUrl} />
-                            </div>
-                            <div className="deal__field deal__field-name vertical-center">
-                              <div>
-                                <div>{deal.name}</div>
-                                <CustomProgressBar
-                                  percent={
-                                    (Number(deal.raisedAmount) * 100) / Number(deal.dealSize)
-                                  }
-                                />
-                              </div>
-                            </div>
-                            <div
-                              className={`deal__field deal__field-status deal__field-status--${deal.status} vertical-center`}
-                            >
-                              <span className="deal__field-status__icon">
-                                <SvgIcon name="dot" />
-                              </span>
-                              <span className="deal__field-status__name">{deal.status}</span>
-                            </div>
-                            <div className="deal__field deal__field-size vertical-center">
-                              <NumberFormat
-                                value={Number(deal.dealSize)}
-                                thousandSeparator
-                                displayType="text"
-                                prefix="$"
-                              />
-                            </div>
-                            <div className="deal__field deal__field-raised-amount vertical-center">
-                              <NumberFormat
-                                value={Number(deal.raisedAmount)}
-                                thousandSeparator
-                                displayType="text"
-                                prefix="$"
-                              />
-                            </div>
-                            <div className="deal__field deal__field-model vertical-center">
-                              {deal.allocationModel}
-                            </div>
-                            <div className="deal__field deal__field-maximum  vertical-center">
-                              <NumberFormat
-                                value={Number(deal.personalCap || 0)}
-                                thousandSeparator
-                                displayType="text"
-                                prefix="$"
-                              />
-                            </div>
-                            <div className="deal__field deal__field-contribution vertical-center">
-                              <span>
-                                <NumberFormat
-                                  value={Number(deal.contributedAmount)}
-                                  thousandSeparator
-                                  displayType="text"
-                                  prefix="$"
-                                />
-                              </span>
-                            </div>
-                            <div className="deal__field deal__field-action vertical-center">
-                              {deal.status === 'opened' ? (
-                                <RoundedButton
-                                  type="primary"
-                                  disabled={
-                                    Number(accountInfo.bdtBalance) <
-                                    Number(deal.minContributorBDTBalance)
-                                  }
-                                  onClick={() => onContribute(deal)}
-                                >
-                                  Contribute
-                                </RoundedButton>
-                              ) : (
-                                <RoundedButton disabled>Claim</RoundedButton>
-                              )}
-                            </div>
-                          </div>
+                          <ViewRow deal={deal} />
                         )}
                       </div>
                     )}

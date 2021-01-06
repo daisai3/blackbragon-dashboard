@@ -23,7 +23,8 @@ import './index.scss';
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
-  return result.splice(endIndex, 0, removed);
+  result.splice(endIndex, 0, removed);
+  return result;
 };
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -49,9 +50,27 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
   const globalReducer = useSelector((state) => state.global);
   const { activeDeal } = globalReducer;
 
+  const getFilteredDeals = () => {
+    if (filterOption === 'active') {
+      return deals.filter((deal) => deal.status === 'opened' || deal.status === 'paused');
+    }
+    if (filterOption === 'closed') {
+      return deals.filter((deal) => deal.status === 'closed');
+    }
+    if (filterOption === 'canceled') {
+      return deals.filter((deal) => deal.status === 'canceled');
+    }
+    return deals;
+  };
+
   useEffect(() => {
     setDeals(userDeals);
   }, [userDeals]);
+
+  useEffect(() => {
+    if (deals.length > 0) setDeals(getFilteredDeals());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterOption]);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -127,21 +146,6 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
     if (val !== filterOption) setFilterOption(val);
   };
 
-  const getFilteredDeals = () => {
-    if (filterOption === 'active') {
-      return deals.filter((deal) => deal.status === 'opened' || deal.status === 'paused');
-    }
-    if (filterOption === 'closed') {
-      return deals.filter((deal) => deal.status === 'closed');
-    }
-    if (filterOption === 'canceled') {
-      return deals.filter((deal) => deal.status === 'canceled');
-    }
-    return deals;
-  };
-
-  const filteredDeals = getFilteredDeals();
-
   return (
     <div className="deals-table admin-deals-table">
       <div className="deals-table-options d-flex">
@@ -213,7 +217,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                     />
                   </div>
                 )}
-                {filteredDeals.map((deal, index) => (
+                {deals.map((deal, index) => (
                   <Draggable key={deal.id} draggableId={deal.id} index={index}>
                     {(provided1, snapshot1) => (
                       <div
