@@ -37,6 +37,13 @@
           }
         }
       }
+      &--distributed--active {
+        svg {
+          path {
+            fill: $color-purple;
+          }
+        }
+      }
     }
   }
   .deal__field-action {

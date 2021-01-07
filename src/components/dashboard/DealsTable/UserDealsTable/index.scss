@@ -69,6 +69,13 @@
         }
       }
     }
+    &--distributed {
+      svg {
+        g {
+          fill: $color-purple;
+        }
+      }
+    }
   }
   .deal__field-raised-amount {
     margin-left: 20px;

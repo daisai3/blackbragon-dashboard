@@ -12,6 +12,7 @@ import IconStatusOpened from 'assets/icons/icon-status-opened.svg';
 import IconStatusPaused from 'assets/icons/icon-status-paused.svg';
 import IconStatusClosed from 'assets/icons/icon-status-closed.svg';
 import IconStatusCanceled from 'assets/icons/icon-status-canceled.svg';
+import IconStatusDistributed from 'assets/icons/icon-status-distributed.svg';
 import IconPlus from 'assets/icons/icon-plus.svg';
 
 import IconFacebook from 'assets/icons/icon-facebook.svg';
@@ -35,6 +36,7 @@ const Icons = {
   statusPaused: IconStatusPaused,
   statusClosed: IconStatusClosed,
   statusCanceled: IconStatusCanceled,
+  statusDistributed: IconStatusDistributed,
   plus: IconPlus,
 
   facebook: IconFacebook,

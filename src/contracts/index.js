@@ -41,6 +41,8 @@ const getStatus = (statusBN) => {
       return 'closed';
     case '4':
       return 'canceled';
+    case '5':
+      return 'distributed';
     default:
       throw new Error(`Invalid status ${statusBN.toString()}`);
   }
