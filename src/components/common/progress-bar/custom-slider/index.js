@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import './index.scss';
+import { FormattedNumber } from 'react-intl';
 
 const PrettoSlider = withStyles({
   root: {
@@ -39,10 +40,10 @@ const CustomSlider = ({ value, min, max, onChange }) => {
   return (
     <div className="custom-slider">
       <PrettoSlider
-        min={min}
+        min={Number(min)}
         step={10}
-        max={max}
-        value={value}
+        max={Number(max)}
+        value={Number(value)}
         onChange={onChange}
         aria-labelledby="continuous-slider"
       />
@@ -51,16 +52,16 @@ const CustomSlider = ({ value, min, max, onChange }) => {
 };
 
 CustomSlider.propTypes = {
-  value: PropTypes.number,
-  min: PropTypes.number,
-  max: PropTypes.number,
+  value: PropTypes.string,
+  min: PropTypes.string,
+  max: PropTypes.string,
   onChange: PropTypes.func,
 };
 
 CustomSlider.defaultProps = {
-  value: 20,
-  min: 0,
-  max: 20,
+  value: '20',
+  min: '0',
+  max: '20',
   onChange: () => {},
 };
 

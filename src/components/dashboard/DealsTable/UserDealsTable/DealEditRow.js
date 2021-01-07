@@ -28,7 +28,7 @@ const DealEditRow = ({ deal }) => {
   };
 
   const onChangeContributionSlider = useCallback((event, val) => {
-    setContributionValue(val);
+    setContributionValue(val.toString());
   }, []);
 
   const onCloseDealModal = () => {
@@ -63,9 +63,9 @@ const DealEditRow = ({ deal }) => {
       </div>
       <div className="deal__field deal__field-modal-bar vertical-center">
         <CustomSlider
-          value={Number(contributionValue.replace(',', ''))}
-          min={Number(deal.minContributorBDTBalance)}
-          max={Number(deal.personalCap || 0)}
+          value={contributionValue.replace(',', '')}
+          min={deal.minContributorBDTBalance}
+          max={deal.personalCap || 0}
           onChange={onChangeContributionSlider}
         />
       </div>
