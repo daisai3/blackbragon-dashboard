@@ -37,21 +37,28 @@ function Routes() {
     return accountInfo;
   };
 
+  const onUpdateAuth = async (_walletAddress) => {
+    const accountInfo = await getAccountInfo(_walletAddress);
+    dispatch(
+      updateAuth({
+        walletAddress: _walletAddress,
+        accountInfo,
+        isAdmin: _walletAddress.toLowerCase() === ADMIN_ADDRESS.toLowerCase(),
+      })
+    );
+  };
+
   const onConnect = async () => {
     const provider = await web3Modal.connect();
     const web3Object = await new Web3(provider);
     const accounts = await web3Object.eth.getAccounts();
     if (accounts.length > 0) {
-      const accountInfo = await getAccountInfo(accounts[0]);
-
-      dispatch(
-        updateAuth({
-          walletAddress: accounts[0],
-          accountInfo,
-          isAdmin: accounts[0] === ADMIN_ADDRESS,
-        })
-      );
+      onUpdateAuth(accounts[0]);
     }
+
+    provider.on('accountsChanged', (_accounts) => {
+      onUpdateAuth(_accounts[0]);
+    });
   };
 
   useEffect(() => {
