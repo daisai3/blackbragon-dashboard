@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Slider from '@material-ui/core/Slider';
+import NumberFormat from 'react-number-format';
 import { withStyles } from '@material-ui/core/styles';
 import './index.scss';
-import { FormattedNumber } from 'react-intl';
 
 const PrettoSlider = withStyles({
   root: {
@@ -11,14 +11,14 @@ const PrettoSlider = withStyles({
     height: 4,
   },
   thumb: {
-    height: 20,
-    width: 20,
+    height: 16,
+    width: 16,
     backgroundColor: '#fff',
     border: '4px solid #029e80',
-    marginTop: -8,
-    marginLeft: -12,
+    marginTop: -6,
+    marginLeft: -8,
     '&:focus, &:hover, &$active': {
-      boxShadow: 'inherit',
+      boxShadow: '0px 0px 0px 8px rgba(#029e80, 0.16)!important',
     },
   },
   active: {},
@@ -39,6 +39,15 @@ const PrettoSlider = withStyles({
 const CustomSlider = ({ value, min, max, onChange }) => {
   return (
     <div className="custom-slider">
+      <div className="custom-slider__label">
+        <div className="custom-slider__label-min">
+          <NumberFormat value={Number(min).toString()} thousandSeparator displayType="text" />
+        </div>
+        <div className="custom-slider__label-max">
+          <NumberFormat value={Number(max).toString()} thousandSeparator displayType="text" />
+        </div>
+      </div>
+
       <PrettoSlider
         min={Number(min)}
         step={10}
