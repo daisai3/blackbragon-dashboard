@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import NumberFormat from 'react-number-format';
 import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
 import './index.scss';
@@ -58,11 +59,25 @@ function LeftSideBar() {
             </div>
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">BDT Tokens Held</h5>
-              <div className="account-info__field-value">{`${accountInfo.bdtBalance} BDT`}</div>
+              <div className="account-info__field-value">
+                <NumberFormat
+                  value={Number(accountInfo.bdtBalance)}
+                  thousandSeparator
+                  displayType="text"
+                  suffix=" BDT"
+                />
+              </div>
             </div>
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">USDT Tokens Held</h5>
-              <div className="account-info__field-value">{`${accountInfo.usdtBalance} USDT`}</div>
+              <div className="account-info__field-value">
+                <NumberFormat
+                  value={Number(accountInfo.usdtBalance)}
+                  thousandSeparator
+                  displayType="text"
+                  suffix=" USDT"
+                />
+              </div>
             </div>
           </div>
         )}
