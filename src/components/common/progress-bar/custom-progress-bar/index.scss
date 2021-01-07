@@ -6,6 +6,7 @@
   }
   > div:first-child {
     height: 4px;
+    background-color: $color-gray-20 !important;
     > div {
       min-height: 4px;
       background-color: $color-green !important;
