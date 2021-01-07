@@ -20,7 +20,7 @@ function LeftSideBar() {
     <div className="sidebar">
       <div className="sidebar__top vertical-center">
         <div className="chart-btn-container">
-          <IconButton icon="chart" />
+          <IconButton icon="menu" />
         </div>
       </div>
       <div className="sidebar__content">
