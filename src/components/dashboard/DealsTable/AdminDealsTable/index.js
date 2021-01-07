@@ -89,11 +89,11 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
       updateGlobal({
         activeDeal: {
           name: '',
-          dealSize: '100000.0',
-          minContribution: '250.0',
+          dealSize: '100000',
+          minContribution: '250',
           allocationModel: 'ProRata',
           minViewLevel: 0,
-          userCap: '0.0',
+          userCap: '0',
           minAccessLevel: 0,
           imageUrl: '',
           unlimitedTimestamp: 0,
@@ -113,7 +113,12 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
   };
 
   const onUpdateDeal = async (deal) => {
-    const result = await updateDeal(deal);
+    const _deal = { ...deal };
+    _deal.dealSize = deal.dealSize.replace(',', '');
+    _deal.minContribution = deal.minContribution.replace(',', '');
+    _deal.userCap = deal.userCap.replace(',', '');
+
+    const result = await updateDeal(_deal);
     onCloseDealModal();
     if (result) onFetchDeals();
   };

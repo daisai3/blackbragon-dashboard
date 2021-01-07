@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import moment from 'moment';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import RoundedButton from 'components/common/button/rounded-button';
 import CustomInput from 'components/common/input/custom-input';
+import NumberInput from 'components/common/input/number-input';
 import CustomSelect from 'components/common/select/custom-select';
 import './index.scss';
 
@@ -21,7 +22,20 @@ const levelItems = [
 ];
 
 function DealEditModal({ data, onClose, onCreate, onUpdate }) {
-  const [deal, setDeal] = useState(data);
+  const [deal, setDeal] = useState({});
+
+  const getFormatDeal = () => {
+    const _data = { ...data };
+    _data.dealSize = Number(data.dealSize).toString();
+    _data.minContribution = Number(data.minContribution).toString();
+    _data.userCap = Number(data.userCap).toString();
+    return _data;
+  };
+
+  useEffect(() => {
+    setDeal(getFormatDeal());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onChangeInput = (e) => {
     const { value, name } = e.target;
@@ -70,10 +84,10 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
         <Grid container spacing={4}>
           <Grid item xs={3}>
             <div className="deal-size">
-              <CustomInput
+              <NumberInput
                 label="Deal Size"
                 name="dealSize"
-                value={Number(deal.dealSize).toString()}
+                value={deal.dealSize}
                 onChange={onChangeInput}
               />
             </div>
@@ -83,7 +97,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
               <CustomSelect
                 label="Min View Level"
                 name="minViewLevel"
-                value={deal.minViewLevel.toString()}
+                value={deal.minViewLevel?.toString()}
                 items={levelItems}
                 onSelect={onChangeSelect}
               />
@@ -94,7 +108,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
               <CustomSelect
                 label="Min Access Level"
                 name="minAccessLevel"
-                value={deal.minAccessLevel.toString()}
+                value={deal.minAccessLevel?.toString()}
                 items={levelItems}
                 onSelect={onChangeSelect}
               />
@@ -119,10 +133,10 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
           </Grid>
           <Grid item xs={3}>
             <div className="deal-min-contribution">
-              <CustomInput
+              <NumberInput
                 label="Min Contribution"
                 name="minContribution"
-                value={Number(deal.minContribution).toString()}
+                value={deal.minContribution}
                 onChange={onChangeInput}
               />
             </div>
@@ -140,10 +154,10 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
           </Grid>
           <Grid item xs={3}>
             <div className="deal-personal-cap">
-              <CustomInput
+              <NumberInput
                 label="Personal Cap"
                 name="userCap"
-                value={Number(deal.userCap).toString()}
+                value={deal.userCap}
                 onChange={onChangeInput}
               />
             </div>
