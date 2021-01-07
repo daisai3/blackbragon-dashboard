@@ -39,19 +39,15 @@ function UserDealsTable({ userDeals }) {
 
   const getFilteredDeals = () => {
     if (filterOption === 'all deals') {
-      return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
+      return userDeals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
     }
-    return deals.sort((a, b) => (a.status === 'opened' && b.status !== 'opened' ? -1 : 1));
+    return userDeals.filter((deal) => Number(deal.contributedAmount) > 0);
   };
 
   useEffect(() => {
-    setDeals(userDeals);
-  }, [userDeals]);
-
-  useEffect(() => {
-    if (deals.length > 0) setDeals(getFilteredDeals());
+    setDeals(getFilteredDeals());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterOption]);
+  }, [userDeals, filterOption]);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;

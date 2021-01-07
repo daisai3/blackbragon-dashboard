@@ -52,29 +52,28 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
 
   const getFilteredDeals = () => {
     if (filterOption === 'active') {
-      return deals.filter((deal) => deal.status === 'opened' || deal.status === 'paused');
+      return userDeals.filter((deal) => deal.status === 'opened' || deal.status === 'paused');
     }
     if (filterOption === 'closed') {
-      return deals.filter((deal) => deal.status === 'closed');
+      return userDeals.filter((deal) => deal.status === 'closed');
     }
     if (filterOption === 'canceled') {
-      return deals.filter((deal) => deal.status === 'canceled');
+      return userDeals.filter((deal) => deal.status === 'canceled');
     }
-    return deals;
+    if (filterOption === 'distributed') {
+      return userDeals.filter((deal) => deal.status === 'distributed');
+    }
+
+    return userDeals;
   };
 
   useEffect(() => {
-    setDeals(userDeals);
-  }, [userDeals]);
-
-  useEffect(() => {
-    if (deals.length > 0) setDeals(getFilteredDeals());
+    setDeals(getFilteredDeals());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterOption]);
+  }, [userDeals, filterOption]);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
-
     const _deals = reorder(deals, result.source.index, result.destination.index);
     setDeals(_deals);
   };
