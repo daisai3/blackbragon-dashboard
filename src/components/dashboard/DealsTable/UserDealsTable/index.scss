@@ -158,9 +158,10 @@
       width: 20%;
       justify-content: center;
       input {
-        max-width: 80%;
+        max-width: 80px;
         margin-right: 10px;
         text-align: right;
+        padding: 3px;
       }
     }
     .deal__field-modal-action {
