@@ -35,7 +35,9 @@ const DealRow = ({ deal }) => {
         <span className="deal__field-status__icon">
           <SvgIcon name="dot" />
         </span>
-        <span className="deal__field-status__name">{deal.status}</span>
+        <span className="deal__field-status__name">
+          {deal.status === 'opened' ? 'live' : deal.status}
+        </span>
       </div>
       <div className="deal__field deal__field-size vertical-center">
         <NumberFormat
