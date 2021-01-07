@@ -19,6 +19,8 @@ import IconGooglePlus from 'assets/icons/icon-google-plus.svg';
 import IconTwitter from 'assets/icons/icon-twitter.svg';
 import IconInstagram from 'assets/icons/icon-instagram.svg';
 
+import IconMenu from 'assets/icons/icon-menu.svg';
+
 const Icons = {
   chart: IconChart,
   search: IconSearch,
@@ -39,6 +41,8 @@ const Icons = {
   googlePlus: IconGooglePlus,
   twitter: IconTwitter,
   instagram: IconInstagram,
+
+  menu: IconMenu,
 };
 
 export default Icons;
