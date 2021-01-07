@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import NumberFormat from 'react-number-format';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import SvgIcon from 'components/common/svgIcon';
 import RoundedButton from 'components/common/button/rounded-button';
 import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
-import NumberFormat from 'react-number-format';
 import { updateGlobal } from 'store/actions';
 import './index.scss';
 

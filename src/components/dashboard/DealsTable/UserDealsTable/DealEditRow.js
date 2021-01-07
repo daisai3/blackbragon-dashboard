@@ -6,9 +6,8 @@ import SvgIcon from 'components/common/svgIcon';
 import RoundedButton from 'components/common/button/rounded-button';
 import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
 import CustomSlider from 'components/common/progress-bar/custom-slider';
-import CustomInput from 'components/common/input/custom-input';
+import NumberInput from 'components/common/input/number-input';
 import { updateGlobal } from 'store/actions';
-import { isNumeric } from 'utils/index';
 import { approveDeal } from 'contracts/index';
 import './index.scss';
 
@@ -25,7 +24,6 @@ const DealEditRow = ({ deal }) => {
 
   const onChangeContributionValue = (e) => {
     const { value } = e.target;
-    if (!isNumeric(value)) return;
     setContributionValue(value);
   };
 
@@ -65,7 +63,7 @@ const DealEditRow = ({ deal }) => {
       </div>
       <div className="deal__field deal__field-modal-bar vertical-center">
         <CustomSlider
-          value={Number(contributionValue)}
+          value={Number(contributionValue.replace(',', ''))}
           min={Number(deal.minContributorBDTBalance)}
           max={Number(deal.personalCap || 0)}
           onChange={onChangeContributionSlider}
@@ -73,9 +71,9 @@ const DealEditRow = ({ deal }) => {
       </div>
       <div className="deal__field deal__field-modal-contribution vertical-center">
         <span>
-          <CustomInput
+          <NumberInput
             placeholder=""
-            value={contributionValue.toString()}
+            value={contributionValue}
             onChange={onChangeContributionValue}
           />
         </span>
