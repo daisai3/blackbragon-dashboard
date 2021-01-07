@@ -2,22 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import NumberFormat from 'react-number-format';
-import RoundedAvatar from 'components/common/avatar/rounded-avatar';
-import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
 import RoundedButton from 'components/common/button/rounded-button';
-import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
 import { updateGlobal } from 'store/actions';
-import {
-  createDeal,
-  updateDeal,
-  cancelDeal,
-  closeDeal,
-  pauseDeal,
-  unpauseDeal,
-} from 'contracts/index';
+import { createDeal, updateDeal } from 'contracts/index';
 import DealEditModal from './DealEditModal';
+import DealRow from './DealRow';
 import './index.scss';
 
 const reorder = (list, startIndex, endIndex) => {
@@ -46,11 +36,14 @@ const getListStyle = (isDraggingOver) => ({
 function AdminDealsTable({ userDeals, onFetchDeals }) {
   const dispatch = useDispatch();
   const [deals, setDeals] = useState([]);
-  const [filterOption, setFilterOption] = useState('active');
+  const [filterOption, setFilterOption] = useState('all');
   const globalReducer = useSelector((state) => state.global);
   const { activeDeal } = globalReducer;
 
   const getFilteredDeals = () => {
+    if (filterOption === 'all') {
+      return userDeals;
+    }
     if (filterOption === 'active') {
       return userDeals.filter((deal) => deal.status === 'opened' || deal.status === 'paused');
     }
@@ -76,11 +69,6 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
     if (!result.destination) return;
     const _deals = reorder(deals, result.source.index, result.destination.index);
     setDeals(_deals);
-  };
-
-  const onManage = (deal) => {
-    // TODO: should show modal
-    dispatch(updateGlobal({ activeDeal: deal }));
   };
 
   const onClickAddDeal = () => {
@@ -122,30 +110,6 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
     if (result) onFetchDeals();
   };
 
-  const onUnpauseDeal = async (deal) => {
-    if (deal.status === 'opened') return;
-    const result = await unpauseDeal(deal.address);
-    if (result) onFetchDeals();
-  };
-
-  const onPauseDeal = async (deal) => {
-    if (deal.status === 'paused') return;
-    const result = await pauseDeal(deal.address);
-    if (result) onFetchDeals();
-  };
-
-  const onCloseDeal = async (deal) => {
-    if (deal.status === 'closed') return;
-    const result = await closeDeal(deal.dealAddress);
-    if (result) onFetchDeals();
-  };
-
-  const onCancelDeal = async (deal) => {
-    if (deal.status === 'canceled') return;
-    const result = await cancelDeal(deal.address);
-    if (result) onFetchDeals();
-  };
-
   const onSelectFilter = (val) => {
     if (val !== filterOption) setFilterOption(val);
   };
@@ -153,6 +117,14 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
   return (
     <div className="deals-table admin-deals-table">
       <div className="deals-table-options d-flex">
+        <div className="filter-btn-wrapper">
+          <RoundedButton
+            className={`filter-btn ${filterOption === 'all' ? 'filter-btn--active' : ''}`}
+            onClick={() => onSelectFilter('all')}
+          >
+            <span>All</span>
+          </RoundedButton>
+        </div>
         <div className="filter-btn-wrapper">
           <RoundedButton
             className={`filter-btn ${filterOption === 'active' ? 'filter-btn--active' : ''}`}
@@ -233,100 +205,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                         }}
                         className="deals-table-content__row"
                       >
-                        <div className="d-flex full-width">
-                          <div className="deal__field deal__field-avatar vertical-center">
-                            <a
-                              href={`https://etherscan.io/address/${deal.address}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <RoundedAvatar src={deal.imageUrl} />
-                            </a>
-                          </div>
-                          <div className="deal__field deal__field-name vertical-center">
-                            <div>
-                              <span>{deal.name}</span>
-                              <CustomProgressBar
-                                percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)}
-                              />
-                            </div>
-                          </div>
-                          <div
-                            className={`deal__field deal__field-status deal__field-status--${deal.status} vertical-center`}
-                          >
-                            <span className="deal__field-status__icon">
-                              <SvgIcon name="dot" />
-                            </span>
-                            <span className="deal__field-status__name">
-                              {deal.status === 'opened' ? 'live' : deal.status}
-                            </span>
-                          </div>
-                          <div className="deal__field deal__field-size vertical-center">
-                            <NumberFormat
-                              value={Number(deal.dealSize)}
-                              thousandSeparator
-                              displayType="text"
-                              prefix="$"
-                            />
-                          </div>
-                          <div className="deal__field deal__field-raised-amount vertical-center">
-                            <NumberFormat
-                              value={Number(deal.raisedAmount)}
-                              thousandSeparator
-                              displayType="text"
-                              prefix="$"
-                            />
-                          </div>
-                          <div className="deal__field deal__field-model vertical-center">
-                            {deal.allocationModel}
-                          </div>
-                          <div className="deal__field deal__field-status-stepper vertical-center">
-                            <span
-                              className={`deal__field-status-step ${
-                                deal.status === 'opened'
-                                  ? 'deal__field-status-step--opened--active'
-                                  : ''
-                              }`}
-                            >
-                              <IconButton icon="statusOpened" onClick={() => onUnpauseDeal(deal)} />
-                            </span>
-                            <span
-                              className={`deal__field-status-step ${
-                                deal.status === 'paused'
-                                  ? 'deal__field-status-step--paused--active'
-                                  : ''
-                              }`}
-                            >
-                              <IconButton icon="statusPaused" onClick={() => onPauseDeal(deal)} />
-                            </span>
-                            <span
-                              className={`deal__field-status-step ${
-                                deal.status === 'closed'
-                                  ? 'deal__field-status-step--closed--active'
-                                  : ''
-                              }`}
-                            >
-                              <IconButton icon="statusClosed" onClick={() => onCloseDeal(deal)} />
-                            </span>
-                            <span
-                              className={`deal__field-status-step ${
-                                deal.status === 'canceled'
-                                  ? 'deal__field-status-step--canceled--active'
-                                  : ''
-                              }`}
-                            >
-                              <IconButton
-                                icon="statusCanceled"
-                                onClick={() => onCancelDeal(deal)}
-                              />
-                            </span>
-                          </div>
-                          <div className="deal__field deal__field-action vertical-center">
-                            <RoundedButton type="primary" onClick={() => onManage(deal)}>
-                              Manage
-                            </RoundedButton>
-                          </div>
-                        </div>
+                        <DealRow deal={deal} onFetchDeals={onFetchDeals} />
                       </div>
                     )}
                   </Draggable>
