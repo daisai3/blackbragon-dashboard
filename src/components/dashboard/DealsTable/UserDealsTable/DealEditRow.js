@@ -38,7 +38,7 @@ const DealEditRow = ({ deal }) => {
 
   const onApprove = async () => {
     onCloseDealModal();
-    const result = await approveDeal(walletAddress, contributionValue.toString());
+    const result = await approveDeal(walletAddress, contributionValue.replace(',', '').toString());
     dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'failed' }));
   };
 
@@ -66,7 +66,7 @@ const DealEditRow = ({ deal }) => {
       <div className="deal__field deal__field-modal-bar vertical-center">
         <CustomSlider
           value={contributionValue.replace(',', '')}
-          min={deal.minContributorBDTBalance}
+          min={deal.minContribution}
           max={deal.personalCap || 0}
           onChange={onChangeContributionSlider}
         />

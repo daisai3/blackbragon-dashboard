@@ -122,7 +122,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
             className={`filter-btn ${filterOption === 'all' ? 'filter-btn--active' : ''}`}
             onClick={() => onSelectFilter('all')}
           >
-            <span>All</span>
+            <span>All Deals</span>
           </RoundedButton>
         </div>
         <div className="filter-btn-wrapper">

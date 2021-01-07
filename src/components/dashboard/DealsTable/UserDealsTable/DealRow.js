@@ -18,6 +18,10 @@ const DealRow = ({ deal }) => {
     dispatch(updateGlobal({ activeDeal: deal }));
   };
 
+  const onClaim = () => {
+    // TODO: should call claim function
+  };
+
   return (
     <div className="d-flex full-width">
       <div className="deal__field deal__field-avatar vertical-center">
@@ -78,13 +82,21 @@ const DealRow = ({ deal }) => {
         {deal.status === 'opened' ? (
           <RoundedButton
             type="primary"
-            disabled={Number(accountInfo.bdtBalance) < Number(deal.minContributorBDTBalance)}
+            disabled={
+              Number(accountInfo.usdtBalance) < Number(deal.minContribution) ||
+              Number(accountInfo.userAccessLevel) < deal.minAccessLevel
+            }
             onClick={onContribute}
           >
             Contribute
           </RoundedButton>
         ) : (
-          <RoundedButton disabled>Claim</RoundedButton>
+          <RoundedButton
+            disabled={!deal.claimAmounts || deal.claimAmounts.length === 0}
+            onClick={onClaim}
+          >
+            Claim
+          </RoundedButton>
         )}
       </div>
     </div>

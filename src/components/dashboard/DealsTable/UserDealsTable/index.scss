@@ -134,6 +134,7 @@
     min-height: calc(100vh - 270px);
     max-height: calc(100vh - 270px);
     overflow-y: auto;
+    padding-bottom: 320px;
     &:after {
       content: '';
       position: absolute;
@@ -147,9 +148,6 @@
         rgba(2, 2, 2, 0.87) 50%,
         $color-black
       );
-    }
-    &:hover:after {
-      display: none;
     }
     &__row {
       height: 100px;
