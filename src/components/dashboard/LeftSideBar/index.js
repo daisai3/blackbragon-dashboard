@@ -83,17 +83,17 @@ function LeftSideBar() {
         )}
         <div className="meta-info">
           <div className="social-links">
-            <a href="/">
-              <SvgIcon name="facebook" width={16} />
+            <a href="https://discord.gg/yEyUsyE" target="_blank" rel="noopener noreferrer">
+              <SvgIcon name="discord" width={16} />
             </a>
-            <a href="/">
-              <SvgIcon name="googlePlus" width={16} />
+            <a href="https://t.me/BlackDragon_Announce" target="_blank" rel="noopener noreferrer">
+              <SvgIcon name="telegram" width={16} />
             </a>
-            <a href="/">
+            <a href="https://twitter.com/blackdragon_io" target="_blank" rel="noopener noreferrer">
               <SvgIcon name="twitter" width={16} />
             </a>
-            <a href="/">
-              <SvgIcon name="instagram" width={16} />
+            <a href="mailto:hello@blackdragon.io" target="_blank" rel="noopener noreferrer">
+              <SvgIcon name="mail" width={16} />
             </a>
           </div>
           <div className="terms-and-policy">

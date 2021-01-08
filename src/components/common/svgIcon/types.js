@@ -20,6 +20,9 @@ import IconGooglePlus from 'assets/icons/icon-google-plus.svg';
 import IconTwitter from 'assets/icons/icon-twitter.svg';
 import IconInstagram from 'assets/icons/icon-instagram.svg';
 
+import IconDiscord from 'assets/icons/icon-discord.svg';
+import IconTelegram from 'assets/icons/icon-telegram.svg';
+import IconMail from 'assets/icons/icon-mail.svg';
 import IconMenu from 'assets/icons/icon-menu.svg';
 
 const Icons = {
@@ -45,6 +48,9 @@ const Icons = {
   instagram: IconInstagram,
 
   menu: IconMenu,
+  discord: IconDiscord,
+  telegram: IconTelegram,
+  mail: IconMail,
 };
 
 export default Icons;
