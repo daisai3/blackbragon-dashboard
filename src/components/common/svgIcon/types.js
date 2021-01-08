@@ -14,6 +14,8 @@ import IconStatusClosed from 'assets/icons/icon-status-closed.svg';
 import IconStatusCanceled from 'assets/icons/icon-status-canceled.svg';
 import IconStatusDistributed from 'assets/icons/icon-status-distributed.svg';
 import IconPlus from 'assets/icons/icon-plus.svg';
+import IconClose from 'assets/icons/icon-close.svg';
+import IconReport from 'assets/icons/icon-report.svg';
 
 import IconFacebook from 'assets/icons/icon-facebook.svg';
 import IconGooglePlus from 'assets/icons/icon-google-plus.svg';
@@ -41,6 +43,8 @@ const Icons = {
   statusCanceled: IconStatusCanceled,
   statusDistributed: IconStatusDistributed,
   plus: IconPlus,
+  close: IconClose,
+  report: IconReport,
 
   facebook: IconFacebook,
   googlePlus: IconGooglePlus,

@@ -1,0 +1,83 @@
+@import 'sass/utils/_variables';
+
+#disclaim-modal {
+  > div:nth-child(3) {
+    > div {
+      padding: 0px 20px;
+      width: 100vw;
+      max-width: 720px;
+      border-radius: 4px;
+      background: $color-gray-10;
+    }
+  }
+}
+
+.disclaim-modal {
+  // header
+  &-header {
+    padding: 30px 0px;
+    &__title {
+      font-size: 24px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.25;
+      color: $color-white;
+      > span {
+        margin-left: 10px;
+      }
+      svg {
+        path:last-child {
+          fill: $color-gray-60;
+        }
+      }
+    }
+    &__btn {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      &:hover {
+        svg {
+          path {
+            fill: $color-gray-30;
+          }
+        }
+      }
+    }
+  }
+  // body
+  &-body {
+    padding: 20px;
+    padding-bottom: 0px;
+    background: $color-gray;
+    border-radius: 4px;
+    max-height: 320px;
+    overflow-y: auto;
+    .disclaim-rules {
+      &__item {
+        margin-bottom: 20px;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        color: $color-gray-60;
+      }
+    }
+  }
+  //footer
+  &-footer {
+    padding: 40px 0px;
+    .disclaim-actions {
+      text-align: right;
+      button {
+        margin-left: 20px;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        width: 82px;
+      }
+    }
+  }
+}

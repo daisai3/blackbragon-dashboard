@@ -101,23 +101,22 @@ input {
 
 // custom scrollbar
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-  // background-color: var(--scrollbar-bg-color);
-  background-color: var(--theme-color-primary);
+  width: 8px;
+  height: 8px;
+  background-color: $color-gray;
   scrollbar-width: 10px;
 }
 
 ::-webkit-scrollbar-track {
   width: 10px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-color);
-  border-radius: 2px;
+  background: $color-gray-20;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-hover-color);
+  background: $color-gray-40;
 }
