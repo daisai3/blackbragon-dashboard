@@ -85,10 +85,11 @@
     margin-left: 20px;
   }
   .deal__field-action {
-    padding-left: 37px;
-    justify-content: start;
     min-width: auto;
-    width: 137px;
+    width: 16%;
+    button {
+      width: 100px;
+    }
   }
 
   // options
