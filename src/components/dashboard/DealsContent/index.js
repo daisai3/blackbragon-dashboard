@@ -36,8 +36,6 @@ function DealsContent() {
     setSearchValue(value);
   };
 
-  const onSelectFilter = () => {};
-
   return (
     <div className="deals-container">
       <div className="deals-header">
@@ -55,9 +53,9 @@ function DealsContent() {
               onChange={onChangeSearch}
             />
           </div>
-          <div className="filter-container vertical-center">
-            <FilterSelect onSelect={onSelectFilter} />
-          </div>
+          {/* <div className="filter-container vertical-center">
+            <FilterSelect />
+          </div> */}
         </div>
       </div>
       {userDeals.length > 0 && (
