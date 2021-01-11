@@ -319,7 +319,7 @@ export async function getUserModel(address) {
   };
 }
 
-export async function claim(dealAddress, tokenAddress) {
+export async function claimDeal(dealAddress, tokenAddress) {
   let result = false;
   try {
     const dealContract = new ethers.Contract(dealAddress, DealArtifact.abi, signer);
