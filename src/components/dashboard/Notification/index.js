@@ -6,11 +6,15 @@ import './index.scss';
 
 const title = {
   approved: 'Deal, successfully approved!',
-  failed: 'Oops, Deal was not approved!',
+  contributed: 'Deal, successfully contributed!',
+  approveFailed: 'Oops, Deal was not approved!',
+  contributeFailed: 'Oops, Deal was not contributed!',
 };
 const description = {
   approved: 'You are going well :)',
-  failed: 'Something goes wrong, try again!',
+  contributed: 'You are going well :)',
+  approveFailed: 'Something goes wrong, try again!',
+  contributeFailed: 'Something goes wrong, try again!',
 };
 
 function DealApproveNotification() {

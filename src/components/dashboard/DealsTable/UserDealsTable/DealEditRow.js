@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
@@ -7,13 +7,16 @@ import RoundedButton from 'components/common/button/rounded-button';
 import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
 import CustomSlider from 'components/common/progress-bar/custom-slider';
 import NumberInput from 'components/common/input/number-input';
+import CircleLoading from 'components/common/loading/circle-loading';
 import { updateGlobal } from 'store/actions';
-import { approveDeal } from 'contracts/index';
+import { approveDeal, contributeDeal } from 'contracts/index';
 import './index.scss';
 
 const DealEditRow = ({ deal }) => {
   const dispatch = useDispatch();
   const [contributionValue, setContributionValue] = useState('');
+  const [isApproved, setApproved] = useState(false);
+  const [isPending, setPending] = useState(false);
   const authReducer = useSelector((state) => state.auth);
   const { walletAddress } = authReducer;
 
@@ -23,23 +26,46 @@ const DealEditRow = ({ deal }) => {
   }, []);
 
   const onChangeContributionValue = (e) => {
+    if (isApproved || isPending) return;
     const { value } = e.target;
     setContributionValue(value);
   };
 
-  const onChangeContributionSlider = useCallback((event, val) => {
+  const onChangeContributionSlider = (event, val) => {
+    if (isApproved || isPending) return;
     setContributionValue(val.toString());
-  }, []);
+  };
 
   const onCloseDealModal = () => {
     dispatch(updateGlobal({ activeDeal: null }));
     setContributionValue('');
   };
 
-  const onApprove = async () => {
-    // onCloseDealModal();
+  const callApprove = async () => {
+    setPending(true);
     const result = await approveDeal(walletAddress, contributionValue.replace(',', '').toString());
-    dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'failed' }));
+    dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'approveFailed' }));
+    setPending(false);
+    setApproved(true);
+  };
+
+  const callContribute = async () => {
+    setPending(true);
+    const result = await contributeDeal(
+      walletAddress,
+      contributionValue.replace(',', '').toString()
+    );
+    dispatch(updateGlobal({ dealApprovedStatus: result ? 'contributed' : 'contributeFailed' }));
+    setPending(false);
+    setApproved(false);
+  };
+
+  const onApprove = async () => {
+    if (!isApproved) await callApprove();
+    else {
+      await callContribute();
+      onCloseDealModal();
+    }
   };
 
   return (
@@ -76,15 +102,21 @@ const DealEditRow = ({ deal }) => {
           <NumberInput
             placeholder=""
             value={contributionValue}
+            disabled={isApproved || isPending}
             onChange={onChangeContributionValue}
           />
         </span>
         <span>USDT</span>
       </div>
       <div className="deal__field deal__field-modal-action vertical-center">
-        <RoundedButton onClick={onCloseDealModal}>Cancel</RoundedButton>
-        <RoundedButton type="primary" onClick={onApprove}>
-          Approve
+        <RoundedButton disabled={isPending} onClick={onCloseDealModal}>
+          Cancel
+        </RoundedButton>
+        <RoundedButton type="primary" disabled={isPending} onClick={onApprove}>
+          <div className="d-flex">
+            {isApproved ? 'Contribute' : 'Approve'}
+            <CircleLoading loading={isPending} />
+          </div>
         </RoundedButton>
       </div>
     </div>

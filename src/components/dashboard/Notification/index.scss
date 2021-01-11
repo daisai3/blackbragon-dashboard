@@ -7,10 +7,12 @@
   display: flex;
   margin-right: 10px;
 
-  &--approved {
+  &--approved,
+  &--contributed {
     background: $color-green;
   }
-  &--failed {
+  &--approveFailed,
+  &--contributeFailed {
     background: $color-red;
   }
   &-icon {

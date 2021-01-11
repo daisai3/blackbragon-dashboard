@@ -12,6 +12,7 @@ function NumberInput({ label, value, name, placeholder, disabled, onChange }) {
         value={value}
         placeholder={placeholder}
         disabled={disabled}
+        displayType={disabled ? 'text' : 'input'}
         thousandSeparator
         onChange={onChange}
       />

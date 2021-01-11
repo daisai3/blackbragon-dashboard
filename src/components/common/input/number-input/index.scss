@@ -1,6 +1,13 @@
 @import 'sass/utils/_variables';
 
 .custom-number-input {
+  margin-right: 10px;
+  // text
+  > span {
+    padding: 3px 5px 3px 33px;
+    border-radius: 5px;
+    background: $color-gray;
+  }
   label {
     font-size: 11px;
     font-weight: 500;

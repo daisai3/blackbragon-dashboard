@@ -113,7 +113,7 @@ const getMyContributionAmountLeft = async (dealAddress) => {
   return ethers.utils.formatUnits(contributionAmountBN, 'mwei');
 };
 
-export async function contribute(address, amount) {
+export async function contributeDeal(address, amount) {
   let result = false;
   try {
     const weiAmount = ethers.utils.parseUnits(amount, 'mwei');

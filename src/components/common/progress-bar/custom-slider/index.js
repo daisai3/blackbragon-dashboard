@@ -10,6 +10,9 @@ const PrettoSlider = withStyles({
     color: '#029e80',
     height: 4,
   },
+  disabled: {
+    color: '#029e80!important',
+  },
   thumb: {
     height: 16,
     width: 16,
@@ -19,6 +22,9 @@ const PrettoSlider = withStyles({
     marginLeft: -8,
     '&:focus, &:hover, &$active': {
       boxShadow: '0px 0px 0px 8px rgba(#029e80, 0.16)!important',
+    },
+    '&$disabled': {
+      marginTop: `-3px!important`,
     },
   },
   active: {},
@@ -36,7 +42,7 @@ const PrettoSlider = withStyles({
   },
 })(Slider);
 
-const CustomSlider = ({ value, min, max, onChange }) => {
+const CustomSlider = ({ value, min, max, disabled, onChange }) => {
   return (
     <div className="custom-slider">
       <div className="custom-slider__label">
@@ -53,6 +59,7 @@ const CustomSlider = ({ value, min, max, onChange }) => {
         step={10}
         max={Number(max)}
         value={Number(value)}
+        disabled={disabled}
         onChange={onChange}
         aria-labelledby="continuous-slider"
       />
@@ -64,6 +71,7 @@ CustomSlider.propTypes = {
   value: PropTypes.string,
   min: PropTypes.string,
   max: PropTypes.string,
+  disabled: PropTypes.bool,
   onChange: PropTypes.func,
 };
 
@@ -71,6 +79,7 @@ CustomSlider.defaultProps = {
   value: '20',
   min: '0',
   max: '20',
+  disabled: false,
   onChange: () => {},
 };
 
