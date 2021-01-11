@@ -37,7 +37,7 @@ const DealEditRow = ({ deal }) => {
   };
 
   const onApprove = async () => {
-    onCloseDealModal();
+    // onCloseDealModal();
     const result = await approveDeal(walletAddress, contributionValue.replace(',', '').toString());
     dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'failed' }));
   };

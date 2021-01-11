@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import SvgIcon from 'components/common/svgIcon';
 import IconButton from 'components/common/button/icon-button';
@@ -7,7 +8,7 @@ import './index.scss';
 
 const menuItems = [{ id: 0, name: 'Deals', value: 'deal1', icon: 'chart' }];
 
-function LeftSideBar() {
+function LeftSideBar({ isExpanded, onToggleSidebar }) {
   const [currentTab, setCurrentTab] = useState(menuItems[0]);
   const authReducer = useSelector((state) => state.auth);
   const { accountInfo, isAdmin } = authReducer;
@@ -17,10 +18,10 @@ function LeftSideBar() {
   };
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${!isExpanded ? 'sidebar--collapsed' : ''}`}>
       <div className="sidebar__top vertical-center">
         <div className="chart-btn-container">
-          <IconButton icon="menu" />
+          <IconButton icon={isExpanded ? 'menu1' : 'menu'} onClick={onToggleSidebar} />
         </div>
       </div>
       <div className="sidebar__content">
@@ -39,7 +40,9 @@ function LeftSideBar() {
                   <span className="sidebar-menu__item-icon vertical-center">
                     <SvgIcon name={item.icon} />
                   </span>
-                  <span className="sidebar-menu__item-name button-big">{item.name}</span>
+                  {isExpanded && (
+                    <span className="sidebar-menu__item-name button-big">{item.name}</span>
+                  )}
                 </div>
               </button>
             );
@@ -47,7 +50,7 @@ function LeftSideBar() {
         </div>
       </div>
       <div className="sidebar__footer">
-        {!isAdmin && (
+        {!isAdmin && isExpanded && (
           <div className="account-info">
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">Access Level</h5>
@@ -98,24 +101,27 @@ function LeftSideBar() {
               <SvgIcon name="mail" width={16} />
             </a>
           </div>
-          <div className="terms-and-policy">
-            <div className="policy">
-              <a href="/">Privacy policy</a>
-            </div>
-            <div className="terms">
-              <a href="/">Terms and conditions</a>
-            </div>
-          </div>
-
-          <div className="company-info">© 2020 Black Dragon</div>
+          {isExpanded && (
+            <>
+              <div className="terms-and-policy">
+                <div className="policy">
+                  <a href="/">Privacy policy</a>
+                </div>
+                <div className="terms">
+                  <a href="/">Terms and conditions</a>
+                </div>
+              </div>
+              <div className="company-info">© 2020 Black Dragon</div>
+            </>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-LeftSideBar.propTypes = {};
+LeftSideBar.propTypes = { isExpanded: PropTypes.bool, onToggleSidebar: PropTypes.func };
 
-LeftSideBar.defaultProps = {};
+LeftSideBar.defaultProps = { isExpanded: true, onToggleSidebar: () => {} };
 
 export default LeftSideBar;

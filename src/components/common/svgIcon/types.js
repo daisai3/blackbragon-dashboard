@@ -26,6 +26,7 @@ import IconDiscord from 'assets/icons/icon-discord.svg';
 import IconTelegram from 'assets/icons/icon-telegram.svg';
 import IconMail from 'assets/icons/icon-mail.svg';
 import IconMenu from 'assets/icons/icon-menu.svg';
+import IconMenu1 from 'assets/icons/icon-menu1.svg';
 
 const Icons = {
   chart: IconChart,
@@ -52,6 +53,7 @@ const Icons = {
   instagram: IconInstagram,
 
   menu: IconMenu,
+  menu1: IconMenu1,
   discord: IconDiscord,
   telegram: IconTelegram,
   mail: IconMail,

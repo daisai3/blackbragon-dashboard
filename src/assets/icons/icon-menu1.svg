@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>43395F7B-B9A1-432D-9EFF-99369CFE4FEC</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-(Admin)" transform="translate(-35.000000, -28.000000)">
+            <g id="Icon-/-Sidebar-(Close)" transform="translate(35.000000, 28.000000)">
+                <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M3,18 L16,18 L16,16 L3,16 L3,18 Z M3,13 L13,13 L13,11 L3,11 L3,13 Z M3,6 L3,8 L16,8 L16,6 L3,6 Z M21,15.59 L17.42,12 L21,8.41 L19.59,7 L14.59,12 L19.59,17 L21,15.59 Z" id="Shape" fill="#BEBEBE" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
