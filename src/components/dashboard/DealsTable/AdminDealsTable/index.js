@@ -130,7 +130,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
             className={`filter-btn ${filterOption === 'active' ? 'filter-btn--active' : ''}`}
             onClick={() => onSelectFilter('active')}
           >
-            <span>Active</span>
+            <span>Live</span>
           </RoundedButton>
         </div>
         <div className="filter-btn-wrapper">
@@ -162,8 +162,8 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
         <div className="deal__field deal__field-avatar vertical-center" />
         <div className="deal__field deal__field-name vertical-center">Name</div>
         <div className="deal__field deal__field-status vertical-center">Status</div>
-        <div className="deal__field deal__field-size vertical-center">Deal size</div>
         <div className="deal__field deal__field-raised-amount vertical-center">Raised Amount</div>
+        <div className="deal__field deal__field-size vertical-center">Deal size</div>
         <div className="deal__field deal__field-model vertical-center">Deal Model</div>
         <div className="deal__field deal__field-status-stepper vertical-center" />
         <div className="deal__field deal__field-action vertical-center">

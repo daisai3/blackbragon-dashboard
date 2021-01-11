@@ -30,7 +30,7 @@ const DealRow = ({ deal }) => {
       <div className="deal__field deal__field-name vertical-center">
         <div>
           <span>{deal.name}</span>
-          <CustomProgressBar percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)} />
+          <CustomProgressBar total={Number(deal.dealSize)} value={Number(deal.raisedAmount)} />
         </div>
       </div>
       <div
@@ -43,17 +43,17 @@ const DealRow = ({ deal }) => {
           {deal.status === 'opened' ? 'live' : deal.status}
         </span>
       </div>
-      <div className="deal__field deal__field-size vertical-center">
+      <div className="deal__field deal__field-raised-amount vertical-center">
         <NumberFormat
-          value={Number(deal.dealSize)}
+          value={Number(deal.raisedAmount)}
           thousandSeparator
           displayType="text"
           prefix="$"
         />
       </div>
-      <div className="deal__field deal__field-raised-amount vertical-center">
+      <div className="deal__field deal__field-size vertical-center">
         <NumberFormat
-          value={Number(deal.raisedAmount)}
+          value={Number(deal.dealSize)}
           thousandSeparator
           displayType="text"
           prefix="$"
