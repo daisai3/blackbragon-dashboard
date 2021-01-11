@@ -51,7 +51,9 @@ function LeftSideBar() {
           <div className="account-info">
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">Access Level</h5>
-              <div className="account-info__field-value">{`Level ${accountInfo.userAccessLevel}`}</div>
+              <div className="account-info__field-value">{`Level ${
+                accountInfo.userAccessLevel >= 0 ? accountInfo.userAccessLevel : '-'
+              }`}</div>
             </div>
             <div className="account-info__field">
               <h5 className="account-info__field-name body-1">ProRata Share</h5>
