@@ -50,7 +50,7 @@ const DealEditRow = ({ deal }) => {
       <div className="deal__field deal__field-name vertical-center">
         <div>
           <span>{deal.name}</span>
-          <CustomProgressBar percent={(Number(deal.raisedAmount) * 100) / Number(deal.dealSize)} />
+          <CustomProgressBar total={Number(deal.dealSize)} value={Number(deal.raisedAmount)} />
         </div>
       </div>
       <div
