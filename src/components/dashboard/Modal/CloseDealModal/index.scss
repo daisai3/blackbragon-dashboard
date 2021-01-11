@@ -1,0 +1,93 @@
+@import 'sass/utils/_variables';
+
+#close-deal-modal {
+  > div:nth-child(3) {
+    > div {
+      padding: 0px 20px;
+      width: 100vw;
+      max-width: 540px;
+      border-radius: 5px;
+      background: $color-gray-10;
+    }
+  }
+}
+
+.close-deal-modal {
+  // header
+  &-header {
+    padding: 32px 0px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba($color-gray-50, 0.2);
+    &__left {
+      .deal-avatar {
+        height: 36px;
+        width: 36px;
+      }
+      .deal-name {
+        margin-left: 5px;
+        width: 110px;
+        font-size: 16px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: normal;
+        color: #d8d8d8;
+      }
+    }
+    &__right {
+      button {
+        margin-left: 30px;
+      }
+    }
+  }
+  // body
+  &-body {
+    padding: 23px 0px 40px;
+    border-bottom: 1px solid rgba($color-gray-50, 0.2);
+    .close-amount {
+      justify-content: space-between;
+      width: 100%;
+      &-slider {
+        width: 300px;
+      }
+      &-input {
+        input {
+          width: 80px;
+          padding: 3px 5px;
+          text-align: right;
+          margin-right: 5px;
+          font-size: 14px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.29;
+          letter-spacing: normal;
+          color: $color-gray-60;
+        }
+        &-unit {
+          font-size: 11px;
+          font-weight: 500;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.45;
+          letter-spacing: normal;
+          text-align: right;
+          color: $color-gray-30;
+        }
+      }
+    }
+  }
+  //footer
+  &-footer {
+    padding: 30px 0px 40px;
+    display: flex;
+    justify-content: space-between;
+    .closing-amount {
+      width: 60%;
+    }
+    .closing-token {
+      width: 40%;
+    }
+  }
+}
