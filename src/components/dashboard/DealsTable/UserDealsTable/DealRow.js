@@ -103,7 +103,8 @@ const DealRow = ({ deal, onFetchDeals }) => {
               type="primary"
               disabled={
                 Number(accountInfo.usdtBalance) < Number(deal.minContribution) ||
-                Number(accountInfo.userAccessLevel) < deal.minAccessLevel
+                Number(accountInfo.userAccessLevel) < deal.minAccessLevel ||
+                Number(deal.personalCap) < Number(deal.minContribution)
               }
               onClick={onContribute}
             >
