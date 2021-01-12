@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import SearchInput from 'components/common/input/search-input';
-import FilterSelect from 'components/common/select/filter-select';
+// import FilterSelect from 'components/common/select/filter-select';
 import UserDealsTable from 'components/dashboard/DealsTable/UserDealsTable';
 import AdminDealsTable from 'components/dashboard/DealsTable/AdminDealsTable';
 import { getDealModels } from 'contracts/index';

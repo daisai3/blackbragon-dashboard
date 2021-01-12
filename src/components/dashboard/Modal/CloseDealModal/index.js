@@ -26,7 +26,7 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
     setCloseAmount(value.replaceAll(',', ''));
   };
 
-  const onChangeSlider = (event, val) => {
+  const onChangeSlider = (_event, val) => {
     setCloseAmount(val.toString());
   };
 
