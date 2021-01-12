@@ -11,6 +11,18 @@
     color: $color-gray-30;
     margin-bottom: 5px;
   }
+  // text
+  > span {
+    margin-top: 16px;
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.06;
+    letter-spacing: normal;
+    color: $color-gray-60;
+  }
   input {
     background-color: $color-gray;
     border-radius: 5px;

@@ -17,10 +17,9 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
 
   const onChangeCloseAmount = (e) => {
     const { value } = e.target;
-    if (Number(value) < 0) return;
-
-    // if (!deal.userCap || Number(value) > Number(deal.userCap)) setCloseAmount(closeAmount);
-    setCloseAmount(value);
+    if (Number(value.replaceAll(',', '')) > Number(deal.userCap))
+      return setCloseAmount((prev) => prev);
+    setCloseAmount(value.replaceAll(',', ''));
   };
 
   const onChangeSlider = (event, val) => {
@@ -79,7 +78,7 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
         <div className="d-flex close-amount">
           <div className="close-amount-slider vertical-center">
             <CustomSlider
-              value={closeAmount.replace(',', '')}
+              value={closeAmount.replaceAll(',', '')}
               min={deal.minContribution}
               max={deal.userCap || '0'}
               onChange={onChangeSlider}
@@ -106,7 +105,7 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
           <CustomInput label="Closing Amount" thousandSeparator value={closeAmount} disabled />
         </div>
         <div className="closing-token">
-          <CustomInput label="Closing Token" value="USDT" disabled />
+          <CustomInput label="Closing Token" isText value="USDT" disabled />
         </div>
       </div>
     </Dialog>

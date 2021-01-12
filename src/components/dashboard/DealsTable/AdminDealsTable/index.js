@@ -101,9 +101,9 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
 
   const onUpdateDeal = async (deal) => {
     const _deal = { ...deal };
-    _deal.dealSize = deal.dealSize.replace(',', '');
-    _deal.minContribution = deal.minContribution.replace(',', '');
-    _deal.userCap = deal.userCap.replace(',', '');
+    _deal.dealSize = deal.dealSize.replaceAll(',', '');
+    _deal.minContribution = deal.minContribution.replaceAll(',', '');
+    _deal.userCap = deal.userCap.replaceAll(',', '');
 
     const result = await updateDeal(_deal);
     onCloseDealModal();
