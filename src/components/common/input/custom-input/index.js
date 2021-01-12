@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
+import MiddleEllipsis from 'react-middle-ellipsis';
 import './index.scss';
 
 function CustomInput({
@@ -16,7 +17,13 @@ function CustomInput({
   return (
     <div className="custom-input">
       {label.length > 0 && <label htmlFor="custom-input">{label}</label>}
-      {isText && <span>{value}</span>}
+      {isText && (
+        <span>
+          <MiddleEllipsis>
+            <span>{value}</span>
+          </MiddleEllipsis>
+        </span>
+      )}
       {thousandSeparator && (
         <NumberFormat value={value} thousandSeparator={!isText} displayType="text" />
       )}
