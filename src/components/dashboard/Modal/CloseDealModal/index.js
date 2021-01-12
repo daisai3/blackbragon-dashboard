@@ -16,12 +16,12 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
   const [destinationAddress, setDestinationAddress] = useState('');
 
   useEffect(() => {
-    setCloseAmount(deal.userCap);
+    setCloseAmount(deal.raisedAmount);
   }, [deal]);
 
   const onChangeCloseAmount = (e) => {
     const { value } = e.target;
-    if (Number(value.replaceAll(',', '')) > Number(deal.userCap))
+    if (Number(value.replaceAll(',', '')) > Number(deal.raisedAmount))
       return setCloseAmount((prev) => prev);
     setCloseAmount(value.replaceAll(',', ''));
   };
@@ -84,7 +84,7 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
             <CustomSlider
               value={closeAmount.replaceAll(',', '')}
               min={deal.minContribution}
-              max={deal.userCap || '0'}
+              max={deal.raisedAmount || '0'}
               onChange={onChangeSlider}
             />
           </div>
