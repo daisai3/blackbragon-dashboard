@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import SvgIcon from 'components/common/svgIcon';
 import RoundedButton from 'components/common/button/rounded-button';
@@ -12,13 +12,11 @@ import { updateGlobal } from 'store/actions';
 import { approveDeal, contributeDeal } from 'contracts/index';
 import './index.scss';
 
-const DealEditRow = ({ deal }) => {
+const DealEditRow = ({ deal, onFetchDeals }) => {
   const dispatch = useDispatch();
   const [contributionValue, setContributionValue] = useState('');
   const [isApproved, setApproved] = useState(false);
   const [isPending, setPending] = useState(false);
-  const authReducer = useSelector((state) => state.auth);
-  const { walletAddress } = authReducer;
 
   useEffect(() => {
     setContributionValue(Number(deal.contributedAmount).toString());
@@ -43,7 +41,7 @@ const DealEditRow = ({ deal }) => {
 
   const callApprove = async () => {
     setPending(true);
-    const result = await approveDeal(walletAddress, contributionValue.replace(',', '').toString());
+    const result = await approveDeal(deal.address, contributionValue.replace(',', '').toString());
     dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'approveFailed' }));
     setPending(false);
     setApproved(true);
@@ -52,12 +50,13 @@ const DealEditRow = ({ deal }) => {
   const callContribute = async () => {
     setPending(true);
     const result = await contributeDeal(
-      walletAddress,
+      deal.address,
       contributionValue.replace(',', '').toString()
     );
     dispatch(updateGlobal({ dealApprovedStatus: result ? 'contributed' : 'contributeFailed' }));
     setPending(false);
     setApproved(false);
+    onFetchDeals();
   };
 
   const onApprove = async () => {
@@ -125,10 +124,12 @@ const DealEditRow = ({ deal }) => {
 
 DealEditRow.propTypes = {
   deal: PropTypes.shape(),
+  onFetchDeals: PropTypes.func,
 };
 
 DealEditRow.defaultProps = {
   deal: {},
+  onFetchDeals: () => {},
 };
 
 export default React.memo(DealEditRow);

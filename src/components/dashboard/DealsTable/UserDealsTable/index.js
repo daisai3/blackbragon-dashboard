@@ -31,7 +31,7 @@ const getListStyle = (isDraggingOver) => ({
   padding: 0,
 });
 
-function UserDealsTable({ userDeals }) {
+function UserDealsTable({ userDeals, onFetchDeals }) {
   const [deals, setDeals] = useState([]);
   const [filterOption, setFilterOption] = useState('all deals');
   const globalReducer = useSelector((state) => state.global);
@@ -130,7 +130,7 @@ function UserDealsTable({ userDeals }) {
                         }`}
                       >
                         {activeDeal && activeDeal.id === deal.id ? (
-                          <DealEditRow deal={deal} />
+                          <DealEditRow deal={deal} onFetchDeals={onFetchDeals} />
                         ) : (
                           <DealRow deal={deal} />
                         )}
@@ -150,10 +150,12 @@ function UserDealsTable({ userDeals }) {
 
 UserDealsTable.propTypes = {
   userDeals: PropTypes.arrayOf(PropTypes.shape()),
+  onFetchDeals: PropTypes.func,
 };
 
 UserDealsTable.defaultProps = {
   userDeals: [],
+  onFetchDeals: () => {},
 };
 
 export default React.memo(UserDealsTable);

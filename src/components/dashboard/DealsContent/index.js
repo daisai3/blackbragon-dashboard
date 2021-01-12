@@ -15,7 +15,6 @@ function DealsContent() {
 
   const fetchUserDeals = async () => {
     const { userAccessLevel } = accountInfo;
-    // const deals = await getDealModels(1);
     const deals = await getDealModels(userAccessLevel);
     const _deals = deals.map((deal, index) => {
       return {
@@ -63,7 +62,7 @@ function DealsContent() {
           {isAdmin ? (
             <AdminDealsTable userDeals={userDeals} onFetchDeals={fetchUserDeals} />
           ) : (
-            <UserDealsTable userDeals={userDeals} />
+            <UserDealsTable userDeals={userDeals} onFetchDeals={fetchUserDeals} />
           )}
         </div>
       )}
