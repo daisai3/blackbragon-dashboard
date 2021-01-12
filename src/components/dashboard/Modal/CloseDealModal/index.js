@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
 import { ethers } from 'ethers';
@@ -14,6 +14,10 @@ import './index.scss';
 const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
   const [closeAmount, setCloseAmount] = useState('0');
   const [destinationAddress, setDestinationAddress] = useState('');
+
+  useEffect(() => {
+    setCloseAmount(deal.userCap);
+  }, [deal]);
 
   const onChangeCloseAmount = (e) => {
     const { value } = e.target;
