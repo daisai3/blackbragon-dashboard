@@ -132,7 +132,7 @@ function UserDealsTable({ userDeals, onFetchDeals }) {
                         {activeDeal && activeDeal.id === deal.id ? (
                           <DealEditRow deal={deal} onFetchDeals={onFetchDeals} />
                         ) : (
-                          <DealRow deal={deal} />
+                          <DealRow deal={deal} onFetchDeals={onFetchDeals}/>
                         )}
                       </div>
                     )}
