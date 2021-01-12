@@ -1,0 +1,61 @@
+@import 'sass/utils/_variables';
+
+#claim-deal-modal {
+  > div:nth-child(3) {
+    > div {
+      padding: 0px 20px;
+      width: 100vw;
+      max-width: 540px;
+      border-radius: 5px;
+      background: $color-gray-10;
+    }
+  }
+}
+
+.claim-deal-modal {
+  // header
+  &-header {
+    padding: 32px 0px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba($color-gray-50, 0.2);
+    &__left {
+      .deal-avatar {
+        height: 36px;
+        width: 36px;
+      }
+      .deal-name {
+        margin-left: 5px;
+        width: 110px;
+        font-size: 16px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.5;
+        letter-spacing: normal;
+        color: #d8d8d8;
+      }
+    }
+    &__right {
+      button {
+        margin-left: 30px;
+      }
+    }
+  }
+  // body
+  &-body {
+    padding: 23px 0px 40px;
+    .claim-token,
+    .claim-symbol {
+      width: 280px;
+    }
+    .deal-address,
+    .claim-amount {
+      width: 190px;
+    }
+
+    .claim-amount,
+    .claim-symbol {
+      margin-top: 30px;
+    }
+  }
+}
