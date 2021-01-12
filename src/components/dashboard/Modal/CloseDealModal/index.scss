@@ -50,6 +50,7 @@
       width: 100%;
       &-slider {
         width: 300px;
+        margin-left: 11px;
       }
       &-input {
         input {
@@ -76,6 +77,10 @@
           color: $color-gray-30;
         }
       }
+    }
+    .destination-address {
+      margin-top: 20px;
+      min-width: 336px;
     }
   }
   //footer

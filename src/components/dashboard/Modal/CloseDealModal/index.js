@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Dialog from '@material-ui/core/Dialog';
+import { ethers } from 'ethers';
 import RoundedButton from 'components/common/button/rounded-button';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
 import CustomProgressBar from 'components/common/progress-bar/custom-progress-bar';
 import CustomSlider from 'components/common/progress-bar/custom-slider';
 import CustomInput from 'components/common/input/custom-input';
 import NumberInput from 'components/common/input/number-input';
+import CircleLoading from 'components/common/loading/circle-loading';
 import './index.scss';
 
-const CloseDealModal = ({ open, deal, onOk, onClose }) => {
+const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
   const [closeAmount, setCloseAmount] = useState('0');
+  const [destinationAddress, setDestinationAddress] = useState('');
 
   const onChangeCloseAmount = (e) => {
     const { value } = e.target;
+    if (Number(value) < 0) return;
+
     // if (!deal.userCap || Number(value) > Number(deal.userCap)) setCloseAmount(closeAmount);
     setCloseAmount(value);
   };
 
   const onChangeSlider = (event, val) => {
     setCloseAmount(val.toString());
+  };
+
+  const onChangeDestinationAddress = (e) => {
+    const { value } = e.target;
+    setDestinationAddress(value);
+  };
+
+  const onConfirm = () => {
+    if (!ethers.utils.isAddress(destinationAddress)) return;
+    onOk(closeAmount, destinationAddress);
   };
 
   return (
@@ -43,13 +58,24 @@ const CloseDealModal = ({ open, deal, onOk, onClose }) => {
           </div>
         </div>
         <div className="close-deal-modal-header__right vertical-center">
-          <RoundedButton onClick={onClose}>Cancel</RoundedButton>
-          <RoundedButton type="secondary" onClick={onOk}>
-            Confirm
+          <RoundedButton disabled={isPending} onClick={onClose}>
+            Cancel
+          </RoundedButton>
+          <RoundedButton
+            type="secondary"
+            disabled={
+              isPending || !ethers.utils.isAddress(destinationAddress) || Number(closeAmount) <= 0
+            }
+            onClick={onConfirm}
+          >
+            <div className="d-flex">
+              Confirm
+              <CircleLoading loading={isPending} />
+            </div>
           </RoundedButton>
         </div>
       </div>
-      <div className="close-deal-modal-body d-flex">
+      <div className="close-deal-modal-body">
         <div className="d-flex close-amount">
           <div className="close-amount-slider vertical-center">
             <CustomSlider
@@ -66,6 +92,14 @@ const CloseDealModal = ({ open, deal, onOk, onClose }) => {
             <span className="close-amount-input-unit">USDT</span>
           </div>
         </div>
+        <div className="destination-address">
+          <CustomInput
+            label="Destination Address"
+            name="destinationAddress"
+            value={destinationAddress}
+            onChange={onChangeDestinationAddress}
+          />
+        </div>
       </div>
       <div className="close-deal-modal-footer">
         <div className="closing-amount">
@@ -81,6 +115,7 @@ const CloseDealModal = ({ open, deal, onOk, onClose }) => {
 
 CloseDealModal.propTypes = {
   open: PropTypes.bool,
+  isPending: PropTypes.bool,
   deal: PropTypes.shape(),
   onClose: PropTypes.func,
   onOk: PropTypes.func,
@@ -88,6 +123,7 @@ CloseDealModal.propTypes = {
 
 CloseDealModal.defaultProps = {
   open: false,
+  isPending: false,
   deal: {},
   onClose: () => {},
   onOk: () => {},

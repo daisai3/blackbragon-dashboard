@@ -15,6 +15,11 @@ import './index.scss';
 const DealRow = ({ deal, onFetchDeals }) => {
   const dispatch = useDispatch();
   const [closeModalOpened, setCloseModalOpened] = useState(false);
+  const [isPending, setPending] = useState(false);
+
+  const onToggleCloseModal = () => {
+    setCloseModalOpened(!closeModalOpened);
+  };
 
   const onManage = () => {
     // TODO: should show modal
@@ -33,10 +38,13 @@ const DealRow = ({ deal, onFetchDeals }) => {
     if (result) onFetchDeals();
   };
 
-  const onCloseDeal = async () => {
+  const onCloseDeal = async (amount, destinationAddress) => {
     if (deal.status === 'closed') return;
-    // const result = await closeDeal(deal.dealAddress);
-    // if (result) onFetchDeals();
+    setPending(true);
+    const result = await closeDeal(deal.dealAddress, amount, destinationAddress);
+    if (result) onFetchDeals();
+    setPending(false);
+    onToggleCloseModal();
   };
 
   const onCancelDeal = async () => {
@@ -49,14 +57,11 @@ const DealRow = ({ deal, onFetchDeals }) => {
     // TODO: should integrate smart contract
   };
 
-  const onToggleCloseModal = () => {
-    setCloseModalOpened(!closeModalOpened);
-  };
-
   return (
     <>
       <CloseDealModal
         open={closeModalOpened}
+        isPending={isPending}
         deal={deal}
         onOk={onCloseDeal}
         onClose={onToggleCloseModal}
