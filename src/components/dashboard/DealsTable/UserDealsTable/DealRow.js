@@ -27,10 +27,10 @@ const DealRow = ({ deal, onFetchDeals }) => {
   };
 
   const onClaim = async () => {
-    setPending(true);
-    const result = await claimDeal(deal.address, walletAddress);
-    if (result) onFetchDeals();
-    setPending(false);
+    // setPending(true);
+    // const result = await claimDeal(deal.address, walletAddress);
+    // if (result) onFetchDeals();
+    // setPending(false);
   };
 
   return (
