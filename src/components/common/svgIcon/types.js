@@ -28,6 +28,9 @@ import IconMail from 'assets/icons/icon-mail.svg';
 import IconMenu from 'assets/icons/icon-menu.svg';
 import IconMenu1 from 'assets/icons/icon-menu1.svg';
 
+import IconError from 'assets/icons/icon-error.svg';
+import IconTick from 'assets/icons/icon-tick.svg';
+
 const Icons = {
   chart: IconChart,
   search: IconSearch,
@@ -57,6 +60,9 @@ const Icons = {
   discord: IconDiscord,
   telegram: IconTelegram,
   mail: IconMail,
+
+  error: IconError,
+  success: IconTick,
 };
 
 export default Icons;

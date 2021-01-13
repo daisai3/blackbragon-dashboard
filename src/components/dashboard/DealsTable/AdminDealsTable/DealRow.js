@@ -59,13 +59,15 @@ const DealRow = ({ deal, onFetchDeals }) => {
 
   return (
     <>
-      <CloseDealModal
-        open={closeModalOpened}
-        isPending={isPending}
-        deal={deal}
-        onOk={onCloseDeal}
-        onClose={onToggleCloseModal}
-      />
+      {closeModalOpened && (
+        <CloseDealModal
+          open={closeModalOpened}
+          isPending={isPending}
+          deal={deal}
+          onOk={onCloseDeal}
+          onClose={onToggleCloseModal}
+        />
+      )}
       <div className="d-flex full-width">
         <div className="deal__field deal__field-avatar vertical-center">
           <a

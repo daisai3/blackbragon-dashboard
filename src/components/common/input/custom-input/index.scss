@@ -1,6 +1,7 @@
 @import 'sass/utils/_variables';
 
-.custom-input {
+.custom-input-container {
+  position: relative;
   label {
     font-size: 11px;
     font-weight: 500;
@@ -23,28 +24,44 @@
     letter-spacing: normal;
     color: $color-gray-60;
   }
-  input {
-    background-color: $color-gray;
-    border-radius: 5px;
-    border: solid 1px transparent;
-    padding: 11px 16px;
-
-    font-size: 15px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: $color-gray-60;
-    &:hover,
-    &:active,
-    &:focus {
-      border-color: $color-gray-30;
-    }
-    &[disabled] {
+  .custom-input-wrapper {
+    position: relative;
+    input {
+      background-color: $color-gray;
+      border-radius: 5px;
       border: solid 1px transparent;
-      background: transparent;
-      padding-left: 0px;
+      padding: 11px 16px;
+
+      font-size: 15px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: $color-gray-60;
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: $color-gray-30;
+      }
+      &[disabled] {
+        border: solid 1px transparent;
+        background: transparent;
+        padding-left: 0px;
+      }
+    }
+    .custom-input-icon {
+      position: absolute;
+      right: 10px;
+      top: 0px;
+      height: 100%;
+    }
+
+    .custom-input--error {
+      border-color: $color-red !important;
+    }
+    .custom-input--success {
+      border-color: $color-green !important;
     }
   }
 }

@@ -40,6 +40,11 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
     onOk(closeAmount, destinationAddress);
   };
 
+  const getAddressStatus = () => {
+    if (destinationAddress.length === 0) return '';
+    return ethers.utils.isAddress(destinationAddress) ? 'success' : 'error';
+  };
+
   return (
     <Dialog open={open} className="close-deal-modal" id="close-deal-modal" onClose={onClose}>
       <div className="close-deal-modal-header d-flex">
@@ -100,6 +105,7 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
             label="Destination Address"
             name="destinationAddress"
             value={destinationAddress}
+            status={getAddressStatus()}
             onChange={onChangeDestinationAddress}
           />
         </div>

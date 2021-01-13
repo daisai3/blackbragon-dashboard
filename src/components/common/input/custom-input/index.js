@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import MiddleEllipsis from 'react-middle-ellipsis';
+import SvgIcon from 'components/common/svgIcon';
 import './index.scss';
 
 function CustomInput({
@@ -11,11 +12,12 @@ function CustomInput({
   placeholder,
   thousandSeparator,
   isText,
+  status,
   disabled,
   onChange,
 }) {
   return (
-    <div className="custom-input">
+    <div className="custom-input-container">
       {label.length > 0 && <label htmlFor="custom-input">{label}</label>}
       {isText && (
         <span>
@@ -28,15 +30,23 @@ function CustomInput({
         <NumberFormat value={value} thousandSeparator={!isText} displayType="text" />
       )}
       {!thousandSeparator && !isText && (
-        <input
-          type="text"
-          id="custom-input"
-          name={name}
-          value={value}
-          disabled={disabled}
-          placeholder={placeholder}
-          onChange={onChange}
-        />
+        <div className="custom-input-wrapper">
+          <input
+            type="text"
+            id="custom-input"
+            className={`custom-input--${status}`}
+            name={name}
+            value={value}
+            disabled={disabled}
+            placeholder={placeholder}
+            onChange={onChange}
+          />
+          {status && (
+            <div className="custom-input-icon vertical-center">
+              <SvgIcon name={status} />
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
@@ -48,6 +58,7 @@ CustomInput.propTypes = {
   placeholder: PropTypes.string,
   thousandSeparator: PropTypes.bool,
   isText: PropTypes.bool,
+  status: PropTypes.string,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
 };
@@ -58,6 +69,7 @@ CustomInput.defaultProps = {
   placeholder: '',
   thousandSeparator: false,
   isText: false,
+  status: null,
   disabled: false,
   onChange: () => {},
 };

@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import './index.scss';
 
-function NumberInput({ label, value, name, placeholder, disabled, isAllowNegative, onChange }) {
+function NumberInput({
+  label,
+  value,
+  name,
+  placeholder,
+  disabled,
+  isAllowNegative,
+  onChange,
+  onBlur,
+}) {
   return (
     <div className="custom-number-input">
       {label.length > 0 && <label htmlFor="custom-number-input">{label}</label>}
@@ -13,6 +22,7 @@ function NumberInput({ label, value, name, placeholder, disabled, isAllowNegativ
         className="real-input"
         disabled={disabled}
         onChange={onChange}
+        onBlur={onBlur}
       />
       <NumberFormat
         name={name}
@@ -35,6 +45,7 @@ NumberInput.propTypes = {
   disabled: PropTypes.bool,
   isAllowNegative: PropTypes.bool,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 NumberInput.defaultProps = {
@@ -44,6 +55,7 @@ NumberInput.defaultProps = {
   disabled: false,
   isAllowNegative: true,
   onChange: () => {},
+  onBlur: () => {},
 };
 
 export default NumberInput;

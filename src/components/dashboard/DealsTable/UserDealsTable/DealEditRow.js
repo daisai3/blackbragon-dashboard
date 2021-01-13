@@ -25,6 +25,12 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
     setContributionValue(value);
   };
 
+  const onBlurContributeValue = () => {
+    if (Number(deal.contributedAmount) + Number(contributionValue) < Number(deal.minContribution)) {
+      setContributionValue(deal.minContribution);
+    }
+  };
+
   const onChangeContributionSlider = (event, val) => {
     if (isApproved || isPending) return;
     if (val < Number(deal.contributedAmount)) return;
@@ -37,14 +43,15 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
   };
 
   const callApprove = async () => {
+    console.log('contributionValue--->', contributionValue);
     setPending(true);
-    const result = await approveDeal(
-      deal.address,
-      contributionValue.replaceAll(',', '').toString()
-    );
-    dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'approveFailed' }));
-    setPending(false);
-    setApproved(true);
+    // const result = await approveDeal(
+    //   deal.address,
+    //   contributionValue.replaceAll(',', '').toString()
+    // );
+    // dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'approveFailed' }));
+    // setPending(false);
+    // setApproved(true);
   };
 
   const callContribute = async () => {
@@ -105,6 +112,7 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
             value={contributionValue}
             disabled={isApproved || isPending}
             onChange={onChangeContributionValue}
+            onBlur={onBlurContributeValue}
           />
         </span>
         <span>USDT</span>
@@ -113,7 +121,16 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
         <RoundedButton disabled={isPending} onClick={onCloseDealModal}>
           Cancel
         </RoundedButton>
-        <RoundedButton type="primary" disabled={isPending} onClick={onApprove}>
+        <RoundedButton
+          type="primary"
+          disabled={
+            isPending ||
+            Number(contributionValue) === 0 ||
+            Number(deal.contributedAmount) + Number(contributionValue) <
+              Number(deal.minContribution)
+          }
+          onClick={onApprove}
+        >
           <div className="d-flex">
             {isApproved ? 'Contribute' : 'Approve'}
             <CircleLoading loading={isPending} />
