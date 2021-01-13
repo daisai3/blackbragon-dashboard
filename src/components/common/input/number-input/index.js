@@ -7,15 +7,22 @@ function NumberInput({ label, value, name, placeholder, disabled, isAllowNegativ
   return (
     <div className="custom-number-input">
       {label.length > 0 && <label htmlFor="custom-number-input">{label}</label>}
+      <input
+        type="text"
+        value={value}
+        className="real-input"
+        disabled={disabled}
+        onChange={onChange}
+      />
       <NumberFormat
         name={name}
         value={value}
+        className="fake-input"
         placeholder={placeholder}
         disabled={disabled}
         displayType={disabled ? 'text' : 'input'}
         allowNegative={isAllowNegative}
         thousandSeparator
-        onChange={onChange}
       />
     </div>
   );

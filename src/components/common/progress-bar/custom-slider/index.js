@@ -47,17 +47,17 @@ const CustomSlider = ({ value, min, max, disabled, onChange }) => {
     <div className="custom-slider">
       <div className="custom-slider__label">
         <div className="custom-slider__label-min">
-          <NumberFormat value={Number(min).toString()} thousandSeparator displayType="text" />
+          <NumberFormat value={min} thousandSeparator displayType="text" />
         </div>
         <div className="custom-slider__label-max">
-          <NumberFormat value={Number(max).toString()} thousandSeparator displayType="text" />
+          <NumberFormat value={max} thousandSeparator displayType="text" />
         </div>
       </div>
 
       <PrettoSlider
-        min={Number(min)}
-        step={10}
-        max={Number(max)}
+        min={min}
+        step={50}
+        max={max}
         value={Number(value)}
         disabled={disabled}
         onChange={onChange}
@@ -69,8 +69,8 @@ const CustomSlider = ({ value, min, max, disabled, onChange }) => {
 
 CustomSlider.propTypes = {
   value: PropTypes.string,
-  min: PropTypes.string,
-  max: PropTypes.string,
+  min: PropTypes.number,
+  max: PropTypes.number,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import RoundedAvatar from 'components/common/avatar/rounded-avatar';
@@ -18,20 +18,17 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
   const [isApproved, setApproved] = useState(false);
   const [isPending, setPending] = useState(false);
 
-  useEffect(() => {
-    setContributionValue(Number(deal.contributedAmount).toString());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const onChangeContributionValue = (e) => {
     if (isApproved || isPending) return;
     const { value } = e.target;
+    if (Number(value) > Number(deal.personalCap)) return;
     setContributionValue(value);
   };
 
   const onChangeContributionSlider = (event, val) => {
     if (isApproved || isPending) return;
-    setContributionValue(val.toString());
+    if (val < Number(deal.contributedAmount)) return;
+    setContributionValue((val - Number(deal.contributedAmount)).toString());
   };
 
   const onCloseDealModal = () => {
@@ -93,9 +90,11 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
       </div>
       <div className="deal__field deal__field-modal-bar vertical-center">
         <CustomSlider
-          value={contributionValue.replaceAll(',', '')}
-          min={deal.minContribution}
-          max={deal.personalCap || 0}
+          value={(
+            Number(deal.contributedAmount) + Number(contributionValue.replaceAll(',', ''))
+          ).toString()}
+          min={Number(deal.minContribution)}
+          max={Number(deal.personalCap || 0) + Number(deal.contributedAmount)}
           onChange={onChangeContributionSlider}
         />
       </div>
