@@ -114,6 +114,7 @@ const DealRow = ({ deal, onFetchDeals }) => {
             </RoundedButton>
           ) : (
             <RoundedButton
+              type="secondary"
               disabled={!deal.claimAmounts || deal.claimAmounts.length === 0}
               onClick={onToggleClaimModal}
             >
