@@ -56,6 +56,11 @@
 
   .deals-table-content {
     padding-bottom: 320px;
+    &__row {
+      &:last-child {
+        margin-bottom: 60px !important;
+      }
+    }
     &:after {
       content: '';
       position: absolute;

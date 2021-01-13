@@ -35,13 +35,15 @@ const DealRow = ({ deal, onFetchDeals }) => {
 
   return (
     <>
-      <ClaimDealModal
-        open={claimModalOpened}
-        isPending={isPending}
-        deal={deal}
-        onOk={onClaim}
-        onClose={onToggleClaimModal}
-      />
+      {claimModalOpened && (
+        <ClaimDealModal
+          open={claimModalOpened}
+          isPending={isPending}
+          deal={deal}
+          onOk={onClaim}
+          onClose={onToggleClaimModal}
+        />
+      )}
       <div className="d-flex full-width">
         <div className="deal__field deal__field-avatar vertical-center">
           <RoundedAvatar src={deal.imageUrl} />
