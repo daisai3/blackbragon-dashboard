@@ -13,15 +13,26 @@ function NumberInput({
   onChange,
   onBlur,
 }) {
+  const onRealInputChange = (e) => {
+    const _value = e.target.value.replaceAll(',', '');
+    const _e = { ...e };
+    _e.target.value = _value;
+
+    if (Number(_value) >= 0) onChange(_e);
+  };
+  const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
   return (
     <div className="custom-number-input">
       {label.length > 0 && <label htmlFor="custom-number-input">{label}</label>}
       <input
         type="text"
-        value={value}
+        name={name}
+        value={formattedValue}
         className="real-input"
+        placeholder={placeholder}
         disabled={disabled}
-        onChange={onChange}
+        onChange={onRealInputChange}
         onBlur={onBlur}
       />
       <NumberFormat
