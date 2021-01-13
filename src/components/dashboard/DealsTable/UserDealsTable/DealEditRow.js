@@ -43,15 +43,14 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
   };
 
   const callApprove = async () => {
-    console.log('contributionValue--->', contributionValue);
     setPending(true);
-    // const result = await approveDeal(
-    //   deal.address,
-    //   contributionValue.replaceAll(',', '').toString()
-    // );
-    // dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'approveFailed' }));
-    // setPending(false);
-    // setApproved(true);
+    const result = await approveDeal(
+      deal.address,
+      contributionValue.replaceAll(',', '').toString()
+    );
+    dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'approveFailed' }));
+    setPending(false);
+    setApproved(true);
   };
 
   const callContribute = async () => {
