@@ -21,9 +21,8 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
 
   const onChangeCloseAmount = (e) => {
     const { value } = e.target;
-    if (Number(value.replaceAll(',', '')) > Number(deal.raisedAmount))
-      return setCloseAmount((prev) => prev);
-    setCloseAmount(value.replaceAll(',', ''));
+    if (Number(value) > Number(deal.raisedAmount)) return;
+    setCloseAmount(value);
   };
 
   const onChangeSlider = (_event, val) => {
@@ -87,7 +86,7 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
         <div className="d-flex close-amount">
           <div className="close-amount-slider vertical-center">
             <CustomSlider
-              value={closeAmount.replaceAll(',', '')}
+              value={closeAmount}
               min={1}
               max={Number(deal.raisedAmount || 0)}
               onChange={onChangeSlider}
