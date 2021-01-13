@@ -40,6 +40,16 @@ function DealsContent() {
     setSearchValue(value);
   };
 
+  const getFilteredDeals = () => {
+    return searchValue === ''
+      ? userDeals
+      : userDeals.filter(
+          (row) => row.name && row.name.toLowerCase().includes(searchValue.toLowerCase())
+        );
+  };
+
+  const filteredDeals = getFilteredDeals();
+
   return (
     <div className="deals-container">
       <div className="deals-header">
@@ -65,9 +75,9 @@ function DealsContent() {
       {userDeals.length > 0 && (
         <div className="deals-content">
           {isAdmin ? (
-            <AdminDealsTable userDeals={userDeals} onFetchDeals={fetchUserDeals} />
+            <AdminDealsTable userDeals={filteredDeals} onFetchDeals={fetchUserDeals} />
           ) : (
-            <UserDealsTable userDeals={userDeals} onFetchDeals={fetchUserDeals} />
+            <UserDealsTable userDeals={filteredDeals} onFetchDeals={fetchUserDeals} />
           )}
         </div>
       )}
