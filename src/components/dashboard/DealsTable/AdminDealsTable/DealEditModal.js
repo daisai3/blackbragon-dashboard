@@ -83,7 +83,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
       <div className="deal-edit-modal__content">
         <Grid container spacing={4}>
           <Grid item xs={3}>
-            <div className="deal-size">
+            <div className="deal-field deal-size">
               <NumberInput
                 label="Deal Size"
                 name="dealSize"
@@ -93,7 +93,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
             </div>
           </Grid>
           <Grid item xs={3}>
-            <div className="deal-min-view-level">
+            <div className="deal-field deal-min-view-level">
               <CustomSelect
                 label="Min View Level"
                 name="minViewLevel"
@@ -104,7 +104,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
             </div>
           </Grid>
           <Grid item xs={3}>
-            <div className="deal-min-access-level">
+            <div className="deal-field deal-min-access-level">
               <CustomSelect
                 label="Min Access Level"
                 name="minAccessLevel"
@@ -115,7 +115,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
             </div>
           </Grid>
           <Grid item xs={3}>
-            <div className="deal-start-time">
+            <div className="deal-field deal-start-time">
               <CustomInput
                 label="Unlimited Start Time"
                 name="unlimitedTimestamp"
@@ -127,12 +127,12 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
         </Grid>
         <Grid container spacing={4}>
           <Grid item xs={3}>
-            <div className="deal-contribution-token">
+            <div className="deal-field deal-contribution-token">
               <CustomInput label="Contribution Token" value="USDT" disabled />
             </div>
           </Grid>
           <Grid item xs={3}>
-            <div className="deal-min-contribution">
+            <div className="deal-field deal-min-contribution">
               <NumberInput
                 label="Min Contribution"
                 name="minContribution"
@@ -142,7 +142,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
             </div>
           </Grid>
           <Grid item xs={3}>
-            <div className="deal-allocation-modal">
+            <div className="deal-field deal-allocation-modal">
               <CustomSelect
                 label="Allocation Model"
                 name="allocationModel"
@@ -153,7 +153,7 @@ function DealEditModal({ data, onClose, onCreate, onUpdate }) {
             </div>
           </Grid>
           <Grid item xs={3}>
-            <div className="deal-personal-cap">
+            <div className="deal-field deal-personal-cap">
               <NumberInput
                 label="Personal Cap"
                 name="userCap"

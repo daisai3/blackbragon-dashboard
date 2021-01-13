@@ -125,5 +125,11 @@
   // modal content
   &__content {
     padding-top: 30px;
+    .deal-field {
+      input {
+        height: 42px;
+        padding: 11px 16px;
+      }
+    }
   }
 }
