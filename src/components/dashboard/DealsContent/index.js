@@ -11,7 +11,7 @@ function DealsContent() {
   const [searchValue, setSearchValue] = useState('');
   const [userDeals, setUserDeals] = useState([]);
   const authReducer = useSelector((state) => state.auth);
-  const { accountInfo, isAdmin } = authReducer;
+  const { accountInfo, isAdmin, walletAddress } = authReducer;
 
   const fetchUserDeals = async () => {
     const { userAccessLevel } = accountInfo;
@@ -29,6 +29,11 @@ function DealsContent() {
     fetchUserDeals();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    fetchUserDeals();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [walletAddress]);
 
   const onChangeSearch = (e) => {
     const { value } = e.target;
