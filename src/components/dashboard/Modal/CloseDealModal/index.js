@@ -16,7 +16,7 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
   const [destinationAddress, setDestinationAddress] = useState('');
 
   useEffect(() => {
-    setCloseAmount(deal.raisedAmount);
+    setCloseAmount(Number(deal.raisedAmount).toString());
   }, [deal]);
 
   const onChangeCloseAmount = (e) => {
@@ -83,8 +83,8 @@ const CloseDealModal = ({ open, isPending, deal, onOk, onClose }) => {
           <div className="close-amount-slider vertical-center">
             <CustomSlider
               value={closeAmount.replaceAll(',', '')}
-              min={deal.minContribution}
-              max={deal.raisedAmount || '0'}
+              min={1}
+              max={Number(deal.raisedAmount || 0)}
               onChange={onChangeSlider}
             />
           </div>
