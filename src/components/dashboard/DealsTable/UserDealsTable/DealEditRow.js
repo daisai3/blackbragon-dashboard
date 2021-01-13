@@ -26,7 +26,7 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
   };
 
   const onBlurContributeValue = () => {
-    if (Number(deal.contributedAmount) + Number(contributionValue) < Number(deal.minContribution)) {
+    if (Number(contributionValue) < Number(deal.minContribution)) {
       setContributionValue(deal.minContribution);
     }
   };
@@ -44,10 +44,7 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
 
   const callApprove = async () => {
     setPending(true);
-    const result = await approveDeal(
-      deal.address,
-      contributionValue.replaceAll(',', '').toString()
-    );
+    const result = await approveDeal(deal.address, contributionValue);
     dispatch(updateGlobal({ dealApprovedStatus: result ? 'approved' : 'approveFailed' }));
     setPending(false);
     setApproved(true);
@@ -55,10 +52,7 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
 
   const callContribute = async () => {
     setPending(true);
-    const result = await contributeDeal(
-      deal.address,
-      contributionValue.replaceAll(',', '').toString()
-    );
+    const result = await contributeDeal(deal.address, contributionValue);
     dispatch(updateGlobal({ dealApprovedStatus: result ? 'contributed' : 'contributeFailed' }));
     setPending(false);
     setApproved(false);
@@ -96,9 +90,7 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
       </div>
       <div className="deal__field deal__field-modal-bar vertical-center">
         <CustomSlider
-          value={(
-            Number(deal.contributedAmount) + Number(contributionValue.replaceAll(',', ''))
-          ).toString()}
+          value={(Number(deal.contributedAmount) + Number(contributionValue)).toString()}
           min={Number(deal.minContribution)}
           max={Number(deal.personalCap || 0) + Number(deal.contributedAmount)}
           onChange={onChangeContributionSlider}
