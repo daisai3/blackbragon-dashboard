@@ -20,6 +20,9 @@
 
   .custom-progress-bar-tooltip-container {
     position: relative;
+    svg {
+      cursor: pointer;
+    }
     .custom-progress-bar-tooltip {
       position: absolute;
       right: 12px;
