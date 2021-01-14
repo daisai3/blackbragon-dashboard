@@ -29,7 +29,20 @@ const PrettoSlider = withStyles({
   },
   active: {},
   valueLabel: {
-    left: 'calc(-50% + 4px)',
+    left: 0,
+    top: 20,
+    '& *': {
+      background: 'transparent',
+      color: '#676767',
+      fontFamily: 'Barlow',
+      fontSize: '11px',
+      fontWeight: 500,
+      fontStretch: 'normal',
+      fontStyle: 'normal',
+      lineHeight: '1.45',
+      letterSpacing: 'normal',
+      transform: 'translateX(-19%)',
+    },
   },
   track: {
     height: 4,
@@ -61,7 +74,11 @@ const CustomSlider = ({ value, min, max, disabled, onChange }) => {
         value={Number(value)}
         disabled={disabled}
         onChange={onChange}
+        valueLabelDisplay="on"
         aria-labelledby="continuous-slider"
+        valueLabelFormat={(x) => {
+          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }}
       />
     </div>
   );
