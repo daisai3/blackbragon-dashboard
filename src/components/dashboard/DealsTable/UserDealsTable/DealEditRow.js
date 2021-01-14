@@ -14,7 +14,7 @@ import './index.scss';
 
 const DealEditRow = ({ deal, onFetchDeals }) => {
   const dispatch = useDispatch();
-  const [contributionValue, setContributionValue] = useState('');
+  const [contributionValue, setContributionValue] = useState('0');
   const [isApproved, setApproved] = useState(false);
   const [isPending, setPending] = useState(false);
 
