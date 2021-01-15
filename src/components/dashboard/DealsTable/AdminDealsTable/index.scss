@@ -105,20 +105,21 @@
     padding-bottom: 30px;
     border-bottom: 1px solid rgba($color-gray-50, 0.2);
     justify-content: space-between;
-    &-left {
-      .deal-image {
-        margin-left: 10px;
-      }
-      .deal-name {
-        margin-left: 23px;
+
+    .deal-image {
+      margin-left: 10px;
+    }
+    .deal-name {
+    }
+    .deal-action {
+      height: 40px;
+      button {
+        margin-left: 30px;
       }
     }
     &-right {
       display: flex;
       align-items: flex-end;
-      button {
-        margin-left: 30px;
-      }
     }
   }
 

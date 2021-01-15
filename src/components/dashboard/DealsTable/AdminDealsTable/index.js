@@ -36,6 +36,7 @@ const getListStyle = (isDraggingOver) => ({
 function AdminDealsTable({ userDeals, onFetchDeals }) {
   const dispatch = useDispatch();
   const [deals, setDeals] = useState([]);
+  const [isPending, setPending] = useState(false);
   const [filterOption, setFilterOption] = useState('all');
   const globalReducer = useSelector((state) => state.global);
   const { activeDeal } = globalReducer;
@@ -84,6 +85,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
           minAccessLevel: 0,
           imageUrl: '',
           unlimitedTimestamp: 0,
+          status: 'opened',
         },
       })
     );
@@ -94,21 +96,19 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
   };
 
   const onCreateDeal = async (deal) => {
+    setPending(true);
     const result = await createDeal(deal);
+    setPending(false);
     onCloseDealModal();
     if (result) onFetchDeals();
   };
 
   const onUpdateDeal = async (deal) => {
-    console.log('deal--->', deal);
-    // const _deal = { ...deal };
-    // _deal.dealSize = deal.dealSize.replaceAll(',', '');
-    // _deal.minContribution = deal.minContribution.replaceAll(',', '');
-    // _deal.userCap = deal.userCap.replaceAll(',', '');
-
-    // const result = await updateDeal(_deal);
-    // onCloseDealModal();
-    // if (result) onFetchDeals();
+    setPending(true);
+    const result = await updateDeal(deal);
+    setPending(false);
+    onCloseDealModal();
+    if (result) onFetchDeals();
   };
 
   const onSelectFilter = (val) => {
@@ -188,6 +188,7 @@ function AdminDealsTable({ userDeals, onFetchDeals }) {
                   <div className="deal-edit-modal-wrapper">
                     <DealEditModal
                       data={activeDeal}
+                      isPending={isPending}
                       onClose={onCloseDealModal}
                       onCreate={onCreateDeal}
                       onUpdate={onUpdateDeal}

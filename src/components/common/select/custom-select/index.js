@@ -21,7 +21,12 @@ function CustomSelect({ label, value, name, items, onSelect }) {
     setOpened(false);
   };
 
-  const activeItem = items.find((item) => item.value.toString() === value.toString());
+  const getActiveItem = () => {
+    const result = items.find((item) => item.value.toString() === value.toString());
+    return result || items[0];
+  };
+
+  const activeItem = getActiveItem();
 
   return (
     <div className="custom-select" ref={ref}>
@@ -60,7 +65,7 @@ function CustomSelect({ label, value, name, items, onSelect }) {
 
 CustomSelect.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   name: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.shape),
   onSelect: PropTypes.func,
