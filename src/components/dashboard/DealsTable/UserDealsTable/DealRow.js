@@ -33,6 +33,18 @@ const DealRow = ({ deal, onFetchDeals }) => {
     // setPending(false);
   };
 
+  const getClaimedAmounts = () => {
+    let claimedAmount = 0;
+    if (deal.claimAmounts) {
+      deal.claimAmounts.map((row) => {
+        claimedAmount += Number(row.claimedAmount);
+        return row;
+      });
+    }
+
+    return claimedAmount;
+  };
+
   return (
     <>
       {claimModalOpened && (
@@ -83,7 +95,7 @@ const DealRow = ({ deal, onFetchDeals }) => {
         <div className="deal__field deal__field-model vertical-center">{deal.allocationModel}</div>
         <div className="deal__field deal__field-maximum  vertical-center">
           <NumberFormat
-            value={Number(deal.personalCap || 0)}
+            value={Number(deal.personalCap || 0) + Number(deal.contributedAmount)}
             thousandSeparator
             displayType="text"
             prefix="$"
@@ -93,6 +105,16 @@ const DealRow = ({ deal, onFetchDeals }) => {
           <span>
             <NumberFormat
               value={Number(deal.contributedAmount)}
+              thousandSeparator
+              displayType="text"
+              prefix="$"
+            />
+          </span>
+        </div>
+        <div className="deal__field deal__field-claimed vertical-center">
+          <span>
+            <NumberFormat
+              value={getClaimedAmounts()}
               thousandSeparator
               displayType="text"
               prefix="$"

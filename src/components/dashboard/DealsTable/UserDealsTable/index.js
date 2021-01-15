@@ -93,6 +93,7 @@ function UserDealsTable({ userDeals, onFetchDeals }) {
             <SvgIcon name="help" />
           </span>
         </div>
+        <div className="deal__field deal__field-claimed  vertical-center">Tokens Claimed</div>
         <div className="deal__field deal__field-action vertical-center" />
       </div>
       <div className="deals-table-content">
