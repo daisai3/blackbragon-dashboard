@@ -21,13 +21,15 @@ const DealEditRow = ({ deal, onFetchDeals }) => {
   const onChangeContributionValue = (e) => {
     if (isApproved || isPending) return;
     const { value } = e.target;
-    if (Number(value) > Number(deal.personalCap)) return;
     setContributionValue(value);
   };
 
   const onBlurContributeValue = () => {
     if (Number(contributionValue) < Number(deal.minContribution)) {
-      setContributionValue(deal.minContribution);
+      setContributionValue(Number(deal.minContribution).toString());
+    }
+    if (Number(contributionValue) > Number(deal.personalCap)) {
+      setContributionValue(Number(deal.personalCap).toString());
     }
   };
 
