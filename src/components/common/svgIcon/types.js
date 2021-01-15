@@ -26,7 +26,8 @@ import IconDiscord from 'assets/icons/icon-discord.svg';
 import IconTelegram from 'assets/icons/icon-telegram.svg';
 import IconMail from 'assets/icons/icon-mail.svg';
 import IconMenu from 'assets/icons/icon-menu.svg';
-import IconMenu1 from 'assets/icons/icon-menu1.svg';
+import IconMenuExpanded from 'assets/icons/icon-menu-expanded.svg';
+import IconMenuCollapsed from 'assets/icons/icon-menu-collapsed.svg';
 
 import IconError from 'assets/icons/icon-error.svg';
 import IconTick from 'assets/icons/icon-tick.svg';
@@ -56,7 +57,8 @@ const Icons = {
   instagram: IconInstagram,
 
   menu: IconMenu,
-  menu1: IconMenu1,
+  menuExpanded: IconMenuExpanded,
+  menuCollapsed: IconMenuCollapsed,
   discord: IconDiscord,
   telegram: IconTelegram,
   mail: IconMail,

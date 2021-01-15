@@ -21,7 +21,10 @@ function LeftSideBar({ isExpanded, onToggleSidebar }) {
     <div className={`sidebar ${!isExpanded ? 'sidebar--collapsed' : ''}`}>
       <div className="sidebar__top vertical-center">
         <div className="chart-btn-container">
-          <IconButton icon={isExpanded ? 'menu1' : 'menu'} onClick={onToggleSidebar} />
+          <IconButton
+            icon={isExpanded ? 'menuExpanded' : 'menuCollapsed'}
+            onClick={onToggleSidebar}
+          />
         </div>
       </div>
       <div className="sidebar__content">
